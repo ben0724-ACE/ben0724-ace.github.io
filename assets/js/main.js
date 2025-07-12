@@ -134,4 +134,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Custom Cursor ---
     const cursor = document.querySelector('.cursor');
 
+    // Call feather.replace() once all elements are loaded
+    feather.replace();
 }); 
