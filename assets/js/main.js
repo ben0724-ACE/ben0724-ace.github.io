@@ -20,9 +20,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- Theme Switcher ---
     const themeSwitcher = document.getElementById('theme-switcher');
-    const root = document.documentElement; // 直接操作 <html> 标签
+    const root = document.documentElement; 
 
-    // 已修改：简化了 setTheme 函数逻辑，使其更健壮
     const setTheme = (theme) => {
         if (theme === 'dark') {
             root.classList.add('dark-mode');
@@ -35,18 +34,14 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    // 检测系统主题变化
     const darkModeMediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
     
-    // 注意：addListener 已被弃用，建议使用 addEventListener
     darkModeMediaQuery.addEventListener('change', (e) => {
-        // 只有当用户没有手动设置过主题时，才跟随系统
         if (!localStorage.getItem('theme')) {
             setTheme(e.matches ? 'dark' : 'light');
         }
     });
 
-    // 加载已保存的主题或根据系统偏好设置
     const savedTheme = localStorage.getItem('theme');
     if (savedTheme) {
         setTheme(savedTheme);
@@ -54,7 +49,6 @@ document.addEventListener('DOMContentLoaded', () => {
         setTheme(darkModeMediaQuery.matches ? 'dark' : 'light');
     }
 
-    // 点击切换主题
     themeSwitcher.addEventListener('click', () => {
         const isDarkMode = root.classList.contains('dark-mode');
         setTheme(isDarkMode ? 'light' : 'dark');
@@ -77,7 +71,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- Quick Navigation --- //
     const quickNavLinks = document.querySelectorAll('.quick-nav a');
-    const mainSections = document.querySelectorAll('main section');
+    const mainSections = document.querySelectorAll('main section.collapsible-section'); // 使选择器更精确
+    
     quickNavLinks.forEach(link => {
         link.addEventListener('click', (e) => {
             e.preventDefault();
@@ -88,29 +83,47 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     });
+
+    // 为每个导航链接对应的版块创建 ScrollTrigger
     mainSections.forEach(section => {
         ScrollTrigger.create({
             trigger: section,
-            start: "top center",
-            end: "bottom center",
+            start: "top center", // 当版块顶部到达视口中心时
+            end: "bottom center", // 当版块底部离开视口中心时
             onToggle: self => {
-              if (self.isActive) {
                 const link = document.querySelector(`.quick-nav a[href="#${section.id}"]`);
-                quickNavLinks.forEach(l => l.classList.remove('active'));
-                if(link) link.classList.add('active');
-              }
+                if (self.isActive) {
+                    // 当进入触发区域时，激活对应的链接
+                    quickNavLinks.forEach(l => l.classList.remove('active'));
+                    if(link) {
+                        link.classList.add('active');
+                    }
+                } else {
+                    // 当离开触发区域时，如果需要，可以移除激活状态
+                    if(link) {
+                        link.classList.remove('active');
+                    }
+                }
             }
         });
     });
+
 
     // --- Collapse Functionality ---
     const collapsibleHeaders = document.querySelectorAll('.collapsible-header');
     collapsibleHeaders.forEach(header => {
         header.addEventListener('click', () => {
             const content = header.nextElementSibling;
-            header.classList.toggle('collapsed'); // 直接切换 collapsed 类
-            content.classList.toggle('is-expanded'); // 切换 is-expanded 类
+            header.classList.toggle('collapsed');
+            content.classList.toggle('is-expanded');
             feather.replace();
+
+            // --- 新增代码在此！ ---
+            // 延迟一小段时间后刷新 ScrollTrigger，以等待折叠动画完成
+            // 这可以确保计算的位置是最终的正确位置
+            setTimeout(() => {
+                ScrollTrigger.refresh();
+            }, 500); // 500ms 对应 CSS 中 max-height 的过渡时间
         });
     });
 
