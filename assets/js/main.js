@@ -1,4 +1,26 @@
 document.addEventListener('DOMContentLoaded', () => {
+    gsap.registerPlugin(ScrollTrigger);
+
+    // --- Pre-loader ---
+    const preloader = document.querySelector('.preloader');
+    const hidePreloader = () => {
+        // Use GSAP for a smoother fade out
+        gsap.to(preloader, { 
+            opacity: 0, 
+            duration: 0.8, 
+            onComplete: () => {
+                preloader.style.display = 'none';
+            }
+        });
+    };
+
+    // This robustly handles the preloader, regardless of caching or network speed.
+    if (document.readyState === 'complete') {
+        hidePreloader();
+    } else {
+        window.addEventListener('load', hidePreloader);
+    }
+
     // --- Theme Switcher ---
     const themeSwitcher = document.getElementById('theme-switcher');
     const body = document.body;
@@ -50,5 +72,8 @@ document.addEventListener('DOMContentLoaded', () => {
     sections.forEach(section => {
         observer.observe(section);
     });
+
+    // --- Custom Cursor ---
+    const cursor = document.querySelector('.cursor');
 
 }); 
