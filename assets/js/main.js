@@ -2,6 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
     gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
     // --- Pre-loader ---
+    // (这部分代码保持不变)
     const preloader = document.querySelector('.preloader');
     const hidePreloader = () => {
         gsap.to(preloader, { 
@@ -19,6 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // --- Theme Switcher ---
+    // (这部分代码保持不变)
     const themeSwitcher = document.getElementById('theme-switcher');
     const root = document.documentElement; 
 
@@ -35,7 +37,6 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     const darkModeMediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-    
     darkModeMediaQuery.addEventListener('change', (e) => {
         if (!localStorage.getItem('theme')) {
             setTheme(e.matches ? 'dark' : 'light');
@@ -55,22 +56,24 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // --- Scroll Animations ---
-gsap.utils.toArray('.collapsible-content ul').forEach(list => {
-    gsap.from(list.children, {
-        autoAlpha: 0,
-        y: 20,        // 已修改：减小垂直位移，减少对布局的影响
-        duration: 0.6,  // 可以稍微加快动画
-        stagger: 0.15,  // 可以稍微减小延迟
-        ease: 'power2.out',
-        scrollTrigger: {
-            trigger: list,
-            start: 'top 85%',
-            toggleActions: 'play none none none',
-        }
+    // (这部分代码保持不变)
+    gsap.utils.toArray('.collapsible-content ul').forEach(list => {
+        gsap.from(list.children, {
+            autoAlpha: 0,
+            y: 20,
+            duration: 0.6,
+            stagger: 0.15,
+            ease: 'power2.out',
+            scrollTrigger: {
+                trigger: list,
+                start: 'top 85%',
+                toggleActions: 'play none none none',
+            }
+        });
     });
-});
 
     // --- Quick Navigation --- //
+    // (这部分代码保持不变)
     const quickNavLinks = document.querySelectorAll('.quick-nav a');
     const mainSections = document.querySelectorAll('main section.collapsible-section');
     
@@ -102,22 +105,45 @@ gsap.utils.toArray('.collapsible-content ul').forEach(list => {
         });
     });
 
-    // --- Collapse Functionality ---
+    // --- 已修改: 全新的折叠/展开功能，由 GSAP 完全控制 ---
     const collapsibleHeaders = document.querySelectorAll('.collapsible-header');
     collapsibleHeaders.forEach(header => {
-        header.addEventListener('click', () => {
-            const content = header.nextElementSibling;
-            header.classList.toggle('collapsed');
-            content.classList.toggle('is-expanded');
-            feather.replace();
+        const content = header.nextElementSibling;
+        
+        // 初始化内容区域为关闭状态
+        gsap.set(content, { height: 0, autoAlpha: 0 });
 
-            setTimeout(() => {
-                ScrollTrigger.refresh();
-            }, 500);
+        header.addEventListener('click', () => {
+            header.classList.toggle('collapsed');
+            
+            // 判断当前是否是展开状态（通过高度是否大于0来判断）
+            const isExpanded = content.offsetHeight > 0;
+
+            if (isExpanded) {
+                // 如果是展开的，则折叠
+                gsap.to(content, { 
+                    height: 0, 
+                    autoAlpha: 0, 
+                    duration: 0.5, 
+                    ease: 'power2.out',
+                    onComplete: () => ScrollTrigger.refresh() // 动画完成后刷新滚动触发器
+                });
+            } else {
+                // 如果是折叠的，则展开
+                gsap.to(content, { 
+                    height: 'auto', // 动画到内容的自然高度
+                    autoAlpha: 1, 
+                    duration: 0.5, 
+                    ease: 'power2.out',
+                    onComplete: () => ScrollTrigger.refresh() // 动画完成后刷新滚动触发器
+                });
+            }
+            feather.replace();
         });
     });
 
     // --- Custom Cursor ---
+    // (这部分代码保持不变)
     const cursor = document.querySelector('.cursor');
     const interactiveElements = document.querySelectorAll('a, button, .collapsible-header, .theme-switcher');
 
@@ -130,14 +156,14 @@ gsap.utils.toArray('.collapsible-content ul').forEach(list => {
         el.addEventListener('mouseleave', () => cursor.classList.remove('grow'));
     });
 
-    // --- 标题下划线动画 (已移动到正确位置) ---
-    // 这段代码现在只会在页面加载时运行一次，而不是每次点击都运行
+    // --- 标题下划线动画 ---
+    // (这部分代码保持不变)
     gsap.utils.toArray('h2').forEach(h2 => {
         ScrollTrigger.create({
           trigger: h2,
           start: 'top 90%',
-          onEnter: () => h2.classList.add('is-visible'), // 进入时添加类
-          once: true // 动画只触发一次
+          onEnter: () => h2.classList.add('is-visible'),
+          once: true
         });
     });
 
