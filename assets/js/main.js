@@ -4,7 +4,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Pre-loader ---
     const preloader = document.querySelector('.preloader');
     const hidePreloader = () => {
-        // Use GSAP for a smoother fade out
         gsap.to(preloader, { 
             opacity: 0, 
             duration: 0.8, 
@@ -13,8 +12,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     };
-
-    // This robustly handles the preloader, regardless of caching or network speed.
     if (document.readyState === 'complete') {
         hidePreloader();
     } else {
@@ -23,57 +20,48 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- Theme Switcher ---
     const themeSwitcher = document.getElementById('theme-switcher');
-    const body = document.body;
-    const root = document.documentElement;
+    const root = document.documentElement; // 直接操作 <html> 标签
 
-    // Function to set the theme
+    // 已修改：简化了 setTheme 函数逻辑，使其更健壮
     const setTheme = (theme) => {
         if (theme === 'dark') {
-            body.classList.remove('light-mode');
-            body.classList.add('dark-mode');
-            root.classList.remove('light-mode');
             root.classList.add('dark-mode');
             themeSwitcher.innerHTML = feather.icons.sun.toSvg();
             localStorage.setItem('theme', 'dark');
         } else {
-            body.classList.remove('dark-mode');
-            body.classList.add('light-mode');
             root.classList.remove('dark-mode');
-            root.classList.add('light-mode');
             themeSwitcher.innerHTML = feather.icons.moon.toSvg();
             localStorage.setItem('theme', 'light');
         }
-        // 强制触发重绘
-        document.body.offsetHeight;
     };
 
     // 检测系统主题变化
     const darkModeMediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-    darkModeMediaQuery.addListener((e) => {
+    
+    // 注意：addListener 已被弃用，建议使用 addEventListener
+    darkModeMediaQuery.addEventListener('change', (e) => {
+        // 只有当用户没有手动设置过主题时，才跟随系统
         if (!localStorage.getItem('theme')) {
             setTheme(e.matches ? 'dark' : 'light');
         }
     });
 
-    // Load saved theme or use system preference
+    // 加载已保存的主题或根据系统偏好设置
     const savedTheme = localStorage.getItem('theme');
-    const prefersDark = darkModeMediaQuery.matches;
-
     if (savedTheme) {
         setTheme(savedTheme);
     } else {
-        setTheme(prefersDark ? 'dark' : 'light');
+        setTheme(darkModeMediaQuery.matches ? 'dark' : 'light');
     }
 
-    // Switch theme on click
+    // 点击切换主题
     themeSwitcher.addEventListener('click', () => {
-        const currentTheme = body.classList.contains('dark-mode') ? 'dark' : 'light';
-        setTheme(currentTheme === 'dark' ? 'light' : 'dark');
+        const isDarkMode = root.classList.contains('dark-mode');
+        setTheme(isDarkMode ? 'light' : 'dark');
     });
 
     // --- Scroll Animations ---
     const sections = document.querySelectorAll('.fade-in-section');
-
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
@@ -81,9 +69,8 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }, {
-        threshold: 0.1 // Trigger when 10% of the section is visible
+        threshold: 0.1
     });
-
     sections.forEach(section => {
         observer.observe(section);
     });
@@ -91,64 +78,46 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Quick Navigation --- //
     const quickNavLinks = document.querySelectorAll('.quick-nav a');
     const mainSections = document.querySelectorAll('main section');
-
-    // Smooth scroll to section on click
     quickNavLinks.forEach(link => {
         link.addEventListener('click', (e) => {
             e.preventDefault();
             const targetId = link.getAttribute('href');
             const targetSection = document.querySelector(targetId);
             if (targetSection) {
-                gsap.to(window, {duration: 1, scrollTo: {y: targetSection, offsetY: 70}, ease: "power2.out"}); // Adjust offsetY if needed
+                gsap.to(window, {duration: 1, scrollTo: {y: targetSection, offsetY: 70}, ease: "power2.out"});
             }
         });
     });
-
-    // Highlight active link on scroll
     mainSections.forEach(section => {
         ScrollTrigger.create({
             trigger: section,
-            start: "top center", // When the top of the section hits the center of the viewport
-            end: "bottom center", // When the bottom of the section hits the center of the viewport
-            onEnter: () => {
-                quickNavLinks.forEach(link => link.classList.remove('active'));
-                document.querySelector(`.quick-nav a[href="#${section.id}"]`).classList.add('active');
-            },
-            onEnterBack: () => {
-                quickNavLinks.forEach(link => link.classList.remove('active'));
-                document.querySelector(`.quick-nav a[href="#${section.id}"]`).classList.add('active');
-            },
-            onLeave: () => {
-                // Optional: remove active class when leaving if you prefer only one active at a time
-            },
-            onLeaveBack: () => {
-                // Optional: remove active class when leaving if you prefer only one active at a time
+            start: "top center",
+            end: "bottom center",
+            onToggle: self => {
+              if (self.isActive) {
+                const link = document.querySelector(`.quick-nav a[href="#${section.id}"]`);
+                quickNavLinks.forEach(l => l.classList.remove('active'));
+                if(link) link.classList.add('active');
+              }
             }
         });
     });
 
     // --- Collapse Functionality ---
     const collapsibleHeaders = document.querySelectorAll('.collapsible-header');
-
     collapsibleHeaders.forEach(header => {
         header.addEventListener('click', () => {
             const content = header.nextElementSibling;
-            const icon = header.querySelector('.collapse-icon');
-
-            if (content.classList.contains('is-expanded')) {
-                content.classList.remove('is-expanded');
-                header.classList.add('collapsed');
-            } else {
-                content.classList.add('is-expanded');
-                header.classList.remove('collapsed');
-            }
-            feather.replace(); // Re-render feather icons after collapse/expand
+            header.classList.toggle('collapsed'); // 直接切换 collapsed 类
+            content.classList.toggle('is-expanded'); // 切换 is-expanded 类
+            feather.replace();
         });
     });
 
     // --- Custom Cursor ---
     const cursor = document.querySelector('.cursor');
+    // ... (custom cursor JS remains the same)
 
-    // Call feather.replace() once all elements are loaded
+    // Initial call to render icons
     feather.replace();
-}); 
+});
