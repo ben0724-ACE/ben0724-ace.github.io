@@ -50,7 +50,7 @@
   header {
     text-align: center;
     margin-bottom: 4rem;
-    background-image: url('assets/img/header-bg.jpg'); /* Placeholder background image */
+    background-image: url('../img/header-bg.jpg'); /* Placeholder background image */
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;

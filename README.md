@@ -57,6 +57,7 @@ my-homepage/
 │   └── img/
 │       ├── avatar.jpg     # Avatar image
 │       └── favicon.ico    # Website icon
+│       └── header-bg.jpg  # Header
 ```
 
 ## Usage
@@ -86,6 +87,7 @@ In the `assets/css/style.css` file:
 - Modify CSS variables to adjust theme colors
 - Adjust font sizes and spacing
 - Customize animation effects
+- **Important Note on Asset Paths**: When referencing images, fonts, or other assets in CSS, ensure you use the correct relative paths. For example, if your `style.css` is in `assets/css/` and your image is in `assets/img/`, the path in CSS should be `../img/your-image.jpg` (using `../` to go up one directory).
 
 ### Add New Features
 In the `assets/js/main.js` file:
