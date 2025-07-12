@@ -55,20 +55,20 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // --- Scroll Animations ---
-    gsap.utils.toArray('.collapsible-content ul').forEach(list => {
-        gsap.from(list.children, {
-            autoAlpha: 0,
-            y: 20,
-            duration: 0.6,
-            stagger: 0.15,
-            ease: 'power2.out',
-            scrollTrigger: {
-                trigger: list,
-                start: 'top 85%',
-                toggleActions: 'play none none none',
-            }
-        });
+gsap.utils.toArray('.collapsible-content ul').forEach(list => {
+    gsap.from(list.children, {
+        autoAlpha: 0,
+        y: 20,        // 已修改：减小垂直位移，减少对布局的影响
+        duration: 0.6,  // 可以稍微加快动画
+        stagger: 0.15,  // 可以稍微减小延迟
+        ease: 'power2.out',
+        scrollTrigger: {
+            trigger: list,
+            start: 'top 85%',
+            toggleActions: 'play none none none',
+        }
     });
+});
 
     // --- Quick Navigation --- //
     const quickNavLinks = document.querySelectorAll('.quick-nav a');
@@ -102,31 +102,18 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // --- Collapse Functionality (已修改为动态高度) ---
+    // --- Collapse Functionality ---
     const collapsibleHeaders = document.querySelectorAll('.collapsible-header');
     collapsibleHeaders.forEach(header => {
         header.addEventListener('click', () => {
             const content = header.nextElementSibling;
-            
             header.classList.toggle('collapsed');
             content.classList.toggle('is-expanded');
-
-            // 检查是否正在展开
-            if (content.classList.contains('is-expanded')) {
-                // 如果是展开状态, 设置 max-height 为内容的实际高度
-                // scrollHeight 是元素内容的总高度，包括由于溢出而看不到的部分
-                content.style.maxHeight = content.scrollHeight + 'px';
-            } else {
-                // 如果是折叠状态, 移除内联样式, 让 CSS 的 max-height: 0 生效
-                content.style.maxHeight = null;
-            }
-            
             feather.replace();
 
-            // 延迟刷新 ScrollTrigger, 确保导航栏高亮准确
             setTimeout(() => {
                 ScrollTrigger.refresh();
-            }, 500); // 500ms 对应 CSS 过渡时间
+            }, 500);
         });
     });
 
@@ -143,15 +130,17 @@ document.addEventListener('DOMContentLoaded', () => {
         el.addEventListener('mouseleave', () => cursor.classList.remove('grow'));
     });
 
-    // --- 标题下划线动画 ---
+    // --- 标题下划线动画 (已移动到正确位置) ---
+    // 这段代码现在只会在页面加载时运行一次，而不是每次点击都运行
     gsap.utils.toArray('h2').forEach(h2 => {
         ScrollTrigger.create({
           trigger: h2,
           start: 'top 90%',
-          onEnter: () => h2.classList.add('is-visible'),
-          once: true
+          onEnter: () => h2.classList.add('is-visible'), // 进入时添加类
+          once: true // 动画只触发一次
         });
     });
 
+    // 初始渲染 Feather 图标
     feather.replace();
 });

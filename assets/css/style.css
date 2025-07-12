@@ -1,4 +1,4 @@
-/* --- 颜色变量等 --- */
+/* --- 颜色变量 --- */
 :root {
   --bg: #fdfdff; 
   --fg: #212529;
@@ -21,6 +21,7 @@
   --text-color-dark: #9e9e9e;
 }
 
+/* --- 全局与布局重置 --- */
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
 html {
@@ -28,7 +29,7 @@ html {
   scroll-behavior: smooth;
 }
 
-/* 关键修改：body 设为全屏，移除布局限制 */
+/* 关键修复 ①：移除 body 的宽度和边距限制 */
 body {
   font-family: 'Inter', 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
   background: var(--bg);
@@ -38,7 +39,7 @@ body {
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-/* header 将自动继承 body 的全屏宽度 */
+/* --- Header 全屏样式 --- */
 header {
   text-align: center;
   margin-bottom: 4rem;
@@ -80,17 +81,28 @@ header > * {
 }
 h1 { font-size: 3rem; margin-bottom: .5rem; font-weight: 700; text-shadow: 1px 1px 3px rgba(0,0,0,0.4); }
 header p { font-size: 1.2rem; color: #e0e0e0; text-shadow: 1px 1px 3px rgba(0,0,0,0.4);}
+.social a {
+  margin: 0 .8rem;
+  color: #fff;
+  transition: color 0.2s;
+}
+.social a:hover { color: var(--accent); }
 
-/* 关键修改：将布局限制应用到 main 元素 */
+
+/* --- 内容区布局约束 --- */
 main {
   max-width: 900px;
   margin: 0 auto;
-  padding: 2rem;
-  padding-left: 200px;
+  padding: 0 2rem; /* 左右边距 */
+  padding-left: 200px; /* 为左侧导航栏留出空间 */
+}
+
+section { 
+  margin-bottom: 3rem; /* 统一增加版块间距 */
 }
 
 h2 {
-  margin: 3rem 0 1.5rem; 
+  margin-bottom: 1.5rem; 
   font-size: 2rem; 
   font-weight: 600;
   padding-bottom: .5rem;
@@ -114,57 +126,25 @@ h2.is-visible::after {
   transform: scaleX(1);
 }
 
-.collapsible-content {
-  max-height: 0;
-  opacity: 0;
-  overflow: hidden;
-  transition: max-height 0.5s ease-out, opacity 0.5s ease-out;
+/* --- 列表与卡片样式 --- */
+
+/* 关键修复 ②：使用 Flexbox Gap 代替 margin-bottom 来控制列表项间距 */
+.collapsible-content > ul {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem; /* 这是控制列表项间距的新方法 */
 }
 
-/* 关键修改：不再需要固定的 max-height，JS 会处理它 */
-/* 但保留 is-expanded 供 JS 判断状态 */
-.collapsible-content.is-expanded {
-  opacity: 1;
-}
-
-/* 关键修改：将布局限制应用到 footer 元素 */
-footer { 
-  max-width: 900px;
-  margin: 4rem auto 0;
-  padding: 2rem;
-  padding-left: 200px;
-  font-size: 1rem; 
-  text-align: center; 
-  opacity: .8; 
-  color: var(--text-color-dark); 
-}
-
-/* 其他样式保持不变... */
-.quick-nav {
-  position: fixed !important;
-  left: 0;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 180px;
-  padding: 1.5rem 1rem;
-  background-color: var(--card-bg);
-  border-right: 1px solid var(--border-color);
-  box-shadow: var(--shadow);
-  border-radius: 0 8px 8px 0;
-  z-index: 999;
-  transition: background-color 0.3s ease, border-color 0.3s ease;
-}
-/* ... 粘贴所有其他未变的样式 ... */
 li {
   background: var(--card-bg);
   border: 1px solid var(--border-color);
   padding: 1.5rem;
-  margin-bottom: 1rem;
   border-radius: 8px;
   box-shadow: var(--shadow);
   transition: transform 0.2s ease-in-out, background-color 0.3s ease, border-color 0.3s ease;
   font-size: 1rem;
   color: var(--text-color-light);
+  margin-bottom: 0; /* 移除旧的 margin，防止冲突 */
 }
 li:hover { transform: translateY(-5px); }
 li strong { color: var(--accent); }
