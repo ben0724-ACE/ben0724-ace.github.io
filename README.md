@@ -12,6 +12,7 @@ This is a modern personal homepage project showcasing my education background, r
 - **Animation Effects**: Uses GSAP for smooth scroll animations and interactive effects
 - **Font Optimization**: Global font size adjustment to improve content readability and visual appeal
 - **Color Palette Refinement**: Adjusted text colors for better readability and visual harmony in both light and dark modes.
+- **Header Background Image**: Added a dynamic background image to the header section for enhanced visual appeal.
 
 ### 🧭 Navigation
 - **Fixed Navigation Bar**: Top fixed navigation for quick jumps to sections
