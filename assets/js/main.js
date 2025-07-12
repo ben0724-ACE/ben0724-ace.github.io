@@ -55,25 +55,24 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // --- Scroll Animations ---
-gsap.utils.toArray('.collapsible-content ul').forEach(list => {
-    gsap.from(list.children, {
-        autoAlpha: 0, // 初始状态：完全透明且不可交互
-        y: 50,        // 从下方 50px 的位置开始
-        duration: 0.8,
-        stagger: 0.2, // 每个子元素（li）之间延迟 0.2 秒出现
-        ease: 'power2.out',
-        scrollTrigger: {
-            trigger: list,
-            start: 'top 85%', // 当列表的顶部进入视口的 85% 位置时触发
-            toggleActions: 'play none none none', // 只播放一次
-            // markers: true, // 在开发时取消注释以查看触发器位置
-          }
+    gsap.utils.toArray('.collapsible-content ul').forEach(list => {
+        gsap.from(list.children, {
+            autoAlpha: 0,
+            y: 50,
+            duration: 0.8,
+            stagger: 0.2,
+            ease: 'power2.out',
+            scrollTrigger: {
+                trigger: list,
+                start: 'top 85%',
+                toggleActions: 'play none none none',
+            }
+        });
     });
-});
 
     // --- Quick Navigation --- //
     const quickNavLinks = document.querySelectorAll('.quick-nav a');
-    const mainSections = document.querySelectorAll('main section.collapsible-section'); // 使选择器更精确
+    const mainSections = document.querySelectorAll('main section.collapsible-section');
     
     quickNavLinks.forEach(link => {
         link.addEventListener('click', (e) => {
@@ -86,30 +85,22 @@ gsap.utils.toArray('.collapsible-content ul').forEach(list => {
         });
     });
 
-    // 为每个导航链接对应的版块创建 ScrollTrigger
     mainSections.forEach(section => {
         ScrollTrigger.create({
             trigger: section,
-            start: "top center", // 当版块顶部到达视口中心时
-            end: "bottom center", // 当版块底部离开视口中心时
+            start: "top center",
+            end: "bottom center",
             onToggle: self => {
                 const link = document.querySelector(`.quick-nav a[href="#${section.id}"]`);
                 if (self.isActive) {
-                    // 当进入触发区域时，激活对应的链接
                     quickNavLinks.forEach(l => l.classList.remove('active'));
-                    if(link) {
-                        link.classList.add('active');
-                    }
+                    if(link) link.classList.add('active');
                 } else {
-                    // 当离开触发区域时，如果需要，可以移除激活状态
-                    if(link) {
-                        link.classList.remove('active');
-                    }
+                    if(link) link.classList.remove('active');
                 }
             }
         });
     });
-
 
     // --- Collapse Functionality ---
     const collapsibleHeaders = document.querySelectorAll('.collapsible-header');
@@ -118,28 +109,16 @@ gsap.utils.toArray('.collapsible-content ul').forEach(list => {
             const content = header.nextElementSibling;
             header.classList.toggle('collapsed');
             content.classList.toggle('is-expanded');
-            gsap.utils.toArray('h2').forEach(h2 => {
-                ScrollTrigger.create({
-                  trigger: h2,
-                  start: 'top 90%',
-                  onEnter: () => h2.classList.add('is-visible'), // 进入时添加类
-                  once: true // 动画只触发一次
-                });
-            });              
             feather.replace();
 
-            // --- 新增代码在此！ ---
-            // 延迟一小段时间后刷新 ScrollTrigger，以等待折叠动画完成
-            // 这可以确保计算的位置是最终的正确位置
             setTimeout(() => {
                 ScrollTrigger.refresh();
-            }, 500); // 500ms 对应 CSS 中 max-height 的过渡时间
+            }, 500);
         });
     });
 
     // --- Custom Cursor ---
     const cursor = document.querySelector('.cursor');
-
     const interactiveElements = document.querySelectorAll('a, button, .collapsible-header, .theme-switcher');
 
     document.addEventListener('mousemove', e => {
@@ -150,4 +129,18 @@ gsap.utils.toArray('.collapsible-content ul').forEach(list => {
         el.addEventListener('mouseenter', () => cursor.classList.add('grow'));
         el.addEventListener('mouseleave', () => cursor.classList.remove('grow'));
     });
+
+    // --- 标题下划线动画 (已移动到正确位置) ---
+    // 这段代码现在只会在页面加载时运行一次，而不是每次点击都运行
+    gsap.utils.toArray('h2').forEach(h2 => {
+        ScrollTrigger.create({
+          trigger: h2,
+          start: 'top 90%',
+          onEnter: () => h2.classList.add('is-visible'), // 进入时添加类
+          once: true // 动画只触发一次
+        });
+    });
+
+    // 初始渲染 Feather 图标
+    feather.replace();
 });
