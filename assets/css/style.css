@@ -66,6 +66,13 @@
     transform: translateY(-5px);
   }
   li strong { color: var(--accent); }
+  .award-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
   .skills-container {
     display: flex;
     flex-wrap: wrap;
