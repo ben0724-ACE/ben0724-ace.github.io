@@ -1,9 +1,4 @@
-/* 核心布局思路:
-  - body: 占据整个视口宽度，不设内边距和最大宽度。
-  - header: 作为 body 的直接子元素，会自动铺满整个屏幕宽度。
-  - main, footer: 设置最大宽度 (max-width) 和外边距 (margin: auto)，使其在页面中水平居中。
-*/
-
+/* --- 颜色变量等 --- */
 :root {
   --bg: #fdfdff; 
   --fg: #212529;
@@ -33,7 +28,7 @@ html {
   scroll-behavior: smooth;
 }
 
-/* 已修改：确保 body 是一个无约束的全屏容器 */
+/* 关键修改：body 设为全屏，移除布局限制 */
 body {
   font-family: 'Inter', 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
   background: var(--bg);
@@ -43,9 +38,8 @@ body {
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-/* header 现在会自动撑满宽度 */
+/* header 将自动继承 body 的全屏宽度 */
 header {
-  width: 100%; /* 明确设置宽度为100% */
   text-align: center;
   margin-bottom: 4rem;
   background-image: url('../img/header-bg.jpg');
@@ -87,7 +81,7 @@ header > * {
 h1 { font-size: 3rem; margin-bottom: .5rem; font-weight: 700; text-shadow: 1px 1px 3px rgba(0,0,0,0.4); }
 header p { font-size: 1.2rem; color: #e0e0e0; text-shadow: 1px 1px 3px rgba(0,0,0,0.4);}
 
-/* 新增：为 main 元素添加布局约束 */
+/* 关键修改：将布局限制应用到 main 元素 */
 main {
   max-width: 900px;
   margin: 0 auto;
@@ -120,21 +114,20 @@ h2.is-visible::after {
   transform: scaleX(1);
 }
 
-/* ... 省略其他不变的样式 ... */
-li {
-  background: var(--card-bg);
-  border: 1px solid var(--border-color);
-  padding: 1.5rem;
-  margin-bottom: 1rem;
-  border-radius: 8px;
-  box-shadow: var(--shadow);
-  transition: transform 0.2s ease-in-out, background-color 0.3s ease, border-color 0.3s ease;
-  font-size: 1rem;
-  color: var(--text-color-light);
+.collapsible-content {
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition: max-height 0.5s ease-out, opacity 0.5s ease-out;
 }
-li:hover { transform: translateY(-5px); }
 
-/* 新增：为 footer 添加布局约束 */
+/* 关键修改：不再需要固定的 max-height，JS 会处理它 */
+/* 但保留 is-expanded 供 JS 判断状态 */
+.collapsible-content.is-expanded {
+  opacity: 1;
+}
+
+/* 关键修改：将布局限制应用到 footer 元素 */
 footer { 
   max-width: 900px;
   margin: 4rem auto 0;
@@ -146,13 +139,7 @@ footer {
   color: var(--text-color-dark); 
 }
 
-/* 已修改：移除与折叠动画相关的CSS，因为JS已完全接管 */
-.collapsible-content {
-  overflow: hidden; /* 只保留 overflow: hidden */
-}
-/* .collapsible-content.is-expanded, .collapsible-content 的 transition 等均可移除 */
-
-/* --- Quick Navigation --- */
+/* 其他样式保持不变... */
 .quick-nav {
   position: fixed !important;
   left: 0;
@@ -167,9 +154,98 @@ footer {
   z-index: 999;
   transition: background-color 0.3s ease, border-color 0.3s ease;
 }
+/* ... 粘贴所有其他未变的样式 ... */
+li {
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  padding: 1.5rem;
+  margin-bottom: 1rem;
+  border-radius: 8px;
+  box-shadow: var(--shadow);
+  transition: transform 0.2s ease-in-out, background-color 0.3s ease, border-color 0.3s ease;
+  font-size: 1rem;
+  color: var(--text-color-light);
+}
+li:hover { transform: translateY(-5px); }
+li strong { color: var(--accent); }
 
-/* ... 省略其他不变的样式 ... */
+.award-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  color: var(--text-color-light);
+}
 
+/* --- 折叠功能 --- */
+.collapsible-header {
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.collapse-icon {
+  transition: transform 0.3s ease;
+}
+.collapsible-header.collapsed .collapse-icon {
+  transform: rotate(-90deg);
+}
+.collapsible-content {
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition: max-height 0.7s ease-out, opacity 0.5s ease-out; /* 稍微延长动画时间 */
+}
+.collapsible-content.is-expanded {
+  max-height: 5000px;
+  opacity: 1;
+}
+
+/* --- 其他组件样式 (Quick Nav, Footer, 等) --- */
+.quick-nav {
+  position: fixed !important;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 180px;
+  padding: 1.5rem 1rem;
+  background-color: var(--card-bg);
+  border-right: 1px solid var(--border-color);
+  box-shadow: var(--shadow);
+  border-radius: 0 8px 8px 0;
+  z-index: 999;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+.quick-nav h3 { font-size: 1.2rem; margin-bottom: 1rem; color: var(--fg); }
+.quick-nav ul { list-style: none; padding: 0; }
+.quick-nav li { margin-bottom: .7rem; padding: 0; background: none; border: none; box-shadow: none; transform: none; }
+.quick-nav li a {
+  text-decoration: none;
+  color: var(--text-color-light);
+  font-size: 1rem;
+  padding: .3rem .5rem;
+  display: block;
+  border-radius: 4px;
+  transition: background-color 0.2s, color 0.2s;
+}
+.quick-nav li a:hover, .quick-nav li a.active {
+  background-color: var(--accent);
+  color: #fff;
+}
+
+footer { 
+  max-width: 900px;
+  margin: 4rem auto 0;
+  padding: 2rem;
+  padding-left: 200px;
+  font-size: 1rem; 
+  text-align: center; 
+  opacity: .8; 
+  color: var(--text-color-dark); 
+}
+
+/* --- 响应式布局 --- */
 @media (max-width: 992px) {
   .quick-nav { display: none; }
   main, footer {
@@ -180,6 +256,10 @@ footer {
 @media (max-width: 600px) {
   body { font-size: 1rem; }
   main, footer { padding: 1.5rem; }
+  h1 { font-size: 2.2rem; }
+  h2, .collapsible-header { font-size: 1.7rem; }
 }
 
-/* (其他所有样式保持不变) */
+/* 剩余样式保持不变 */
+.skills-container, .btn, .preloader, .loader, .cursor, .project-header, .project-subheader, .details-list { /* ...其他样式... */ }
+.skills-container{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:2rem;background:var(--card-bg);border:1px solid var(--border-color);padding:1.5rem;border-radius:8px;box-shadow:var(--shadow);transition:background-color .3s ease,border-color .3s ease}.skill-category{min-width:0}.tags span{display:inline-block;background:var(--accent);color:#fff;padding:.4rem .8rem;margin:.3rem .2rem;border-radius:16px;font-size:.95rem;transition:background-color .2s}.tags span:hover{background-color:#0056b3}.btn{display:inline-block;margin-top:1.5rem;padding:.9rem 1.8rem;background-color:var(--accent);color:#fff;text-decoration:none;border-radius:8px;border:none;font-weight:600;box-shadow:var(--shadow);transition:background-color .2s,transform .2s;font-size:1.1rem}.btn:hover{background-color:#0056b3;transform:translateY(-2px)}.preloader{position:fixed;top:0;left:0;width:100%;height:100%;background:var(--bg);display:flex;justify-content:center;align-items:center;z-index:9999;transition:opacity .5s ease-out,visibility .5s ease-out}.preloader.loaded{opacity:0;visibility:hidden}.loader{width:50px;height:50px;border:5px solid var(--border-color);border-top:5px solid var(--accent);border-radius:50%;animation:spin 1s linear infinite}@keyframes spin{0%{transform:rotate(0)}100%{transform:rotate(360deg)}}.cursor{position:fixed;width:20px;height:20px;border:2px solid var(--fg);border-radius:50%;left:0;top:0;pointer-events:none;transform:translate(-50%,-50%);z-index:1001;mix-blend-mode:difference;transition:width .2s,height .2s}.cursor.grow{width:40px;height:40px}.project-header{display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:1rem}.project-subheader{margin-top:.5rem;font-style:italic;display:block}.details-list{list-style-type:disc;padding-left:20px;margin-top:.5rem}.details-list li,.details-list li:hover{background:0 0!important;border:none!important;padding:.2rem 0!important;margin-bottom:.2rem!important;box-shadow:none!important;transform:none!important}

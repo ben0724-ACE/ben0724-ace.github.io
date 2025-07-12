@@ -2,7 +2,6 @@ document.addEventListener('DOMContentLoaded', () => {
     gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
     // --- Pre-loader ---
-    // (这部分代码保持不变)
     const preloader = document.querySelector('.preloader');
     const hidePreloader = () => {
         gsap.to(preloader, { 
@@ -20,7 +19,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // --- Theme Switcher ---
-    // (这部分代码保持不变)
     const themeSwitcher = document.getElementById('theme-switcher');
     const root = document.documentElement; 
 
@@ -37,6 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     const darkModeMediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+    
     darkModeMediaQuery.addEventListener('change', (e) => {
         if (!localStorage.getItem('theme')) {
             setTheme(e.matches ? 'dark' : 'light');
@@ -56,7 +55,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // --- Scroll Animations ---
-    // (这部分代码保持不变)
     gsap.utils.toArray('.collapsible-content ul').forEach(list => {
         gsap.from(list.children, {
             autoAlpha: 0,
@@ -73,7 +71,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // --- Quick Navigation --- //
-    // (这部分代码保持不变)
     const quickNavLinks = document.querySelectorAll('.quick-nav a');
     const mainSections = document.querySelectorAll('main section.collapsible-section');
     
@@ -105,45 +102,35 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // --- 已修改: 全新的折叠/展开功能，由 GSAP 完全控制 ---
+    // --- Collapse Functionality (已修改为动态高度) ---
     const collapsibleHeaders = document.querySelectorAll('.collapsible-header');
     collapsibleHeaders.forEach(header => {
-        const content = header.nextElementSibling;
-        
-        // 初始化内容区域为关闭状态
-        gsap.set(content, { height: 0, autoAlpha: 0 });
-
         header.addEventListener('click', () => {
-            header.classList.toggle('collapsed');
+            const content = header.nextElementSibling;
             
-            // 判断当前是否是展开状态（通过高度是否大于0来判断）
-            const isExpanded = content.offsetHeight > 0;
+            header.classList.toggle('collapsed');
+            content.classList.toggle('is-expanded');
 
-            if (isExpanded) {
-                // 如果是展开的，则折叠
-                gsap.to(content, { 
-                    height: 0, 
-                    autoAlpha: 0, 
-                    duration: 0.5, 
-                    ease: 'power2.out',
-                    onComplete: () => ScrollTrigger.refresh() // 动画完成后刷新滚动触发器
-                });
+            // 检查是否正在展开
+            if (content.classList.contains('is-expanded')) {
+                // 如果是展开状态, 设置 max-height 为内容的实际高度
+                // scrollHeight 是元素内容的总高度，包括由于溢出而看不到的部分
+                content.style.maxHeight = content.scrollHeight + 'px';
             } else {
-                // 如果是折叠的，则展开
-                gsap.to(content, { 
-                    height: 'auto', // 动画到内容的自然高度
-                    autoAlpha: 1, 
-                    duration: 0.5, 
-                    ease: 'power2.out',
-                    onComplete: () => ScrollTrigger.refresh() // 动画完成后刷新滚动触发器
-                });
+                // 如果是折叠状态, 移除内联样式, 让 CSS 的 max-height: 0 生效
+                content.style.maxHeight = null;
             }
+            
             feather.replace();
+
+            // 延迟刷新 ScrollTrigger, 确保导航栏高亮准确
+            setTimeout(() => {
+                ScrollTrigger.refresh();
+            }, 500); // 500ms 对应 CSS 过渡时间
         });
     });
 
     // --- Custom Cursor ---
-    // (这部分代码保持不变)
     const cursor = document.querySelector('.cursor');
     const interactiveElements = document.querySelectorAll('a, button, .collapsible-header, .theme-switcher');
 
@@ -157,7 +144,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // --- 标题下划线动画 ---
-    // (这部分代码保持不变)
     gsap.utils.toArray('h2').forEach(h2 => {
         ScrollTrigger.create({
           trigger: h2,
@@ -167,6 +153,5 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // 初始渲染 Feather 图标
     feather.replace();
 });
