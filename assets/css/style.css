@@ -44,6 +44,13 @@
     border-bottom: 2px solid var(--accent);
     display: inline-block;
   }
+  h3 {
+    margin-top: 0;
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--fg);
+  }
   section { margin-bottom: 2rem; }
   ul { list-style: none; padding-left: 0; }
   li { 
@@ -59,6 +66,20 @@
     transform: translateY(-5px);
   }
   li strong { color: var(--accent); }
+  .skills-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: var(--shadow);
+  }
+  .skill-category {
+    flex: 1;
+    min-width: 250px;
+  }
   .tags span {
     display: inline-block;
     background: var(--accent);
