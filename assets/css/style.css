@@ -173,3 +173,70 @@
     display: flex;
     justify-content: space-between;
   }
+
+  /* --- Pre-loader --- */
+  .preloader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--bg);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    transition: opacity 0.5s ease-out, visibility 0.5s ease-out;
+  }
+  .preloader.loaded {
+    opacity: 0;
+    visibility: hidden;
+  }
+  .loader {
+    width: 50px;
+    height: 50px;
+    border: 5px solid var(--border-color);
+    border-top: 5px solid var(--accent);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+  }
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
+  /* --- Custom Cursor --- */
+  .cursor {
+    position: fixed;
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--fg);
+    border-radius: 50%;
+    left: 0;
+    top: 0;
+    pointer-events: none;
+    transform: translate(-50%, -50%);
+    z-index: 1001;
+    mix-blend-mode: difference;
+    transition: width 0.2s, height 0.2s;
+  }
+  .cursor.grow {
+    width: 40px;
+    height: 40px;
+  }
+
+  /* --- Theme Toggle --- */
+  .theme-switcher {
+    /* ... existing code ... */
+  }
+
+  /* --- Scroll Animations --- */
+  .gsap-reveal {
+    opacity: 0;
+  }
+
+  .project-header {
+    display: flex;
+    justify-content: space-between;
+    /* ... existing code ... */
+  }
