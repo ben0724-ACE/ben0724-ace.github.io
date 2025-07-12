@@ -11,11 +11,13 @@ This is a modern personal homepage project showcasing my education background, r
 - **Modern UI**: Adopts a card-based design, concise and aesthetic
 - **Animation Effects**: Uses GSAP for smooth scroll animations and interactive effects
 - **Font Optimization**: Global font size adjustment to improve content readability and visual appeal
+- **Color Palette Refinement**: Adjusted text colors for better readability and visual harmony in both light and dark modes.
 
 ### 🧭 Navigation
 - **Fixed Navigation Bar**: Top fixed navigation for quick jumps to sections
 - **Smooth Scrolling**: Clicking navigation items scrolls smoothly to the corresponding area
 - **Active State**: The currently viewed section is highlighted in the navigation
+- **Quick Index Navigation**: Added a fixed left-side navigation for quick access to main content sections, with active state highlighting.
 
 ### 📱 Interactive Experience
 - **Preloader Animation**: Displays a loading animation when the page loads
@@ -99,7 +101,8 @@ In the `assets/js/main.js` file:
 ## Changelog
 
 ### v1.1.0 (2025-07-12)
-- Optimized font sizes for improved aesthetics and readability
+- Further optimized webpage aesthetics and adjusted font colors for enhanced readability
+- Added quick index navigation on the left side for easy content access
 - Added content collapse functionality for optimized information display
 
 ### v1.0.0 (2025-07-12)
