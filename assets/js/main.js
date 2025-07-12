@@ -24,25 +24,40 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Theme Switcher ---
     const themeSwitcher = document.getElementById('theme-switcher');
     const body = document.body;
+    const root = document.documentElement;
 
     // Function to set the theme
     const setTheme = (theme) => {
         if (theme === 'dark') {
             body.classList.remove('light-mode');
             body.classList.add('dark-mode');
+            root.classList.remove('light-mode');
+            root.classList.add('dark-mode');
             themeSwitcher.innerHTML = feather.icons.sun.toSvg();
             localStorage.setItem('theme', 'dark');
         } else {
             body.classList.remove('dark-mode');
             body.classList.add('light-mode');
+            root.classList.remove('dark-mode');
+            root.classList.add('light-mode');
             themeSwitcher.innerHTML = feather.icons.moon.toSvg();
             localStorage.setItem('theme', 'light');
         }
+        // 强制触发重绘
+        document.body.offsetHeight;
     };
+
+    // 检测系统主题变化
+    const darkModeMediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+    darkModeMediaQuery.addListener((e) => {
+        if (!localStorage.getItem('theme')) {
+            setTheme(e.matches ? 'dark' : 'light');
+        }
+    });
 
     // Load saved theme or use system preference
     const savedTheme = localStorage.getItem('theme');
-    const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const prefersDark = darkModeMediaQuery.matches;
 
     if (savedTheme) {
         setTheme(savedTheme);
@@ -52,7 +67,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Switch theme on click
     themeSwitcher.addEventListener('click', () => {
-        const currentTheme = localStorage.getItem('theme') || (prefersDark ? 'dark' : 'light');
+        const currentTheme = body.classList.contains('dark-mode') ? 'dark' : 'light';
         setTheme(currentTheme === 'dark' ? 'light' : 'dark');
     });
 

@@ -50,26 +50,27 @@
   header {
     text-align: center;
     margin-bottom: 4rem;
-    background-image: url('../img/header-bg.jpg'); /* Placeholder background image */
+    background-image: url('../img/header-bg.jpg');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    padding-top: 6rem; /* Add more padding for background image */
-    padding-bottom: 4rem; /* Adjust padding as needed */
-    color: #fff; /* Ensure text is readable on background */
-    position: relative; /* For potential overlay */
+    padding: 6rem 2rem 4rem;
+    color: #fff;
+    position: relative;
+    min-height: 400px;
   }
   header::before {
     content: '';
     position: absolute;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.4); /* Semi-transparent overlay for text readability */
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
     z-index: 1;
+    pointer-events: none;
   }
-  header > *:not(.theme-switcher) {
+  header > * {
     position: relative;
     z-index: 2;
   }
@@ -187,9 +188,10 @@
 
   /* --- Theme Toggle --- */
   .theme-switcher {
-    position: absolute;
+    position: fixed;
     top: 1.5rem;
     right: 1.5rem;
+    z-index: 100;
     cursor: pointer;
     background: var(--card-bg);
     padding: 0.5rem;
@@ -198,9 +200,17 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    width: 40px;
+    height: 40px;
+    transition: background-color 0.3s;
   }
   .theme-switcher:hover {
-    opacity: 0.8;
+    opacity: 0.9;
+  }
+
+  body.dark-mode .theme-switcher {
+    background: var(--card-bg);
+    color: var(--fg);
   }
 
   /* --- Scroll Animations --- */
@@ -270,11 +280,6 @@
     height: 40px;
   }
 
-  /* --- Theme Toggle --- */
-  .theme-switcher {
-    /* ... existing code ... */
-  }
-
   /* --- Scroll Animations --- */
   .gsap-reveal {
     opacity: 0;
@@ -283,7 +288,6 @@
   .project-header {
     display: flex;
     justify-content: space-between;
-    /* ... existing code ... */
   }
 
   /* --- Collapse Functionality --- */
@@ -300,9 +304,9 @@
   }
 
   .collapsible-header h2 {
-    margin: 0; /* Override previous h2 margin */
-    border-bottom: none; /* Override previous h2 border */
-    padding-bottom: 0; /* Override previous h2 padding */
+    margin: 0;
+    border-bottom: none;
+    padding-bottom: 0;
   }
 
   .collapse-icon {
@@ -314,7 +318,7 @@
   }
 
   .collapsible-content {
-    max-height: 2000px; /* Large enough value to ensure content fits when expanded */
+    max-height: 2000px;
     overflow: hidden;
     transition: max-height 0.5s ease-out, opacity 0.5s ease-out;
   }
@@ -326,7 +330,7 @@
 
   @media (max-width: 600px) {
     .collapsible-header {
-      font-size: 1.7rem; /* Adjust for smaller screens */
+      font-size: 1.7rem;
     }
   }
 
@@ -358,11 +362,11 @@
 
   .quick-nav li {
     margin-bottom: .7rem;
-    padding: 0; /* Override default li padding */
-    background: none; /* Override default li background */
-    border: none; /* Override default li border */
-    box-shadow: none; /* Override default li shadow */
-    transform: none; /* Override default li transform */
+    padding: 0;
+    background: none;
+    border: none;
+    box-shadow: none;
+    transform: none;
   }
 
   .quick-nav li a {
@@ -383,15 +387,15 @@
 
   @media (max-width: 992px) {
     .quick-nav {
-      display: none; /* Hide quick nav on smaller screens */
+      display: none;
     }
     body {
-      padding-left: 2rem; /* Reset padding for smaller screens */
+      padding-left: 2rem;
     }
   }
 
   @media (min-width: 993px) {
     body {
-      padding-left: 200px; /* Space for the fixed quick nav */
+      padding-left: 200px;
     }
   }
