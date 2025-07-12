@@ -82,13 +82,29 @@ header > * {
 h1 { font-size: 3rem; margin-bottom: .5rem; font-weight: 700; }
 header p { font-size: 1.2rem; color: var(--text-color-dark); }
 h2 {
-  margin: 3rem 0 1.5rem;
-  font-size: 2rem;
+  margin: 3rem 0 1.5rem; 
+  font-size: 2rem; 
   font-weight: 600;
   padding-bottom: .5rem;
-  border-bottom: 2px solid var(--accent);
+  /* border-bottom: 2px solid var(--accent); */ /* <-- 移除这一行 */
   display: inline-block;
   color: var(--fg);
+  position: relative; /* 为伪元素定位提供参考 */
+}
+h2::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-color: var(--accent);
+  transform: scaleX(0); /* 初始宽度为0 */
+  transform-origin: left; /* 从左侧开始伸展 */
+  transition: transform 0.6s ease-out; /* 定义动画效果 */
+}
+h2.is-visible::after {
+  transform: scaleX(1); /* 宽度变为 100% */
 }
 h3 {
   margin-top: 0;

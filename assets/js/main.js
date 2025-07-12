@@ -55,19 +55,21 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // --- Scroll Animations ---
-    const sections = document.querySelectorAll('.fade-in-section');
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('is-visible');
-            }
-        });
-    }, {
-        threshold: 0.1
+gsap.utils.toArray('.collapsible-content ul').forEach(list => {
+    gsap.from(list.children, {
+        autoAlpha: 0, // 初始状态：完全透明且不可交互
+        y: 50,        // 从下方 50px 的位置开始
+        duration: 0.8,
+        stagger: 0.2, // 每个子元素（li）之间延迟 0.2 秒出现
+        ease: 'power2.out',
+        scrollTrigger: {
+            trigger: list,
+            start: 'top 85%', // 当列表的顶部进入视口的 85% 位置时触发
+            toggleActions: 'play none none none', // 只播放一次
+            // markers: true, // 在开发时取消注释以查看触发器位置
+          }
     });
-    sections.forEach(section => {
-        observer.observe(section);
-    });
+});
 
     // --- Quick Navigation --- //
     const quickNavLinks = document.querySelectorAll('.quick-nav a');
@@ -116,6 +118,14 @@ document.addEventListener('DOMContentLoaded', () => {
             const content = header.nextElementSibling;
             header.classList.toggle('collapsed');
             content.classList.toggle('is-expanded');
+            gsap.utils.toArray('h2').forEach(h2 => {
+                ScrollTrigger.create({
+                  trigger: h2,
+                  start: 'top 90%',
+                  onEnter: () => h2.classList.add('is-visible'), // 进入时添加类
+                  once: true // 动画只触发一次
+                });
+            });              
             feather.replace();
 
             // --- 新增代码在此！ ---
@@ -129,8 +139,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- Custom Cursor ---
     const cursor = document.querySelector('.cursor');
-    // ... (custom cursor JS remains the same)
 
-    // Initial call to render icons
-    feather.replace();
+    const interactiveElements = document.querySelectorAll('a, button, .collapsible-header, .theme-switcher');
+
+    document.addEventListener('mousemove', e => {
+        cursor.setAttribute('style', `top: ${e.clientY}px; left: ${e.clientX}px;`);
+    });
+    
+    interactiveElements.forEach(el => {
+        el.addEventListener('mouseenter', () => cursor.classList.add('grow'));
+        el.addEventListener('mouseleave', () => cursor.classList.remove('grow'));
+    });
 });
