@@ -1,47 +1,39 @@
-/* --- 已修改：简化了颜色变量定义，并微调颜色以提升美感 --- */
 :root {
-  --bg: #fdfdff; /* 稍微变亮的背景 */
+  --bg: #fdfdff; 
   --fg: #212529;
-  --accent: #0077cc; /* 稍微调整的蓝色 */
+  --accent: #0077cc; 
   --card-bg: #ffffff;
   --border-color: #dee2e6;
-  --shadow: 0 4px 6px rgba(0, 0, 0, 0.08); /* 减弱阴影 */
+  --shadow: 0 4px 6px rgba(0, 0, 0, 0.08); 
   --text-color-light: #495057;
   --text-color-dark: #6c757d;
 }
 
-/* 已修改：现在只用一个选择器来定义深色主题，更健壮 */
 :root.dark-mode {
-  --bg: #1a1a1a; /* 深灰色背景 */
+  --bg: #1a1a1a;
   --fg: #e0e0e0;
-  --accent: #1e90ff; /* 更亮的蓝色以提高对比度 */
-  --card-bg: #252525; /* 卡片背景 */
+  --accent: #1e90ff;
+  --card-bg: #252525;
   --border-color: #444;
   --shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
   --text-color-light: #bdbdbd;
   --text-color-dark: #9e9e9e;
 }
 
-/* 已删除：移除了 body.dark-mode 和 @media(prefers-color-scheme) 的重复定义 */
-
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
 html {
   background-color: var(--bg);
+  scroll-behavior: smooth; /* 让滚动更平滑 */
 }
 
 body {
-  /* 已修改：使用新的 Google Font，并为颜色变化添加过渡效果 */
   font-family: 'Inter', 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
   background: var(--bg);
   color: var(--fg);
   line-height: 1.7;
-  padding: 2rem;
-  max-width: 900px;
-  margin: 0 auto;
   font-size: 1.1rem;
-  padding-left: 200px;
-  transition: background-color 0.3s ease, color 0.3s ease; /* 新增过渡 */
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 header {
@@ -55,6 +47,10 @@ header {
   color: #fff;
   position: relative;
   min-height: 400px;
+  display: flex; /* 使用 flex 布局让内容垂直居中 */
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 header::before {
   content: '';
@@ -76,20 +72,28 @@ header > * {
   height: 140px;
   border-radius: 50%;
   margin-bottom: 1.5rem;
-  border: 5px solid var(--card-bg);
+  border: 5px solid rgba(255, 255, 255, 0.8); /* 边框稍微透明，更有质感 */
   box-shadow: var(--shadow);
 }
-h1 { font-size: 3rem; margin-bottom: .5rem; font-weight: 700; }
-header p { font-size: 1.2rem; color: var(--text-color-dark); }
+h1 { font-size: 3rem; margin-bottom: .5rem; font-weight: 700; text-shadow: 1px 1px 3px rgba(0,0,0,0.4); }
+header p { font-size: 1.2rem; color: #e0e0e0; text-shadow: 1px 1px 3px rgba(0,0,0,0.4);}
+
+/* 为 main 元素添加布局约束 */
+main {
+  max-width: 900px;
+  margin: 0 auto; /* 页面居中 */
+  padding: 2rem;
+  padding-left: 200px; /* 为左侧导航栏留出空间 */
+}
+
 h2 {
   margin: 3rem 0 1.5rem; 
   font-size: 2rem; 
   font-weight: 600;
   padding-bottom: .5rem;
-  /* border-bottom: 2px solid var(--accent); */ /* <-- 移除这一行 */
   display: inline-block;
   color: var(--fg);
-  position: relative; /* 为伪元素定位提供参考 */
+  position: relative;
 }
 h2::after {
   content: '';
@@ -99,13 +103,14 @@ h2::after {
   width: 100%;
   height: 2px;
   background-color: var(--accent);
-  transform: scaleX(0); /* 初始宽度为0 */
-  transform-origin: left; /* 从左侧开始伸展 */
-  transition: transform 0.6s ease-out; /* 定义动画效果 */
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.6s ease-out;
 }
 h2.is-visible::after {
-  transform: scaleX(1); /* 宽度变为 100% */
+  transform: scaleX(1);
 }
+
 h3 {
   margin-top: 0;
   margin-bottom: 1rem;
@@ -122,7 +127,7 @@ li {
   margin-bottom: 1rem;
   border-radius: 8px;
   box-shadow: var(--shadow);
-  transition: transform 0.2s ease-in-out, background-color 0.3s ease, border-color 0.3s ease; /* 新增过渡 */
+  transition: transform 0.2s ease-in-out, background-color 0.3s ease, border-color 0.3s ease;
   font-size: 1rem;
   color: var(--text-color-light);
 }
@@ -139,19 +144,18 @@ li strong { color: var(--accent); }
   color: var(--text-color-light);
 }
 .skills-container {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid; /* 改为 grid 布局，更灵活 */
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 2rem;
   background: var(--card-bg);
   border: 1px solid var(--border-color);
   padding: 1.5rem;
   border-radius: 8px;
   box-shadow: var(--shadow);
-  transition: background-color 0.3s ease, border-color 0.3s ease; /* 新增过渡 */
+  transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 .skill-category {
-  flex: 1;
-  min-width: 250px;
+  min-width: 0; /* 配合 grid 布局 */
 }
 .tags span {
   display: inline-block;
@@ -186,27 +190,30 @@ li strong { color: var(--accent); }
 }
 .social a {
   margin: 0 .8rem;
-  color: var(--fg);
+  color: #fff; /* header中的社交图标颜色 */
   transition: color 0.2s;
 }
 .social a:hover {
   color: var(--accent);
 }
-footer { margin-top: 4rem; font-size: 1rem; text-align: center; opacity: .8; color: var(--text-color-dark); }
-
-@media (max-width: 600px) {
-  body { padding: 1.5rem; font-size: 1rem; }
-  h1 { font-size: 2.2rem; }
-  h2 { font-size: 1.7rem; }
-  h3 { font-size: 1.2rem; }
+/* 新增：为 footer 添加布局约束 */
+footer { 
+  max-width: 900px;
+  margin: 4rem auto 0; /* 页面居中 */
+  padding: 2rem;
+  padding-left: 200px;
+  font-size: 1rem; 
+  text-align: center; 
+  opacity: .8; 
+  color: var(--text-color-dark); 
 }
 
-/* --- Theme Toggle --- */
+/* --- Theme Toggle, Pre-loader, Cursor 等保持不变 --- */
 .theme-switcher {
   position: fixed;
   top: 1.5rem;
   right: 1.5rem;
-  z-index: 1000; /* 确保在最顶层 */
+  z-index: 1000;
   cursor: pointer;
   background: var(--card-bg);
   padding: 0.5rem;
@@ -217,31 +224,10 @@ footer { margin-top: 4rem; font-size: 1rem; text-align: center; opacity: .8; col
   justify-content: center;
   width: 40px;
   height: 40px;
-  transition: background-color 0.3s, color 0.3s; /* 新增过渡 */
+  transition: background-color 0.3s, color 0.3s;
 }
-.theme-switcher:hover {
-  opacity: 0.9;
-}
+.theme-switcher:hover { opacity: 0.9; }
 
-/* 已删除 body.dark-mode .theme-switcher 选择器，因为不再需要 */
-
-/* --- Scroll Animations --- */
-.fade-in-section {
-  opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-}
-.fade-in-section.is-visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.project-header {
-  display: flex;
-  justify-content: space-between;
-}
-
-/* --- Pre-loader --- */
 .preloader {
   position: fixed;
   top: 0;
@@ -252,7 +238,7 @@ footer { margin-top: 4rem; font-size: 1rem; text-align: center; opacity: .8; col
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 9999; /* 提高 z-index */
+  z-index: 9999;
   transition: opacity 0.5s ease-out, visibility 0.5s ease-out;
 }
 .preloader.loaded {
@@ -272,7 +258,6 @@ footer { margin-top: 4rem; font-size: 1rem; text-align: center; opacity: .8; col
   100% { transform: rotate(360deg); }
 }
 
-/* --- Custom Cursor --- */
 .cursor {
   position: fixed;
   width: 20px;
@@ -292,70 +277,36 @@ footer { margin-top: 4rem; font-size: 1rem; text-align: center; opacity: .8; col
   height: 40px;
 }
 
-/* --- Scroll Animations --- */
-.gsap-reveal {
-  opacity: 0;
-}
-
-.project-header {
-  display: flex;
-  justify-content: space-between;
-}
-
 /* --- Collapse Functionality --- */
 .collapsible-header {
   cursor: pointer;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding-bottom: .5rem;
-  border-bottom: 2px solid var(--accent);
-  margin: 3rem 0 1.5rem;
-  font-size: 2rem;
-  font-weight: 600;
 }
-
-.collapsible-header h2 {
-  margin: 0;
-  border-bottom: none;
-  padding-bottom: 0;
-}
-
 .collapse-icon {
   transition: transform 0.3s ease;
 }
-
-/* 已修改：默认折叠状态下，图标旋转-90度 (朝右) */
 .collapsible-header.collapsed .collapse-icon {
   transform: rotate(-90deg);
 }
-
 .collapsible-content {
-  max-height: 0; /* 默认最大高度为0，实现折叠 */
-  opacity: 0;    /* 默认透明度为0 */
+  max-height: 0;
+  opacity: 0;
   overflow: hidden;
   transition: max-height 0.5s ease-out, opacity 0.5s ease-out;
 }
-
-/* 已修改：当 is-expanded 类存在时，展开内容 */
 .collapsible-content.is-expanded {
-  max-height: 2000px; /* 给予一个足够大的高度以容纳内容 */
+  max-height: 5000px; /* 大幅增加高度以避免内容被截断 */
   opacity: 1;
-}
-
-
-@media (max-width: 600px) {
-  .collapsible-header {
-    font-size: 1.7rem;
-  }
 }
 
 /* --- Quick Navigation --- */
 .quick-nav {
   position: fixed !important;
   left: 0;
-  top: 0;
-  transform: none;
+  top: 50%; /* 改为垂直居中 */
+  transform: translateY(-50%); /* 配合 top: 50% 实现垂直居中 */
   width: 180px;
   padding: 1.5rem 1rem;
   background-color: var(--card-bg);
@@ -363,20 +314,14 @@ footer { margin-top: 4rem; font-size: 1rem; text-align: center; opacity: .8; col
   box-shadow: var(--shadow);
   border-radius: 0 8px 8px 0;
   z-index: 999;
-  transition: background-color 0.3s ease, border-color 0.3s ease; /* 新增过渡 */
+  transition: background-color 0.3s ease, border-color 0.3s ease;
 }
-
 .quick-nav h3 {
   font-size: 1.2rem;
   margin-bottom: 1rem;
   color: var(--fg);
 }
-
-.quick-nav ul {
-  list-style: none;
-  padding: 0;
-}
-
+.quick-nav ul { list-style: none; padding: 0; }
 .quick-nav li {
   margin-bottom: .7rem;
   padding: 0;
@@ -385,7 +330,6 @@ footer { margin-top: 4rem; font-size: 1rem; text-align: center; opacity: .8; col
   box-shadow: none;
   transform: none;
 }
-
 .quick-nav li a {
   text-decoration: none;
   color: var(--text-color-light);
@@ -395,24 +339,53 @@ footer { margin-top: 4rem; font-size: 1rem; text-align: center; opacity: .8; col
   border-radius: 4px;
   transition: background-color 0.2s, color 0.2s;
 }
-
 .quick-nav li a:hover,
 .quick-nav li a.active {
   background-color: var(--accent);
   color: #fff;
 }
 
+
+/* --- 媒体查询，用于响应式布局 --- */
 @media (max-width: 992px) {
-  .quick-nav {
-    display: none;
-  }
-  body {
-    padding-left: 2rem;
+  .quick-nav { display: none; }
+  main, footer {
+    padding: 2rem; /* 在小屏幕上移除为导航栏留出的左侧边距 */
   }
 }
 
-@media (min-width: 993px) {
-  body {
-    padding-left: 200px;
-  }
+@media (max-width: 600px) {
+  body { font-size: 1rem; }
+  main, footer { padding: 1.5rem; }
+  h1 { font-size: 2.2rem; }
+  h2 { font-size: 1.7rem; }
+  h3 { font-size: 1.2rem; }
+  .collapsible-header { font-size: 1.7rem; }
+}
+
+/* 内部列表样式 */
+.project-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+.project-subheader {
+  margin-top: 0.5rem;
+  font-style: italic;
+  display: block;
+}
+.details-list {
+  list-style-type: disc;
+  padding-left: 20px;
+  margin-top: 0.5rem;
+}
+.details-list li, .details-list li:hover {
+  background: none !important;
+  border: none !important;
+  padding: 0.2rem 0 !important;
+  margin-bottom: 0.2rem !important;
+  box-shadow: none !important;
+  transform: none !important;
 }

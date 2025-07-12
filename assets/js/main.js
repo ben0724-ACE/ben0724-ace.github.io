@@ -55,20 +55,20 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // --- Scroll Animations ---
-    gsap.utils.toArray('.collapsible-content ul').forEach(list => {
-        gsap.from(list.children, {
-            autoAlpha: 0,
-            y: 50,
-            duration: 0.8,
-            stagger: 0.2,
-            ease: 'power2.out',
-            scrollTrigger: {
-                trigger: list,
-                start: 'top 85%',
-                toggleActions: 'play none none none',
-            }
-        });
+gsap.utils.toArray('.collapsible-content ul').forEach(list => {
+    gsap.from(list.children, {
+        autoAlpha: 0,
+        y: 20,        // 已修改：减小垂直位移，减少对布局的影响
+        duration: 0.6,  // 可以稍微加快动画
+        stagger: 0.15,  // 可以稍微减小延迟
+        ease: 'power2.out',
+        scrollTrigger: {
+            trigger: list,
+            start: 'top 85%',
+            toggleActions: 'play none none none',
+        }
     });
+});
 
     // --- Quick Navigation --- //
     const quickNavLinks = document.querySelectorAll('.quick-nav a');
