@@ -1,114 +1,121 @@
-# Qi Haoran 个人主页
+# Qi Haoran Personal Page
 
-## 项目简介
-这是一个现代化的个人主页项目，展示本人的教育背景、研究经历、项目经验和技能。网页采用响应式设计，支持深色/浅色主题切换，具有流畅的动画效果和良好的用户体验。
+## Project Introduction
+This is a modern personal homepage project showcasing my education background, research experience, project experience, and skills. The webpage features a responsive design, supports dark/light theme switching, and offers smooth animations for an excellent user experience.
 
-## 功能特性
+## Features
 
-### 🎨 视觉设计
-- **响应式布局**: 适配桌面、平板和手机设备
-- **主题切换**: 支持深色/浅色主题，自动跟随系统偏好
-- **现代化UI**: 采用卡片式设计，简洁美观
-- **动画效果**: 使用GSAP实现流畅的滚动动画和交互效果
+### 🎨 Visual Design
+- **Responsive Layout**: Adapts to desktop, tablet, and mobile devices
+- **Theme Switching**: Supports dark/light themes, automatically follows system preferences
+- **Modern UI**: Adopts a card-based design, concise and aesthetic
+- **Animation Effects**: Uses GSAP for smooth scroll animations and interactive effects
+- **Font Optimization**: Global font size adjustment to improve content readability and visual appeal
 
-### 🧭 导航功能
-- **固定导航栏**: 顶部固定导航，快速跳转到各个章节
-- **平滑滚动**: 点击导航项平滑滚动到对应区域
-- **活跃状态**: 当前查看的章节在导航中高亮显示
+### 🧭 Navigation
+- **Fixed Navigation Bar**: Top fixed navigation for quick jumps to sections
+- **Smooth Scrolling**: Clicking navigation items scrolls smoothly to the corresponding area
+- **Active State**: The currently viewed section is highlighted in the navigation
 
-### 📱 交互体验
-- **预加载动画**: 页面加载时显示加载动画
-- **悬停效果**: 卡片悬停时有轻微上浮效果
-- **自定义光标**: 跟随鼠标移动的自定义光标效果
-- **技能标签**: 可点击的技能标签，支持分类展示
+### 📱 Interactive Experience
+- **Preloader Animation**: Displays a loading animation when the page loads
+- **Hover Effects**: Cards subtly lift on hover
+- **Custom Cursor**: A custom cursor effect that follows the mouse movement
+- **Skill Tags**: Clickable skill tags, supporting categorized display
+- **Content Collapse**: Sections can be collapsed/expanded to optimize information presentation and space utilization
 
-### 📄 内容组织
-- **教育背景**: 详细的学历信息和核心课程成绩
-- **研究发表**: 学术论文和研究项目经历
-- **工程项目**: 竞赛获奖和工程实践经验
-- **实习经历**: 企业实习和工作经验
-- **荣誉奖项**: 各类竞赛和奖学金获奖情况
-- **技术技能**: 按类别组织的技能标签
+### 📄 Content Organization
+- **Education Background**: Detailed academic information and core course grades
+- **Research & Publications**: Academic papers and research project experiences
+- **Engineering Projects**: Competition awards and engineering practical experiences
+- **Internship Experience**: Company internships and work experience
+- **Honors & Awards**: Various competition and scholarship awards
+- **Technical Skills**: Skill tags organized by category
 
-## 技术栈
-- **HTML5**: 语义化标签，良好的SEO结构
-- **CSS3**: 现代CSS特性，包括Grid、Flexbox、CSS变量
-- **JavaScript**: ES6+语法，模块化编程
-- **GSAP**: 高性能动画库
-- **Feather Icons**: 轻量级图标库
-- **GitHub Pages**: 免费静态网站托管
+## Technologies Used
+- **HTML5**: Semantic tags, good SEO structure
+- **CSS3**: Modern CSS features, including Grid, Flexbox, CSS variables
+- **JavaScript**: ES6+ syntax, modular programming
+- **GSAP**: High-performance animation library
+- **Feather Icons**: Lightweight icon library
+- **GitHub Pages**: Free static website hosting
 
-## 文件结构
+## File Structure
 ```
 my-homepage/
-├── index.html              # 主页面文件
-├── README.md              # 项目说明文档
-├── resume8.pdf            # 个人简历PDF
+├── index.html              # Main page file
+├── README.md              # Project documentation
+├── resume8.pdf            # Personal CV PDF
 ├── assets/
 │   ├── css/
-│   │   └── style.css      # 样式文件
+│   │   └── style.css      # Stylesheet file
 │   ├── js/
-│   │   └── main.js        # JavaScript功能
+│   │   └── main.js        # JavaScript functionalities
 │   └── img/
-│       ├── avatar.jpg     # 头像图片
-│       └── favicon.ico    # 网站图标
+│       ├── avatar.jpg     # Avatar image
+│       └── favicon.ico    # Website icon
 ```
 
-## 使用方法
+## Usage
 
-### 本地开发
-1. 克隆项目到本地
-2. 使用任意HTTP服务器运行项目（如Live Server）
-3. 在浏览器中访问 `http://localhost:端口号`
+### Local Development
+1. Clone the repository locally
+2. Run the project using any HTTP server (e.g., Live Server)
+3. Access `http://localhost:port_number` in your browser
 
-### 部署到GitHub Pages
-1. 将代码推送到GitHub仓库
-2. 在仓库设置中启用GitHub Pages
-3. 选择主分支作为源分支
-4. 访问生成的GitHub Pages URL
+### Deploy to GitHub Pages
+1. Push the code to your GitHub repository
+2. Enable GitHub Pages in your repository settings
+3. Select the main branch as the source branch
+4. Access the generated GitHub Pages URL
 
-## 自定义配置
+## Custom Configuration
 
-### 修改个人信息
-在 `index.html` 文件中修改以下内容：
-- 姓名和联系方式
-- 头像图片路径
-- 社交媒体链接
-- 简历PDF文件
+### Modify Personal Information
+Modify the following content in the `index.html` file:
+- Name and contact information
+- Avatar image path
+- Social media links
+- CV PDF file
 
-### 调整样式
-在 `assets/css/style.css` 文件中：
-- 修改CSS变量来调整主题色彩
-- 调整字体大小和间距
-- 自定义动画效果
+### Adjust Styles
+In the `assets/css/style.css` file:
+- Modify CSS variables to adjust theme colors
+- Adjust font sizes and spacing
+- Customize animation effects
 
-### 添加新功能
-在 `assets/js/main.js` 文件中：
-- 添加新的交互功能
-- 修改动画参数
-- 扩展主题切换逻辑
+### Add New Features
+In the `assets/js/main.js` file:
+- Add new interactive features
+- Modify animation parameters
+- Extend theme switching logic
 
-## 性能优化
-- 图片压缩和优化
-- CSS和JavaScript文件压缩
-- 使用CDN加载第三方库
-- 懒加载和预加载策略
+## Performance Optimization
+- Image compression and optimization
+- CSS and JavaScript file compression
+- Use CDN to load third-party libraries
+- Lazy loading and preloading strategies
 
-## 更新日志
+## Changelog
+
+### v1.1.0 (2025-07-12)
+- Optimized font sizes for improved aesthetics and readability
+- Added content collapse functionality for optimized information display
 
 ### v1.0.0 (2025-07-12)
-- 🎉 初始版本发布
-- 📄 基础个人主页功能
-- 🌙 深色/浅色主题支持
-- ✨ 基础动画效果
+- 🎉 Initial version release
+- 📄 Basic personal homepage features
+- 🌙 Dark/Light theme support
+- ✨ Basic animation effects
 
-## 贡献指南
-欢迎提交Issue和Pull Request来改进这个项目！
+## Contribution Guide
+Welcome to submit Issues and Pull Requests to improve this project!
 
-## 联系方式
-- 邮箱: haoran.qi0724@gmail.com
+
+## Contact Information
+- Email: haoran.qi0724@gmail.com
 - GitHub: [@ben0724-ACE](https://github.com/ben0724-ACE)
 
 ---
 
-⭐ 如果这个项目对你有帮助，请给它一个星标！ 
+⭐ If this project is helpful to you, please give it a star!

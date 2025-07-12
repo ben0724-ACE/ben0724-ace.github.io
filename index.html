@@ -56,134 +56,144 @@
 </header>
 
 <main>
-  <section>
-    <h2>Education</h2>
-    <ul>
-      <li>
-        <div class="project-header">
-          <strong>Beijing University of Chemical Technology</strong>
-          <em>Beijing, China</em>
-        </div>
-        <div class="project-subheader">
-          <span>Bachelor of Engineering in Automation</span>
-          <span style="float: right;">Sep. 2022 - June 2026 (Expected)</span>
-        </div>
-        <ul class="details-list">
-          <li><strong>Average Overall Score:</strong> <strong>88.03/100</strong></li>
-          <li><strong>Core Courses:</strong> Signals and Systems (<strong>93</strong>), Linear Algebra (<strong>92</strong>), Embedded System Design (<strong>A</strong>), Digital Image Processing (<strong>A</strong>)</li>
-        </ul>
-      </li>
-    </ul>
+  <section class="collapsible-section">
+    <h2 class="collapsible-header">Education <i data-feather="chevron-down" class="collapse-icon"></i></h2>
+    <div class="collapsible-content is-expanded">
+      <ul>
+        <li>
+          <div class="project-header">
+            <strong>Beijing University of Chemical Technology</strong>
+            <em>Beijing, China</em>
+          </div>
+          <div class="project-subheader">
+            <span>Bachelor of Engineering in Automation</span>
+            <span style="float: right;">Sep. 2022 - June 2026 (Expected)</span>
+          </div>
+          <ul class="details-list">
+            <li><strong>Average Overall Score:</strong> <strong>88.03/100</strong></li>
+            <li><strong>Core Courses:</strong> Signals and Systems (<strong>93</strong>), Linear Algebra (<strong>92</strong>), Embedded System Design (<strong>A</strong>), Digital Image Processing (<strong>A</strong>)</li>
+          </ul>
+        </li>
+      </ul>
+    </div>
   </section>
 
-  <section>
-    <h2>Research & Publications</h2>
-    <ul>
-      <li>
-        <div class="project-header">
-          <strong>First Author | Solution Concentration Monitoring Device Design</strong>
-          <em>Apr. 2023 - Dec. 2023</em>
-        </div>
-        <span class="project-subheader">Published in <em>University Chemistry</em> (Peer-reviewed Journal, Hosted by Peking University)</span>
-        <ul class="details-list">
-          <li><strong>Authored</strong> a first-author paper (<strong>DOI: 10.12461/PKU.DXHX202404036</strong>) detailing a novel vision-based concentration detection device.</li>
-          <li><strong>Architected</strong> a vision-based system using a Raspberry Pi and OpenCV, establishing a linear model between solution color (HSV) and concentration based on the Lambert-Beer law to <strong>achieve a 90% accuracy rate</strong>.</li>
-          <li><strong>Devised</strong> a custom 3D-printed black-box environment and disabled camera auto-white-balance to eliminate light interference, ensuring data integrity and measurement repeatability.</li>
-        </ul>
-      </li>
-      <li>
-        <div class="project-header">
-          <strong>Co-author | Intelligent Bird Recognition for River Ecosystems</strong>
-          <em>July 2024 - Sep. 2025</em>
-        </div>
-        <span class="project-subheader">Paper submitted to the <em>Chinese Journal of Applied Ecology</em> (A National Core Journal, CSCD Indexed, Under Review)</span>
-        <ul class="details-list">
-          <li><strong>Co-developed</strong> the YOLOv8-MAT-2H model by integrating MSBlock and ADown modules to enhance feature extraction for small, complex targets in ecological monitoring.</li>
-          <li><strong>Optimized</strong> the model to <strong>improve mAP@0.5:0.95 from 0.704 to 0.722 (+2.57%)</strong> while simultaneously <strong>reducing model parameters by 20% and GFLOPS by 10%</strong>, ideal for edge device deployment.</li>
-          <li><strong>Spearheaded</strong> strategies to handle environmental occlusions in real-world river settings, contributing directly to the system's final operational <strong>accuracy of nearly 80%</strong> for the Beijing Water Authority.</li>
-        </ul>
-      </li>
-      <li>
-        <div class="project-header">
-            <strong>Research Member | Fiber Optic Biosensor for Tumor Marker Detection</strong>
-            <em>Jan. 2025 - Apr. 2025</em>
-        </div>
-        <ul class="details-list">
-            <li><strong>Contributed</strong> to a project developing a fiber optic biosensor that <strong>improved the detection limit by 15 times</strong> compared to traditional ELISA technology.</li>
-            <li><strong>Executed</strong> data processing algorithm optimization and participated in sensor design and validation, helping to <strong>reduce detection time from hours to just 5 minutes</strong>.</li>
-        </ul>
-      </li>
-    </ul>
+  <section class="collapsible-section">
+    <h2 class="collapsible-header">Research & Publications <i data-feather="chevron-down" class="collapse-icon"></i></h2>
+    <div class="collapsible-content is-expanded">
+      <ul>
+        <li>
+          <div class="project-header">
+            <strong>First Author | Solution Concentration Monitoring Device Design</strong>
+            <em>Apr. 2023 - Dec. 2023</em>
+          </div>
+          <span class="project-subheader">Published in <em>University Chemistry</em> (Peer-reviewed Journal, Hosted by Peking University)</span>
+          <ul class="details-list">
+            <li><strong>Authored</strong> a first-author paper (<strong>DOI: 10.12461/PKU.DXHX202404036</strong>) detailing a novel vision-based concentration detection device.</li>
+            <li><strong>Architected</strong> a vision-based system using a Raspberry Pi and OpenCV, establishing a linear model between solution color (HSV) and concentration based on the Lambert-Beer law to <strong>achieve a 90% accuracy rate</strong>.</li>
+            <li><strong>Devised</strong> a custom 3D-printed black-box environment and disabled camera auto-white-balance to eliminate light interference, ensuring data integrity and measurement repeatability.</li>
+          </ul>
+        </li>
+        <li>
+          <div class="project-header">
+            <strong>Co-author | Intelligent Bird Recognition for River Ecosystems</strong>
+            <em>July 2024 - Sep. 2025</em>
+          </div>
+          <span class="project-subheader">Paper submitted to the <em>Chinese Journal of Applied Ecology</em> (A National Core Journal, CSCD Indexed, Under Review)</span>
+          <ul class="details-list">
+            <li><strong>Co-developed</strong> the YOLOv8-MAT-2H model by integrating MSBlock and ADown modules to enhance feature extraction for small, complex targets in ecological monitoring.</li>
+            <li><strong>Optimized</strong> the model to <strong>improve mAP@0.5:0.95 from 0.704 to 0.722 (+2.57%)</strong> while simultaneously <strong>reducing model parameters by 20% and GFLOPS by 10%</strong>, ideal for edge device deployment.</li>
+            <li><strong>Spearheaded</strong> strategies to handle environmental occlusions in real-world river settings, contributing directly to the system's final operational <strong>accuracy of nearly 80%</strong> for the Beijing Water Authority.</li>
+          </ul>
+        </li>
+        <li>
+          <div class="project-header">
+              <strong>Research Member | Fiber Optic Biosensor for Tumor Marker Detection</strong>
+              <em>Jan. 2025 - Apr. 2025</em>
+          </div>
+          <ul class="details-list">
+              <li><strong>Contributed</strong> to a project developing a fiber optic biosensor that <strong>improved the detection limit by 15 times</strong> compared to traditional ELISA technology.</li>
+              <li><strong>Executed</strong> data processing algorithm optimization and participated in sensor design and validation, helping to <strong>reduce detection time from hours to just 5 minutes</strong>.</li>
+          </ul>
+        </li>
+      </ul>
+    </div>
   </section>
 
-  <section>
-    <h2>Key Engineering & Competition Projects</h2>
-    <ul>
-      <li>
-        <div class="project-header">
-          <strong>Team Captain | "Siemens Cup" China Intelligent Manufacturing Challenge</strong>
-          <em>Aug. 2024</em>
-        </div>
-        <span class="project-subheader"><em>Information & Networking Track,</em> <strong>1st Prize (North China Region)</strong></span>
-        <ul class="details-list">
-          <li><strong>Led a team</strong> to design and deploy a complete industrial network system for a simulated factory environment.</li>
-          <li><strong>Architected</strong> the network topology from abstract requirements, defining the IP schema, VLAN segmentation, and firewall access control policies.</li>
-          <li><strong>Engineered and commissioned</strong> the entire system, configuring Siemens S7 PLCs and industrial switches via TIA Portal to ensure robust, redundant communication.</li>
-        </ul>
-      </li>
-      <li>
-        <div class="project-header">
-          <strong>Team Captain | Raicom Robot Developer Competition</strong>
-          <em>Oct. 2024</em>
-        </div>
-        <span class="project-subheader"><em>Quadruped Robot Collaborative Challenge,</em> <strong>2nd Prize (National Final)</strong></span>
-        <ul class="details-list">
-          <li><strong>Directed the team</strong> and developed main functional packages using ROS for a quadruped robot to perform autonomous navigation, object manipulation, and animal recognition.</li>
-          <li><strong>Engineered an innovative solution</strong> to overcome hardware limitations of the Raspberry Pi by implementing a "position-then-detect" strategy, capturing and processing a single frame to bypass real-time video latency.</li>
-          <li><strong>Trained and deployed a YOLOv8 model</strong> that <strong>achieved 98.8% accuracy</strong> in identifying six types of animals under variable lighting conditions through targeted data augmentation.</li>
-        </ul>
-      </li>
-      <li>
-        <div class="project-header">
-          <strong>Team Member | "China International College Students' Innovation Competition</strong>
-          <em>July 2025</em>
-        </div>
-        <span class="project-subheader"><em>Project: An intelligent monitoring system for industrial centrifuges,</em> <strong>Provincial Semi-finalist</strong></span>
-        <ul class="details-list">
-          <li><strong>Owned</strong> the functional development and data analysis for the monitoring subsystem within a complex project targeted at the nuclear sector.</li>
-          <li><strong>Delivered</strong> critical code modules that ensured the stability and integrity of the multi-sensor data stream, foundational for the system's fault diagnosis and vibration suppression capabilities.</li>
-        </ul>
-      </li>
-    </ul>
+  <section class="collapsible-section">
+    <h2 class="collapsible-header">Key Engineering & Competition Projects <i data-feather="chevron-down" class="collapse-icon"></i></h2>
+    <div class="collapsible-content is-expanded">
+      <ul>
+        <li>
+          <div class="project-header">
+            <strong>Team Captain | "Siemens Cup" China Intelligent Manufacturing Challenge</strong>
+            <em>Aug. 2024</em>
+          </div>
+          <span class="project-subheader"><em>Information & Networking Track,</em> <strong>1st Prize (North China Region)</strong></span>
+          <ul class="details-list">
+            <li><strong>Led a team</strong> to design and deploy a complete industrial network system for a simulated factory environment.</li>
+            <li><strong>Architected</strong> the network topology from abstract requirements, defining the IP schema, VLAN segmentation, and firewall access control policies.</li>
+            <li><strong>Engineered and commissioned</strong> the entire system, configuring Siemens S7 PLCs and industrial switches via TIA Portal to ensure robust, redundant communication.</li>
+          </ul>
+        </li>
+        <li>
+          <div class="project-header">
+            <strong>Team Captain | Raicom Robot Developer Competition</strong>
+            <em>Oct. 2024</em>
+          </div>
+          <span class="project-subheader"><em>Quadruped Robot Collaborative Challenge,</em> <strong>2nd Prize (National Final)</strong></span>
+          <ul class="details-list">
+            <li><strong>Directed the team</strong> and developed main functional packages using ROS for a quadruped robot to perform autonomous navigation, object manipulation, and animal recognition.</li>
+            <li><strong>Engineered an innovative solution</strong> to overcome hardware limitations of the Raspberry Pi by implementing a "position-then-detect" strategy, capturing and processing a single frame to bypass real-time video latency.</li>
+            <li><strong>Trained and deployed a YOLOv8 model</strong> that <strong>achieved 98.8% accuracy</strong> in identifying six types of animals under variable lighting conditions through targeted data augmentation.</li>
+          </ul>
+        </li>
+        <li>
+          <div class="project-header">
+            <strong>Team Member | "China International College Students' Innovation Competition</strong>
+            <em>July 2025</em>
+          </div>
+          <span class="project-subheader"><em>Project: An intelligent monitoring system for industrial centrifuges,</em> <strong>Provincial Semi-finalist</strong></span>
+          <ul class="details-list">
+            <li><strong>Owned</strong> the functional development and data analysis for the monitoring subsystem within a complex project targeted at the nuclear sector.</li>
+            <li><strong>Delivered</strong> critical code modules that ensured the stability and integrity of the multi-sensor data stream, foundational for the system's fault diagnosis and vibration suppression capabilities.</li>
+          </ul>
+        </li>
+      </ul>
+    </div>
   </section>
   
-  <section>
-    <h2>Internship Experience</h2>
-    <ul>
-      <li>
-        <div class="project-header">
-          <strong>Testing Intern | <em>Guangzhou Dapsen Intelligent Equipment Co., Ltd.</em></strong>
-          <em>July 2024 – Aug. 2024</em>
-        </div>
-        <ul class="details-list">
-          <li><strong>Analyzed</strong> a plastic bottle inspection line to identify critical failure points in the assembly and sensor calibration processes.</li>
-          <li><strong>Engineered</strong> a revised debugging workflow which was adopted by the team, <strong>reducing setup time by an estimated 15%</strong> and improving overall operational stability.</li>
-        </ul>
-      </li>
-    </ul>
+  <section class="collapsible-section">
+    <h2 class="collapsible-header">Internship Experience <i data-feather="chevron-down" class="collapse-icon"></i></h2>
+    <div class="collapsible-content is-expanded">
+      <ul>
+        <li>
+          <div class="project-header">
+            <strong>Testing Intern | <em>Guangzhou Dapsen Intelligent Equipment Co., Ltd.</em></strong>
+            <em>July 2024 – Aug. 2024</em>
+          </div>
+          <ul class="details-list">
+            <li><strong>Analyzed</strong> a plastic bottle inspection line to identify critical failure points in the assembly and sensor calibration processes.</li>
+            <li><strong>Engineered</strong> a revised debugging workflow which was adopted by the team, <strong>reducing setup time by an estimated 15%</strong> and improving overall operational stability.</li>
+          </ul>
+        </li>
+      </ul>
+    </div>
   </section>
 
-  <section>
-    <h2>Honors & Awards</h2>
-    <ul>
-      <li class="award-item"><span><strong>2nd Prize</strong>, "Shuwei Cup" University Student Mathematical Modeling Challenge (National)</span> <span><em>May 2025</em></span></li>
-      <li class="award-item"><span><strong>2nd Prize</strong>, Raicom Robot Developer Competition (National)</span> <span><em>Oct. 2024</em></span></li>
-      <li class="award-item"><span><strong>1st Prize</strong>, "Siemens Cup" China Intelligent Manufacturing Challenge (Regional | North China)</span> <span><em>Aug. 2024</em></span></li>
-      <li class="award-item"><span><strong>3rd Prize</strong>, iCAN Innovation and Entrepreneurship Competition (Regional | Beijing)</span> <span><em>Nov. 2024</em></span></li>
-      <li class="award-item"><span><strong>1st Prize</strong>, RoboCup China Family Group Project Competition (University Level)</span> <span><em>Dec. 2024</em></span></li>
-      <li class="award-item"><span><strong>2nd Prize</strong>, People's Scholarship (University Level)</span> <span><em>2023 & 2025</em></span></li>
-      <li class="award-item"><span><strong>3rd Prize</strong>, People's Scholarship (University Level)</span> <span><em>2024</em></span></li>
-    </ul>
+  <section class="collapsible-section">
+    <h2 class="collapsible-header">Honors & Awards <i data-feather="chevron-down" class="collapse-icon"></i></h2>
+    <div class="collapsible-content is-expanded">
+      <ul>
+        <li class="award-item"><span><strong>2nd Prize</strong>, "Shuwei Cup" University Student Mathematical Modeling Challenge (National)</span> <span><em>May 2025</em></span></li>
+        <li class="award-item"><span><strong>2nd Prize</strong>, Raicom Robot Developer Competition (National)</span> <span><em>Oct. 2024</em></span></li>
+        <li class="award-item"><span><strong>1st Prize</strong>, "Siemens Cup" China Intelligent Manufacturing Challenge (Regional | North China)</span> <span><em>Aug. 2024</em></span></li>
+        <li class="award-item"><span><strong>3rd Prize</strong>, iCAN Innovation and Entrepreneurship Competition (Regional | Beijing)</span> <span><em>Nov. 2024</em></span></li>
+        <li class="award-item"><span><strong>1st Prize</strong>, RoboCup China Family Group Project Competition (University Level)</span> <span><em>Dec. 2024</em></span></li>
+        <li class="award-item"><span><strong>2nd Prize</strong>, People's Scholarship (University Level)</span> <span><em>2023 & 2025</em></span></li>
+        <li class="award-item"><span><strong>3rd Prize</strong>, People's Scholarship (University Level)</span> <span><em>2024</em></span></li>
+      </ul>
+    </div>
   </section>
 
   <section>

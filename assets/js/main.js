@@ -73,6 +73,25 @@ document.addEventListener('DOMContentLoaded', () => {
         observer.observe(section);
     });
 
+    // --- Collapse Functionality ---
+    const collapsibleHeaders = document.querySelectorAll('.collapsible-header');
+
+    collapsibleHeaders.forEach(header => {
+        header.addEventListener('click', () => {
+            const content = header.nextElementSibling;
+            const icon = header.querySelector('.collapse-icon');
+
+            if (content.classList.contains('is-expanded')) {
+                content.classList.remove('is-expanded');
+                header.classList.add('collapsed');
+            } else {
+                content.classList.add('is-expanded');
+                header.classList.remove('collapsed');
+            }
+            feather.replace(); // Re-render feather icons after collapse/expand
+        });
+    });
+
     // --- Custom Cursor ---
     const cursor = document.querySelector('.cursor');
 

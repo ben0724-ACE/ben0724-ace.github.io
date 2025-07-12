@@ -33,6 +33,7 @@
     padding: 2rem;
     max-width: 900px;
     margin: 0 auto;
+    font-size: 1.1rem;
   }
   header { text-align: center; margin-bottom: 4rem; }
   .avatar { 
@@ -43,11 +44,11 @@
     border: 5px solid var(--card-bg);
     box-shadow: var(--shadow);
   }
-  h1 { font-size: 2.5rem; margin-bottom: .5rem; font-weight: 600; }
-  header p { font-size: 1.1rem; color: #6c757d; }
+  h1 { font-size: 3rem; margin-bottom: .5rem; font-weight: 700; }
+  header p { font-size: 1.2rem; color: #6c757d; }
   h2 { 
     margin: 3rem 0 1.5rem; 
-    font-size: 1.8rem; 
+    font-size: 2rem; 
     font-weight: 600;
     padding-bottom: .5rem;
     border-bottom: 2px solid var(--accent);
@@ -56,7 +57,7 @@
   h3 {
     margin-top: 0;
     margin-bottom: 1rem;
-    font-size: 1.2rem;
+    font-size: 1.4rem;
     font-weight: 600;
     color: var(--fg);
   }
@@ -70,6 +71,7 @@
     border-radius: 8px;
     box-shadow: var(--shadow);
     transition: transform 0.2s ease-in-out;
+    font-size: 1rem;
   }
   li:hover {
     transform: translateY(-5px);
@@ -103,7 +105,7 @@
     padding: .4rem .8rem;
     margin: .3rem .2rem;
     border-radius: 16px;
-    font-size: .9rem;
+    font-size: .95rem;
     transition: background-color 0.2s;
   }
   .tags span:hover {
@@ -112,7 +114,7 @@
   .btn {
     display: inline-block;
     margin-top: 1.5rem;
-    padding: .8rem 1.6rem;
+    padding: .9rem 1.8rem;
     background-color: var(--accent);
     color: #fff;
     text-decoration: none;
@@ -121,6 +123,7 @@
     font-weight: 600;
     box-shadow: var(--shadow);
     transition: background-color 0.2s, transform 0.2s;
+    font-size: 1.1rem;
   }
   .btn:hover {
     background-color: #0056b3;
@@ -134,10 +137,12 @@
   .social a:hover {
     color: var(--accent);
   }
-  footer { margin-top: 4rem; font-size: .9rem; text-align: center; opacity: .8; }
+  footer { margin-top: 4rem; font-size: 1rem; text-align: center; opacity: .8; }
   @media (max-width: 600px) {
-    body { padding: 1.5rem; }
-    h1 { font-size: 2rem; }
+    body { padding: 1.5rem; font-size: 1rem; }
+    h1 { font-size: 2.2rem; }
+    h2 { font-size: 1.7rem; }
+    h3 { font-size: 1.2rem; }
   }
 
   /* --- Theme Toggle --- */
@@ -239,4 +244,48 @@
     display: flex;
     justify-content: space-between;
     /* ... existing code ... */
+  }
+
+  /* --- Collapse Functionality --- */
+  .collapsible-header {
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: .5rem;
+    border-bottom: 2px solid var(--accent);
+    margin: 3rem 0 1.5rem;
+    font-size: 2rem;
+    font-weight: 600;
+  }
+
+  .collapsible-header h2 {
+    margin: 0; /* Override previous h2 margin */
+    border-bottom: none; /* Override previous h2 border */
+    padding-bottom: 0; /* Override previous h2 padding */
+  }
+
+  .collapse-icon {
+    transition: transform 0.3s ease;
+  }
+
+  .collapsible-header.collapsed .collapse-icon {
+    transform: rotate(-90deg);
+  }
+
+  .collapsible-content {
+    max-height: 2000px; /* Large enough value to ensure content fits when expanded */
+    overflow: hidden;
+    transition: max-height 0.5s ease-out, opacity 0.5s ease-out;
+  }
+
+  .collapsible-content:not(.is-expanded) {
+    max-height: 0;
+    opacity: 0;
+  }
+
+  @media (max-width: 600px) {
+    .collapsible-header {
+      font-size: 1.7rem; /* Adjust for smaller screens */
+    }
   }
