@@ -1,24 +1,24 @@
-/* --- 颜色变量等保持不变 --- */
+/* --- 优化的颜色变量 --- */
 :root {
-  --bg: #fdfdff; 
-  --fg: #212529;
-  --accent: #0077cc; 
-  --card-bg: #ffffff;
-  --border-color: #dee2e6;
-  --shadow: 0 4px 6px rgba(0, 0, 0, 0.08); 
-  --text-color-light: #495057;
-  --text-color-dark: #6c757d;
+  --bg: #f8f9fa; /* 更柔和的背景色 */
+  --fg: #212529; /* 主文字颜色 */
+  --accent: #0d6efd; /* 一个更鲜明、现代的蓝色 */
+  --card-bg: #ffffff; /* 卡片背景 */
+  --border-color: #e9ecef; /* 更柔和的边框 */
+  --shadow: 0 4px 12px rgba(0, 0, 0, 0.07); /* 更细腻的阴影 */
+  --text-color-light: #495057; /* 次要文字 */
+  --text-color-dark: #6c757d; /* 辅助文字 */
 }
 
 :root.dark-mode {
-  --bg: #1a1a1a;
-  --fg: #e0e0e0;
-  --accent: #1e90ff;
-  --card-bg: #252525;
-  --border-color: #444;
-  --shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-  --text-color-light: #bdbdbd;
-  --text-color-dark: #9e9e9e;
+  --bg: #121212; /* 纯粹的深色背景，适合OLED屏幕 */
+  --fg: #e9ecef; /* 浅色文字，对比度高 */
+  --accent: #3b82f6; /* 在深色背景下更明亮的蓝色 */
+  --card-bg: #1e1e1e; /* 稍亮的卡片背景，创造深度感 */
+  --border-color: #343a40; /* 深色模式下的边框 */
+  --shadow: 0 4px 12px rgba(0, 0, 0, 0.25); /* 更明显的阴影 */
+  --text-color-light: #adb5bd; /* 深色模式下的次要文字 */
+  --text-color-dark: #868e96; /* 深色模式下的辅助文字 */
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -82,10 +82,10 @@ header p { font-size: 1.2rem; color: #e0e0e0; text-shadow: 1px 1px 3px rgba(0,0,
 
 /* 新增：为 main 元素添加布局约束 */
 main {
-  max-width: 900px;
+  max-width: 1100px; /* 从 900px 增加到 1100px */
   margin: 0 auto; /* 页面居中 */
   padding: 2rem;
-  padding-left: 200px; /* 为左侧导航栏留出空间 */
+  padding-left: 220px; /* 相应地增加左边距 (180px 导航 + 40px 间距) */
 }
 
 h2 {
@@ -200,10 +200,10 @@ li strong { color: var(--accent); }
 }
 /* 新增：为 footer 添加布局约束 */
 footer { 
-  max-width: 900px;
+  max-width: 1100px; /* 与 main 保持一致 */
   margin: 4rem auto 0; /* 页面居中 */
   padding: 2rem;
-  padding-left: 200px;
+  padding-left: 220px; /* 与 main 保持一致 */
   font-size: 1rem; 
   text-align: center; 
   opacity: .8; 
@@ -297,6 +297,10 @@ footer {
   opacity: 0;
   overflow: hidden;
   transition: max-height 0.5s ease-out, opacity 0.5s ease-out;
+}
+/* 为列表添加底部内边距，防止最后一个元素被遮挡 */
+.collapsible-content ul {
+  padding-bottom: 1rem; /* 增加此行 */
 }
 .collapsible-content.is-expanded {
   max-height: 5000px; /* 已修改：大幅增加高度以避免内容被截断 */
