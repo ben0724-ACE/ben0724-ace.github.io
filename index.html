@@ -34,8 +34,23 @@
       padding: 0.2rem 0 !important;
       margin-bottom: 0.2rem !important;
       box-shadow: none !important;
-            transform: none !important;
+      transform: none !important;
       }
+    /* Helper style for image containers */
+    .image-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+        margin-top: 1rem;
+    }
+    .image-container img {
+        flex: 1 1 200px; /* Flex-grow, flex-shrink, and basis */
+        min-width: 200px;
+        max-width: 100%;
+        height: auto;
+        border-radius: 8px; /* Match card border-radius */
+        object-fit: cover;
+    }
     </style>
   </head>
 <body>
@@ -109,6 +124,9 @@
             <li><strong>Architected</strong> a vision-based system using a Raspberry Pi and OpenCV, establishing a linear model between solution color (HSV) and concentration based on the Lambert-Beer law to <strong>achieve a 90% accuracy rate</strong>.</li>
             <li><strong>Devised</strong> a custom 3D-printed black-box environment and disabled camera auto-white-balance to eliminate light interference, ensuring data integrity and measurement repeatability.</li>
           </ul>
+          <div class="image-container">
+            <img src="assets/img/Solution.jpg" alt="Solution Concentration Monitoring Device Design">
+          </div>
         </li>
         <li>
           <div class="project-header">
@@ -151,6 +169,9 @@
             <li><strong>Architected</strong> the network topology from abstract requirements, defining the IP schema, VLAN segmentation, and firewall access control policies.</li>
             <li><strong>Engineered and commissioned</strong> the entire system, configuring Siemens S7 PLCs and industrial switches via TIA Portal to ensure robust, redundant communication.</li>
           </ul>
+          <div class="image-container">
+            <img src="assets/img/Siemens.jpg" alt="Siemens Cup Challenge">
+          </div>
         </li>
         <li>
           <div class="project-header">
@@ -163,6 +184,10 @@
             <li><strong>Engineered an innovative solution</strong> to overcome hardware limitations of the Raspberry Pi by implementing a "position-then-detect" strategy, capturing and processing a single frame to bypass real-time video latency.</li>
             <li><strong>Trained and deployed a YOLOv8 model</strong> that <strong>achieved 98.8% accuracy</strong> in identifying six types of animals under variable lighting conditions through targeted data augmentation.</li>
           </ul>
+          <div class="image-container">
+            <img src="assets/img/Raicom.jpg" alt="Raicom Robot Developer Competition">
+            <img src="assets/img/Raicom2.jpg" alt="Raicom Robot Developer Competition Details">
+          </div>
         </li>
         <li>
           <div class="project-header">
@@ -174,6 +199,9 @@
             <li><strong>Owned</strong> the functional development and data analysis for the monitoring subsystem within a complex project targeted at the nuclear sector.</li>
             <li><strong>Delivered</strong> critical code modules that ensured the stability and integrity of the multi-sensor data stream, foundational for the system's fault diagnosis and vibration suppression capabilities.</li>
           </ul>
+          <div class="image-container">
+            <img src="assets/img/Innovation.jpg" alt="Innovation Competition Project">
+          </div>
         </li>
       </ul>
     </div>
