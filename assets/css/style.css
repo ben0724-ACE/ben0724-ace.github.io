@@ -167,7 +167,7 @@ li strong { color: var(--accent); }
 }
 .tags span {
   display: inline-block;
-  background: var(--accent);
+  background: var(--accent-secondary);
   color: #fff;
   padding: .4rem .8rem;
   margin: .3rem .2rem;
@@ -176,7 +176,7 @@ li strong { color: var(--accent); }
   transition: background-color 0.2s;
 }
 .tags span:hover {
-  background-color: #0056b3;
+  background-color: var(--highlight);
 }
 .btn {
   display: inline-block;
@@ -193,7 +193,7 @@ li strong { color: var(--accent); }
   font-size: 1.1rem;
 }
 .btn:hover {
-  background-color: #0056b3;
+  background-color: var(--highlight);
   transform: translateY(-2px);
 }
 .social a {
