@@ -158,11 +158,11 @@ document.addEventListener('DOMContentLoaded', () => {
         gsap.to(bgImages[currentIndex], { autoAlpha: 1, duration: 1.5, ease: 'power2.inOut' });
         
         // 安排下一次交叉淡入淡出
-        gsap.delayedCall(5, crossfade); // 每5秒切换一次图片
+        gsap.delayedCall(3, crossfade); // 每3秒切换一次图片
     }
 
     // 开始幻灯片放映
-    gsap.delayedCall(5, crossfade);
+    gsap.delayedCall(3, crossfade);
 
     // 初始化 Feather 图标
     feather.replace();
