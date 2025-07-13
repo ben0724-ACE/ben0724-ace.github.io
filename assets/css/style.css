@@ -1,24 +1,30 @@
 /* --- 优化的颜色变量 --- */
 :root {
-  --bg: #f8f9fa; /* 更柔和的背景色 */
-  --fg: #212529; /* 主文字颜色 */
-  --accent: #0d6efd; /* 一个更鲜明、现代的蓝色 */
-  --card-bg: #ffffff; /* 卡片背景 */
-  --border-color: #e9ecef; /* 更柔和的边框 */
-  --shadow: 0 4px 12px rgba(0, 0, 0, 0.07); /* 更细腻的阴影 */
-  --text-color-light: #495057; /* 次要文字 */
-  --text-color-dark: #6c757d; /* 辅助文字 */
+  /* 明亮主题：正式但有活力的蓝蓝绿配色，带有温和灰色和橙色点缀 */
+  --bg: #f6f8fa;              /* 柔和冷白底色，清新不刺眼 */
+  --fg: #23272f;              /* 深灰蓝主文字，正式且易读 */
+  --accent: #1a73e8;          /* Google风格活力蓝，专业且有科技感 */
+  --accent-secondary: #10b981;/* 绿色点缀，活力且不跳脱 */
+  --highlight: #ffb300;       /* 温和橙色高亮，适合按钮/hover */
+  --card-bg: #ffffff;         /* 卡片纯白，干净清爽 */
+  --border-color: #e3e7ed;    /* 浅灰蓝边框，低调有层次 */
+  --shadow: 0 4px 16px rgba(30, 42, 80, 0.08); /* 微蓝阴影，科技感 */
+  --text-color-light: #5c6b7a;/* 次要文字，蓝灰色 */
+  --text-color-dark: #8a99ad; /* 辅助文字，淡蓝灰 */
 }
 
 :root.dark-mode {
-  --bg: #121212; /* 纯粹的深色背景，适合OLED屏幕 */
-  --fg: #e9ecef; /* 浅色文字，对比度高 */
-  --accent: #3b82f6; /* 在深色背景下更明亮的蓝色 */
-  --card-bg: #1e1e1e; /* 稍亮的卡片背景，创造深度感 */
-  --border-color: #343a40; /* 深色模式下的边框 */
-  --shadow: 0 4px 12px rgba(0, 0, 0, 0.25); /* 更明显的阴影 */
-  --text-color-light: #adb5bd; /* 深色模式下的次要文字 */
-  --text-color-dark: #868e96; /* 深色模式下的辅助文字 */
+  /* 深色主题：深蓝灰为主，蓝绿点缀，橙色高亮，科技感强 */
+  --bg: #181f2a;              /* 深蓝灰背景，沉稳不死黑 */
+  --fg: #f1f3f8;              /* 亮灰白主文字，清晰对比 */
+  --accent: #4f9cff;          /* 明亮蓝色，深色下依然活力 */
+  --accent-secondary: #34d399;/* 绿色点缀，深色下更显活力 */
+  --highlight: #ffb300;       /* 橙色高亮，深色下依然醒目 */
+  --card-bg: #232b3a;         /* 深蓝卡片，层次分明 */
+  --border-color: #2c3442;    /* 深灰蓝边框 */
+  --shadow: 0 4px 16px rgba(20, 30, 50, 0.32); /* 深色阴影 */
+  --text-color-light: #b6c2d1;/* 次要文字，浅蓝灰 */
+  --text-color-dark: #7a869a; /* 辅助文字，灰蓝 */
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
