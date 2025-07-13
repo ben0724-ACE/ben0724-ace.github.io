@@ -51,6 +51,15 @@
         border-radius: 8px; /* Match card border-radius */
         object-fit: cover;
     }
+    /* Style for links within project cards */
+    li a {
+        color: var(--accent);
+        text-decoration: none;
+        transition: text-decoration 0.2s ease;
+    }
+    li a:hover {
+        text-decoration: underline;
+    }
     </style>
   </head>
 <body>
@@ -93,7 +102,7 @@
       <ul>
         <li>
           <div class="project-header">
-            <strong>Beijing University of Chemical Technology</strong>
+            <strong><a href="https://www.buct.edu.cn/main.htm" target="_blank" rel="noopener noreferrer">Beijing University of Chemical Technology</a></strong>
             <em>Beijing, China</em>
           </div>
           <div class="project-subheader">
@@ -120,7 +129,7 @@
           </div>
           <span class="project-subheader">Published in <em>University Chemistry</em> (Peer-reviewed Journal, Hosted by Peking University)</span>
           <ul class="details-list">
-            <li><strong>Authored</strong> a first-author paper (<strong>DOI: 10.12461/PKU.DXHX202404036</strong>) detailing a novel vision-based concentration detection device.</li>
+            <li><strong>Authored</strong> a first-author paper (<strong><a href="https://www.dxhx.pku.edu.cn/CN/10.12461/PKU.DXHX202404036" target="_blank" rel="noopener noreferrer">DOI: 10.12461/PKU.DXHX202404036</a></strong>) detailing a novel vision-based concentration detection device.</li>
             <li><strong>Architected</strong> a vision-based system using a Raspberry Pi and OpenCV, establishing a linear model between solution color (HSV) and concentration based on the Lambert-Beer law to <strong>achieve a 90% accuracy rate</strong>.</li>
             <li><strong>Devised</strong> a custom 3D-printed black-box environment and disabled camera auto-white-balance to eliminate light interference, ensuring data integrity and measurement repeatability.</li>
           </ul>
