@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
-    // --- Pre-loader ---
+    // --- 预加载动画 ---
     const preloader = document.querySelector('.preloader');
     const hidePreloader = () => {
         gsap.to(preloader, { 
@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
         window.addEventListener('load', hidePreloader);
     }
 
-    // --- Theme Switcher ---
+    // --- 主题切换器 ---
     const themeSwitcher = document.getElementById('theme-switcher');
     const root = document.documentElement; 
 
@@ -54,23 +54,23 @@ document.addEventListener('DOMContentLoaded', () => {
         setTheme(isDarkMode ? 'light' : 'dark');
     });
 
-    // --- Scroll Animations ---
-gsap.utils.toArray('.collapsible-content ul').forEach(list => {
-    gsap.from(list.children, {
-        autoAlpha: 0,
-        y: 20,        // 已修改：减小垂直位移，减少对布局的影响
-        duration: 0.6,  // 可以稍微加快动画
-        stagger: 0.15,  // 可以稍微减小延迟
-        ease: 'power2.out',
-        scrollTrigger: {
-            trigger: list,
-            start: 'top 85%',
-            toggleActions: 'play none none none',
-        }
+    // --- 滚动动画 ---
+    gsap.utils.toArray('.collapsible-content ul').forEach(list => {
+        gsap.from(list.children, {
+            autoAlpha: 0,
+            y: 20,
+            duration: 0.6,
+            stagger: 0.15,
+            ease: 'power2.out',
+            scrollTrigger: {
+                trigger: list,
+                start: 'top 85%',
+                toggleActions: 'play none none none',
+            }
+        });
     });
-});
 
-    // --- Quick Navigation --- //
+    // --- 快速导航 --- 
     const quickNavLinks = document.querySelectorAll('.quick-nav a');
     const mainSections = document.querySelectorAll('main section.collapsible-section');
     
@@ -102,7 +102,7 @@ gsap.utils.toArray('.collapsible-content ul').forEach(list => {
         });
     });
 
-    // --- Collapse Functionality ---
+    // --- 折叠功能 ---
     const collapsibleHeaders = document.querySelectorAll('.collapsible-header');
     collapsibleHeaders.forEach(header => {
         header.addEventListener('click', () => {
@@ -117,7 +117,7 @@ gsap.utils.toArray('.collapsible-content ul').forEach(list => {
         });
     });
 
-    // --- Custom Cursor ---
+    // --- 自定义光标 ---
     const cursor = document.querySelector('.cursor');
     const interactiveElements = document.querySelectorAll('a, button, .collapsible-header, .theme-switcher');
 
@@ -130,17 +130,40 @@ gsap.utils.toArray('.collapsible-content ul').forEach(list => {
         el.addEventListener('mouseleave', () => cursor.classList.remove('grow'));
     });
 
-    // --- 标题下划线动画 (已移动到正确位置) ---
-    // 这段代码现在只会在页面加载时运行一次，而不是每次点击都运行
+    // --- 标题下划线动画 ---
     gsap.utils.toArray('h2').forEach(h2 => {
         ScrollTrigger.create({
           trigger: h2,
           start: 'top 90%',
-          onEnter: () => h2.classList.add('is-visible'), // 进入时添加类
-          once: true // 动画只触发一次
+          onEnter: () => h2.classList.add('is-visible'),
+          once: true
         });
     });
 
-    // 初始渲染 Feather 图标
+    // --- 页头背景幻灯片 ---
+    const bgImages = gsap.utils.toArray('.header-bg-slider img');
+    let currentIndex = 0;
+
+    // 设置第一张图片为可见
+    gsap.set(bgImages[0], { autoAlpha: 1 });
+
+    function crossfade() {
+        // 淡出当前图片
+        gsap.to(bgImages[currentIndex], { autoAlpha: 0, duration: 1.5, ease: 'power2.inOut' });
+
+        // 确定下一张图片的索引
+        currentIndex = (currentIndex + 1) % bgImages.length;
+
+        // 淡入下一张图片
+        gsap.to(bgImages[currentIndex], { autoAlpha: 1, duration: 1.5, ease: 'power2.inOut' });
+        
+        // 安排下一次交叉淡入淡出
+        gsap.delayedCall(5, crossfade); // 每5秒切换一次图片
+    }
+
+    // 开始幻灯片放映
+    gsap.delayedCall(5, crossfade);
+
+    // 初始化 Feather 图标
     feather.replace();
 });

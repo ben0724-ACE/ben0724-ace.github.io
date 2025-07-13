@@ -49,7 +49,6 @@
         max-width: 100%;
         height: auto;
         border-radius: 8px; /* Match card border-radius */
-        /* 已移除 object-fit: cover; 以修复GIF播放问题 */
     }
     /* Style for links within project cards */
     li a {
@@ -59,6 +58,24 @@
     }
     li a:hover {
         text-decoration: underline;
+    }
+    /* --- 新增：Header 背景滚动样式 --- */
+    .header-bg-slider {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 0;
+    }
+    .header-bg-slider img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        opacity: 0;
     }
     </style>
   </head>
@@ -81,6 +98,13 @@
 </aside>
 
 <header>
+  <div class="header-bg-slider">
+    <img src="assets/img/header-bg.jpg" alt="Header Background 1">
+    <img src="assets/img/header-bg2.jpg" alt="Header Background 2">
+    <img src="assets/img/header-bg3.jpg" alt="Header Background 3">
+    <img src="assets/img/header-bg4.jpg" alt="Header Background 4">
+  </div>
+  
   <img src="assets/img/avatar.jpg" alt="avatar" class="avatar">
   <h1>Qi Haoran</h1>
   <p>
@@ -195,7 +219,7 @@
           </ul>
           <div class="image-container">
             <img src="assets/img/Raicom.jpg" alt="Raicom Robot Developer Competition">
-            <img src="assets/img/Raicom2.jpg" alt="Raicom Robot Developer Competition Details">
+            <img src="assets/img/Raicom2.gif" alt="Raicom Robot Developer Competition Details">
           </div>
         </li>
         <li>
@@ -280,7 +304,10 @@
   </section>
 
   <section style="display: flex; flex-direction: column; align-items: center; margin-top: 4rem;">
-    <img src="assets/img/other.gif" alt="More Info" style="max-width: 100%; height: auto; border-radius: 8px; margin-bottom: 2rem;">
+    <div class="image-container" style="margin-bottom: 2rem; justify-content: center;">
+      <img src="assets/img/other.gif" alt="More Info" style="border-radius: 8px;">
+      <img src="assets/img/robocup.gif" alt="RoboCup GIF" style="border-radius: 8px;">
+    </div>
     <a class="btn" href="resume8.pdf" target="_blank">Download CV (PDF)</a>
   </section>
 </main>
