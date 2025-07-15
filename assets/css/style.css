@@ -43,17 +43,17 @@ body {
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-/* ===页头修复=== */
+/* ===页头=== */
 header {
   text-align: center;
   margin-bottom: 4rem;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  padding: 5rem 2rem 3rem; /* 减小了上下内边距 */
+  padding: 5rem 2rem 3rem;
   color: #fff;
   position: relative;
-  min-height: 350px; /* 减小了最小高度 */
+  min-height: 350px;
   display: flex; 
   flex-direction: column;
   align-items: center;
@@ -152,17 +152,16 @@ h3 {
 section { margin-bottom: 2rem; }
 ul { list-style: none; padding-left: 0; }
 
-/* ===卡片辉光效果与文字布局修复=== */
+/* ===卡片辉光效果与文字布局最终修复=== */
 li {
-  background: var(--card-bg);
+  /* 外层li作为辉光容器，背景透明 */
+  background: transparent;
   border: 1px solid var(--border-color);
-  padding: 1.5rem;
+  padding: 2px; /* 辉光边框的宽度 */
   margin-bottom: 1rem;
-  border-radius: 8px;
+  border-radius: 10px; /* 圆角稍大 */
   box-shadow: var(--shadow);
-  transition: transform 0.2s ease-in-out, background-color 0.3s ease, border-color 0.3s ease;
-  font-size: 1rem;
-  color: var(--text-color-light);
+  transition: transform 0.3s ease-in-out;
   position: relative;
   overflow: hidden;
 }
@@ -171,6 +170,18 @@ li:hover {
 }
 li strong { color: var(--accent); }
 
+/* 内容包裹层，拥有背景色和内边距，与辉光分离 */
+.card-content-wrapper {
+  background-color: var(--card-bg);
+  padding: 1.5rem;
+  border-radius: 8px; /* 内层圆角稍小 */
+  width: 100%;
+  height: 100%;
+  color: var(--text-color-light);
+  font-size: 1rem;
+}
+
+/* 辉光效果的伪元素 */
 li::before {
   content: "";
   position: absolute;
@@ -178,7 +189,6 @@ li::before {
   height: 150%;
   top: 50%;
   left: 50%;
-  z-index: 0;
   background: conic-gradient(from 180deg at 50% 50%, var(--accent) 0deg, var(--accent-secondary) 60deg, var(--highlight) 120deg, #8e44ad 180deg, var(--accent) 360deg);
   opacity: 0;
   transform: translate(-50%, -50%) scale(0.9);
@@ -189,34 +199,16 @@ li:hover::before {
   opacity: 1;
   transform: translate(-50%, -50%) scale(1);
 }
-li::after {
-  content: "";
-  position: absolute;
-  top: 2px;
-  left: 2px;
-  right: 2px;
-  bottom: 2px;
-  background-color: var(--card-bg);
-  border-radius: 6px;
-  z-index: 0;
-  transition: background-color 0.3s ease; /* 让背景色也能平滑过渡 */
-}
 @keyframes rotateGradient {
   from { transform: translate(-50%, -50%) rotate(0deg); }
   to { transform: translate(-50%, -50%) rotate(360deg); }
-}
-
-/* 文字布局修复：使用更精确的选择器 */
-.project-header, .project-subheader, .details-list, .image-container, .project-tags, .award-item {
-  position: relative;
-  z-index: 1;
 }
 
 /* ===技能区美化=== */
 .skills-container {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 1.5rem; /* 调整间距 */
+  gap: 1.5rem;
   background: transparent;
   border: none;
   padding: 0;
@@ -280,7 +272,7 @@ li::after {
     margin-bottom: 0.5rem;
 }
 
-/* ===图片居中和大小修复=== */
+/* ===图片居中和大小最终修复=== */
 .image-container {
     display: flex;
     flex-wrap: wrap;
@@ -290,12 +282,16 @@ li::after {
     align-items: center;
 }
 .image-container img {
-    flex-shrink: 0; /* 防止图片被压缩 */
+    flex: 1 1 auto;
     max-width: 100%;
     height: auto;
     border-radius: 8px;
     object-fit: contain;
 }
+/* 新增的图片尺寸修饰符类 */
+.image-container .img-size-s { flex: 0 0 auto; width: 300px; max-width: 90%; }
+.image-container .img-size-m { flex: 0 0 auto; width: 400px; max-width: 90%; }
+.image-container .img-size-l { flex: 0 0 auto; width: 550px; max-width: 90%; }
 
 /* --- 其他组件样式 --- */
 .award-item {
@@ -304,7 +300,9 @@ li::after {
   align-items: center;
   flex-wrap: wrap;
   gap: 1rem;
-  color: var(--text-color-light);
+}
+.award-item, .award-item span {
+   color: var(--text-color-light);
 }
 .btn {
   display: inline-block;
@@ -502,10 +500,15 @@ footer {
   margin-top: 0.5rem;
 }
 .details-list li, .details-list li:hover {
-  background: none !important;
+  background: transparent !important;
   border: none !important;
   padding: 0.2rem 0 !important;
-  margin-bottom: 0.2rem !important;
+  margin: 0 !important;
   box-shadow: none !important;
   transform: none !important;
+  position: static !important;
+  overflow: visible !important;
+}
+.details-list li::before, .details-list li::after {
+    display: none !important;
 }
