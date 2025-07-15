@@ -12,7 +12,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     };
-    // 兼容某些浏览器/网络下 load 事件可能已触发的情况
     if (document.readyState === 'complete') {
         hidePreloader();
     } else {
@@ -38,13 +37,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const darkModeMediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
     
     darkModeMediaQuery.addEventListener('change', (e) => {
-        // 仅在用户没有手动设置过主题时，才跟随系统
         if (!localStorage.getItem('theme')) {
             setTheme(e.matches ? 'dark' : 'light');
         }
     });
 
-    // 页面加载时应用主题
     const savedTheme = localStorage.getItem('theme');
     if (savedTheme) {
         setTheme(savedTheme);
@@ -57,7 +54,7 @@ document.addEventListener('DOMContentLoaded', () => {
         setTheme(isDarkMode ? 'light' : 'dark');
     });
 
-    // --- 滚动动画 (为列表项添加) ---
+    // --- 滚动动画 ---
     gsap.utils.toArray('.collapsible-content ul').forEach(list => {
         gsap.from(list.children, {
             autoAlpha: 0,
@@ -75,7 +72,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- 快速导航 --- 
     const quickNavLinks = document.querySelectorAll('.quick-nav a');
-    const mainSections = document.querySelectorAll('main section.collapsible-section, main section#skills');
+    const mainSections = document.querySelectorAll('main section.collapsible-section');
     
     quickNavLinks.forEach(link => {
         link.addEventListener('click', (e) => {
@@ -83,9 +80,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const targetId = link.getAttribute('href');
             const targetSection = document.querySelector(targetId);
             if (targetSection) {
-                // 计算偏移量，确保标题可见
-                const offset = window.matchMedia("(max-width: 992px)").matches ? 20 : 70;
-                gsap.to(window, {duration: 1, scrollTo: {y: targetSection, offsetY: offset}, ease: "power2.out"});
+                gsap.to(window, {duration: 1, scrollTo: {y: targetSection, offsetY: 70}, ease: "power2.out"});
             }
         });
     });
@@ -97,18 +92,15 @@ document.addEventListener('DOMContentLoaded', () => {
             end: "bottom center",
             onToggle: self => {
                 const link = document.querySelector(`.quick-nav a[href="#${section.id}"]`);
-                if (link) {
-                  if (self.isActive) {
-                      quickNavLinks.forEach(l => l.classList.remove('active'));
-                      link.classList.add('active');
-                  } else {
-                      link.classList.remove('active');
-                  }
+                if (self.isActive) {
+                    quickNavLinks.forEach(l => l.classList.remove('active'));
+                    if(link) link.classList.add('active');
+                } else {
+                    if(link) link.classList.remove('active');
                 }
             }
         });
     });
-
 
     // --- 折叠功能 ---
     const collapsibleHeaders = document.querySelectorAll('.collapsible-header');
@@ -116,37 +108,21 @@ document.addEventListener('DOMContentLoaded', () => {
         header.addEventListener('click', () => {
             const content = header.nextElementSibling;
             header.classList.toggle('collapsed');
-            
-            // 使用 GSAP 来创建更平滑的动画
-            if (content.classList.contains('is-expanded')) {
-                // 折叠
-                content.classList.remove('is-expanded');
-            } else {
-                // 展开
-                content.classList.add('is-expanded');
-            }
-            
-            // 确保图标在状态切换后正确显示
+            content.classList.toggle('is-expanded');
             feather.replace();
 
-            // 延迟刷新 ScrollTrigger，以确保动画完成后计算的位置是准确的
             setTimeout(() => {
                 ScrollTrigger.refresh();
-            }, 500); // 这个时间应与 CSS transition 时间匹配
+            }, 500);
         });
     });
 
     // --- 自定义光标 ---
     const cursor = document.querySelector('.cursor');
-    const interactiveElements = document.querySelectorAll('a, button, .collapsible-header, .theme-switcher, .tags span');
+    const interactiveElements = document.querySelectorAll('a, button, .collapsible-header, .theme-switcher');
 
     document.addEventListener('mousemove', e => {
-        // 使用 GSAP 来让光标移动更平滑
-        gsap.to(cursor, {
-            duration: 0.2,
-            x: e.clientX,
-            y: e.clientY
-        });
+        cursor.setAttribute('style', `top: ${e.clientY}px; left: ${e.clientX}px;`);
     });
     
     interactiveElements.forEach(el => {
@@ -163,6 +139,30 @@ document.addEventListener('DOMContentLoaded', () => {
           once: true
         });
     });
+
+    // --- 页头背景幻灯片 ---
+    const bgImages = gsap.utils.toArray('.header-bg-slider img');
+    let currentIndex = 0;
+
+    // 设置第一张图片为可见
+    gsap.set(bgImages[0], { autoAlpha: 1 });
+
+    function crossfade() {
+        // 淡出当前图片
+        gsap.to(bgImages[currentIndex], { autoAlpha: 0, duration: 1.5, ease: 'power2.inOut' });
+
+        // 确定下一张图片的索引
+        currentIndex = (currentIndex + 1) % bgImages.length;
+
+        // 淡入下一张图片
+        gsap.to(bgImages[currentIndex], { autoAlpha: 1, duration: 1.5, ease: 'power2.inOut' });
+        
+        // 安排下一次交叉淡入淡出
+        gsap.delayedCall(3, crossfade); // 每3秒切换一次图片
+    }
+
+    // 开始幻灯片放映
+    gsap.delayedCall(3, crossfade);
 
     // 初始化 Feather 图标
     feather.replace();

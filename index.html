@@ -10,260 +10,312 @@
   <link rel="stylesheet" href="assets/css/style.css">
   <link rel="icon" href="assets/img/favicon.ico">
   <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
-</head>
+  <style>
+    .project-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .project-subheader {
+      margin-top: 0.5rem;
+      font-style: italic;
+      display: block;
+    }
+    .details-list {
+      list-style-type: disc;
+      padding-left: 20px;
+      margin-top: 0.5rem;
+    }
+    .details-list li, .details-list li:hover {
+      background: none !important;
+      border: none !important;
+      padding: 0.2rem 0 !important;
+      margin-bottom: 0.2rem !important;
+      box-shadow: none !important;
+      transform: none !important;
+      }
+    /* Helper style for image containers */
+    .image-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+        margin-top: 1rem;
+        justify-content: center; /* 让容器内元素整体居中 */
+    }
+    .image-container img {
+        flex: 1 1 200px;
+        min-width: 200px;
+        max-width: 100%;
+        height: auto;
+        border-radius: 8px;
+    }
+    /* Style for links within project cards */
+    li a {
+        color: var(--accent);
+        text-decoration: none;
+        transition: text-decoration 0.2s ease;
+    }
+    li a:hover {
+        text-decoration: underline;
+    }
+    .header-bg-slider {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 0;
+    }
+    .header-bg-slider img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        opacity: 0;
+    }
+    </style>
+  </head>
 <body>
 <div class="cursor"></div>
 <div class="preloader"><div class="loader"></div></div>
 
 <div class="theme-switcher" id="theme-switcher"></div>
 
-<div class="main-container">
-  <aside class="sidebar">
-    <div class="sidebar-sticky-content">
-      <img src="assets/img/avatar.jpg" alt="avatar" class="avatar">
-      <h1>Qi Haoran</h1>
-      <p class="subtitle">Automation Student | Aspiring Engineer</p>
-      
-      <div class="contact-info">
-        <p>
-          <i data-feather="phone" style="width:1rem; height:1rem;"></i> 
-          <span>+86 13431422869</span>
-        </p>
-        <a href="mailto:haoran.qi0724@gmail.com">
-          <i data-feather="mail" style="width:1rem; height:1rem;"></i> 
-          <span>haoran.qi0724@gmail.com</span>
-        </a>
-      </div>
-      
-      <div class="social">
-        <a href="https://github.com/ben0724-ACE" title="GitHub" target="_blank"><i data-feather="github"></i></a>
-      </div>
-      
-      <nav class="quick-nav">
-        <h3>Contents</h3>
-        <ul>
-          <li><a href="#education">Education</a></li>
-          <li><a href="#research">Research & Publications</a></li>
-          <li><a href="#projects">Key Engineering & Competition Projects</a></li>
-          <li><a href="#internship">Internship Experience</a></li>
-          <li><a href="#awards">Honors & Awards</a></li>
-          <li><a href="#skills">Technical Skills</a></li>
-        </ul>
-      </nav>
+<aside class="quick-nav">
+  <h3>Contents</h3>
+  <ul>
+    <li><a href="#education">Education</a></li>
+    <li><a href="#research">Research & Publications</a></li>
+    <li><a href="#projects">Key Engineering & Competition Projects</a></li>
+    <li><a href="#internship">Internship Experience</a></li>
+    <li><a href="#awards">Honors & Awards</a></li>
+    <li><a href="#skills">Technical Skills</a></li>
+  </ul>
+</aside>
+
+<header>
+  <div class="header-bg-slider">
+    <img src="assets/img/header-bg.jpg" alt="Header Background 1">
+    <img src="assets/img/header-bg2.jpg" alt="Header Background 2">
+    <img src="assets/img/header-bg3.jpg" alt="Header Background 3">
+  </div>
+  
+  <img src="assets/img/avatar.jpg" alt="avatar" class="avatar">
+  <h1>Qi Haoran</h1>
+  <p>
+    <i data-feather="phone" style="vertical-align: middle;"></i> +86 13431422869
+    &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+    <a href="mailto:haoran.qi0724@gmail.com" style="text-decoration: none; color: inherit;">
+      <i data-feather="mail" style="vertical-align: middle;"></i> haoran.qi0724@gmail.com
+    </a>
+  </p>
+  <div class="social">
+    <a href="https://github.com/ben0724-ACE" title="GitHub" target="_blank"><i data-feather="github"></i></a>
+  </div>
+</header>
+
+<main>
+  <section class="collapsible-section" id="education">
+    <h2 class="collapsible-header collapsed">Education <i data-feather="chevron-down" class="collapse-icon"></i></h2>
+    <div class="collapsible-content">
+      <ul>
+        <li>
+          <div class="project-header">
+            <strong><a href="https://www.buct.edu.cn/main.htm" target="_blank" rel="noopener noreferrer">Beijing University of Chemical Technology</a></strong>
+            <em>Beijing, China</em>
+          </div>
+          <div class="project-subheader">
+            <span>Bachelor of Engineering in Automation</span>
+            <span style="float: right;">Sep. 2022 - June 2026 (Expected)</span>
+          </div>
+          <ul class="details-list">
+            <li><strong>Average Overall Score:</strong> <strong>88.03/100</strong></li>
+            <li><strong>Core Courses:</strong> Signals and Systems (<strong>93</strong>), Linear Algebra (<strong>92</strong>), Embedded System Design (<strong>A</strong>), Digital Image Processing (<strong>A</strong>)</li>
+          </ul>
+        </li>
+      </ul>
     </div>
-  </aside>
+  </section>
 
-  <main>
-    <section class="collapsible-section" id="education">
-      <h2 class="collapsible-header collapsed">Education <i data-feather="chevron-down" class="collapse-icon"></i></h2>
-      <div class="collapsible-content">
-        <ul>
-          <li>
-            <div class="project-header">
-              <strong><a href="https://www.buct.edu.cn/main.htm" target="_blank" rel="noopener noreferrer">Beijing University of Chemical Technology</a></strong>
-              <em>Beijing, China</em>
-            </div>
-            <div class="project-subheader">
-              <span>Bachelor of Engineering in Automation</span>
-              <span style="float: right;">Sep. 2022 - June 2026 (Expected)</span>
-            </div>
-            <ul class="details-list">
-              <li><strong>Average Overall Score:</strong> <strong>88.03/100</strong></li>
-              <li><strong>Core Courses:</strong> Signals and Systems (<strong>93</strong>), Linear Algebra (<strong>92</strong>), Embedded System Design (<strong>A</strong>), Digital Image Processing (<strong>A</strong>)</li>
-            </ul>
-          </li>
-        </ul>
-      </div>
-    </section>
-
-    <section class="collapsible-section" id="research">
-      <h2 class="collapsible-header collapsed">Research & Publications <i data-feather="chevron-down" class="collapse-icon"></i></h2>
-      <div class="collapsible-content">
-        <ul>
-          <li>
-            <div class="project-header">
-              <strong>First Author | Solution Concentration Monitoring Device Design</strong>
-              <em>Apr. 2023 - Dec. 2023</em>
-            </div>
-            <span class="project-subheader">Published in <em>University Chemistry</em> (Peer-reviewed Journal, Hosted by Peking University)</span>
-            <ul class="details-list">
-              <li><strong>Authored</strong> a first-author paper (<strong><a href="https://www.dxhx.pku.edu.cn/CN/10.12461/PKU.DXHX202404036" target="_blank" rel="noopener noreferrer">DOI: 10.12461/PKU.DXHX202404036</a></strong>) detailing a novel vision-based concentration detection device.</li>
-              <li><strong>Architected</strong> a vision-based system using a Raspberry Pi and OpenCV, establishing a linear model between solution color (HSV) and concentration based on the Lambert-Beer law to <strong>achieve a 90% accuracy rate</strong>.</li>
-              <li><strong>Devised</strong> a custom 3D-printed black-box environment and disabled camera auto-white-balance to eliminate light interference, ensuring data integrity and measurement repeatability.</li>
-            </ul>
-            <div class="image-container">
-              <img src="assets/img/Solution.jpg" alt="Solution Concentration Monitoring Device Design" style="width: 400px; max-width: 90%; flex: none; margin: 0 auto;">
-            </div>
-             <div class="project-tags">
-                <span class="tag">OpenCV</span><span class="tag">Python</span><span class="tag">Raspberry Pi</span><span class="tag">3D Printing</span>
-            </div>
-          </li>
-          <li>
-            <div class="project-header">
-              <strong>Co-author | Intelligent Bird Recognition for River Ecosystems</strong>
-              <em>July 2024 - Sep. 2025</em>
-            </div>
-            <span class="project-subheader">Paper submitted to the <em>Chinese Journal of Applied Ecology</em> (A National Core Journal, CSCD Indexed, Under Review)</span>
-            <ul class="details-list">
-              <li><strong>Co-developed</strong> the YOLOv8-MAT-2H model by integrating MSBlock and ADown modules to enhance feature extraction for small, complex targets in ecological monitoring.</li>
-              <li><strong>Optimized</strong> the model to <strong>improve mAP@0.5:0.95 from 0.704 to 0.722 (+2.57%)</strong> while simultaneously <strong>reducing model parameters by 20% and GFLOPS by 10%</strong>, ideal for edge device deployment.</li>
-              <li><strong>Spearheaded</strong> strategies to handle environmental occlusions in real-world river settings, contributing directly to the system's final operational <strong>accuracy of nearly 80%</strong> for the Beijing Water Authority.</li>
-            </ul>
-            <div class="image-container">
-              <img src="assets/img/bird.jpg" alt="Intelligent Bird Recognition for River Ecosystems" style="width: 400px; max-width: 90%; flex: none; margin: 0 auto;">
-            </div>
-            <div class="project-tags">
-                <span class="tag">YOLOv8</span><span class="tag">PyTorch</span><span class="tag">Computer Vision</span>
-            </div>
-          </li>
-          <li>
-            <div class="project-header">
-                <strong>Research Member | Fiber Optic Biosensor for Tumor Marker Detection</strong>
-                <em>Jan. 2025 - Apr. 2025</em>
-            </div>
-            <ul class="details-list">
-                <li><strong>Contributed</strong> to a project developing a fiber optic biosensor that <strong>improved the detection limit by 15 times</strong> compared to traditional ELISA technology.</li>
-                <li><strong>Executed</strong> data processing algorithm optimization and participated in sensor design and validation, helping to <strong>reduce detection time from hours to just 5 minutes</strong>.</li>
-            </ul>
-            <div class="image-container">
-              <img src="assets/img/Biosensor.jpg" alt="Fiber Optic Biosensor for Tumor Marker Detection" style="width: 300px; max-width: 90%; flex: none; margin: 0 auto;">
-            </div>
-          </li>
-        </ul>
-      </div>
-    </section>
-
-    <section class="collapsible-section" id="projects">
-      <h2 class="collapsible-header collapsed">Key Engineering & Competition Projects <i data-feather="chevron-down" class="collapse-icon"></i></h2>
-      <div class="collapsible-content">
-        <ul>
-          <li>
-            <div class="project-header">
-              <strong>Team Captain | "Siemens Cup" China Intelligent Manufacturing Challenge</strong>
-              <em>Aug. 2024</em>
-            </div>
-            <span class="project-subheader"><em>Information & Networking Track,</em> <strong>1st Prize (North China Region)</strong></span>
-            <ul class="details-list">
-              <li><strong>Led a team</strong> to design and deploy a complete industrial network system for a simulated factory environment.</li>
-              <li><strong>Architected</strong> the network topology from abstract requirements, defining the IP schema, VLAN segmentation, and firewall access control policies.</li>
-              <li><strong>Engineered and commissioned</strong> the entire system, configuring Siemens S7 PLCs and industrial switches via TIA Portal to ensure robust, redundant communication.</li>
-            </ul>
-            <div class="image-container">
-              <img src="assets/img/Siemens.jpg" alt="Siemens Cup Challenge" style="width: 350px; max-width: 90%; flex: none; margin: 0 auto;">
-            </div>
-            <div class="project-tags">
-                <span class="tag">Siemens PLC</span><span class="tag">TIA Portal</span><span class="tag">Industrial Network</span>
-            </div>
-          </li>
-          <li>
-            <div class="project-header">
-              <strong>Team Captain | Raicom Robot Developer Competition</strong>
-              <em>Oct. 2024</em>
-            </div>
-            <span class="project-subheader"><em>Quadruped Robot Collaborative Challenge,</em> <strong>2nd Prize (National Final)</strong></span>
-            <ul class="details-list">
-              <li><strong>Directed the team</strong> and developed main functional packages using ROS for a quadruped robot to perform autonomous navigation, object manipulation, and animal recognition.</li>
-              <li><strong>Engineered an innovative solution</strong> to overcome hardware limitations of the Raspberry Pi by implementing a "position-then-detect" strategy, capturing and processing a single frame to bypass real-time video latency.</li>
-              <li><strong>Trained and deployed a YOLOv8 model</strong> that <strong>achieved 98.8% accuracy</strong> in identifying six types of animals under variable lighting conditions through targeted data augmentation.</li>
-            </ul>
-            <div class="image-container">
-              <img src="assets/img/Raicom.jpg" alt="Raicom Robot Developer Competition" >
-              <img src="assets/img/Raicom2.gif" alt="Raicom Robot Developer Competition Details">
-            </div>
-            <div class="project-tags">
-                <span class="tag">ROS</span><span class="tag">YOLOv8</span><span class="tag">Quadruped Robot</span>
-            </div>
-          </li>
-          <li>
-            <div class="project-header">
-              <strong>Team Member | "China International College Students' Innovation Competition</strong>
-              <em>July 2025</em>
-            </div>
-            <span class="project-subheader"><em>Project: An intelligent monitoring system for industrial centrifuges,</em> <strong>Provincial Semi-finalist</strong></span>
-            <ul class="details-list">
-              <li><strong>Owned</strong> the functional development and data analysis for the monitoring subsystem within a complex project targeted at the nuclear sector.</li>
-              <li><strong>Delivered</strong> critical code modules that ensured the stability and integrity of the multi-sensor data stream, foundational for the system's fault diagnosis and vibration suppression capabilities.</li>
-            </ul>
-            <div class="image-container">
-              <img src="assets/img/Innovation.jpg" alt="Innovation Competition Project" style="width: 550px; max-width: 90%; flex: none; margin: 0 auto;" >
-            </div>
-          </li>
-        </ul>
-      </div>
-    </section>
-    
-    <section class="collapsible-section" id="internship">
-      <h2 class="collapsible-header collapsed">Internship Experience <i data-feather="chevron-down" class="collapse-icon"></i></h2>
-      <div class="collapsible-content">
-        <ul>
-          <li>
-            <div class="project-header">
-              <strong>Testing Intern | <em>Guangzhou Dapsen Intelligent Equipment Co., Ltd.</em></strong>
-              <em>July 2024 – Aug. 2024</em>
-            </div>
-            <ul class="details-list">
-              <li><strong>Analyzed</strong> a plastic bottle inspection line to identify critical failure points in the assembly and sensor calibration processes.</li>
-              <li><strong>Engineered</strong> a revised debugging workflow which was adopted by the team, <strong>reducing setup time by an estimated 15%</strong> and improving overall operational stability.</li>
-            </ul>
-          </li>
-        </ul>
-      </div>
-    </section>
-
-    <section class="collapsible-section" id="awards">
-      <h2 class="collapsible-header collapsed">Honors & Awards <i data-feather="chevron-down" class="collapse-icon"></i></h2>
-      <div class="collapsible-content">
-        <ul>
-          <li class="award-item"><span><strong>2nd Prize</strong>, "Shuwei Cup" University Student Mathematical Modeling Challenge (National)</span> <span><em>May 2025</em></span></li>
-          <li class="award-item"><span><strong>2nd Prize</strong>, Raicom Robot Developer Competition (National)</span> <span><em>Oct. 2024</em></span></li>
-          <li class="award-item"><span><strong>1st Prize</strong>, "Siemens Cup" China Intelligent Manufacturing Challenge (Regional | North China)</span> <span><em>Aug. 2024</em></span></li>
-          <li class="award-item"><span><strong>3rd Prize</strong>, iCAN Innovation and Entrepreneurship Competition (Regional | Beijing)</span> <span><em>Nov. 2024</em></span></li>
-          <li class="award-item"><span><strong>1st Prize</strong>, RoboCup China Family Group Project Competition (University Level)</span> <span><em>Dec. 2024</em></span></li>
-          <li class="award-item"><span><strong>2nd Prize</strong>, People's Scholarship (University Level)</span> <span><em>2023 & 2025</em></span></li>
-          <li class="award-item"><span><strong>3rd Prize</strong>, People's Scholarship (University Level)</span> <span><em>2024</em></span></li>
-        </ul>
-      </div>
-    </section>
-
-    <section id="skills">
-      <h2>Technical Skills</h2>
-      <div class="skills-container">
-        <div class="skill-category">
-          <h3>Programming & AI</h3>
-          <div class="tags">
-            <span>Python</span><span>C</span><span>ROS</span><span>MATLAB</span><span>OpenCV</span><span>PyTorch</span><span>YOLO</span><span>Pandas</span><span>SPSS</span>
+  <section class="collapsible-section" id="research">
+    <h2 class="collapsible-header collapsed">Research & Publications <i data-feather="chevron-down" class="collapse-icon"></i></h2>
+    <div class="collapsible-content">
+      <ul>
+        <li>
+          <div class="project-header">
+            <strong>First Author | Solution Concentration Monitoring Device Design</strong>
+            <em>Apr. 2023 - Dec. 2023</em>
           </div>
-        </div>
-        <div class="skill-category">
-          <h3>Control & Automation</h3>
-          <div class="tags">
-            <span>Siemens S7-1200/S7-300 PLC</span><span>TIA Portal</span><span>DCS (Zhejiang SUPCON ECS-700)</span><span>MATLAB/Simulink</span><span>Industrial Network Design</span>
+          <span class="project-subheader">Published in <em>University Chemistry</em> (Peer-reviewed Journal, Hosted by Peking University)</span>
+          <ul class="details-list">
+            <li><strong>Authored</strong> a first-author paper (<strong><a href="https://www.dxhx.pku.edu.cn/CN/10.12461/PKU.DXHX202404036" target="_blank" rel="noopener noreferrer">DOI: 10.12461/PKU.DXHX202404036</a></strong>) detailing a novel vision-based concentration detection device.</li>
+            <li><strong>Architected</strong> a vision-based system using a Raspberry Pi and OpenCV, establishing a linear model between solution color (HSV) and concentration based on the Lambert-Beer law to <strong>achieve a 90% accuracy rate</strong>.</li>
+            <li><strong>Devised</strong> a custom 3D-printed black-box environment and disabled camera auto-white-balance to eliminate light interference, ensuring data integrity and measurement repeatability.</li>
+          </ul>
+          <div class="image-container">
+            <img src="assets/img/Solution.jpg" alt="Solution Concentration Monitoring Device Design" style="width: 400px; max-width: 90%; flex: none; margin: 0 auto;">
           </div>
-        </div>
-        <div class="skill-category">
-          <h3>Embedded Systems & Hardware</h3>
-          <div class="tags">
-            <span>Raspberry Pi</span><span>Arduino</span><span>STM32</span><span>PLC</span><span>Sensor Integration</span><span>EDA (Altium Designer, Proteus)</span>
+        </li>
+        <li>
+          <div class="project-header">
+            <strong>Co-author | Intelligent Bird Recognition for River Ecosystems</strong>
+            <em>July 2024 - Sep. 2025</em>
           </div>
-        </div>
-        <div class="skill-category">
-          <h3>Software & Tools</h3>
-          <div class="tags">
-            <span>Linux (Ubuntu)</span><span>Git</span><span>VS Code</span><span>PyCharm</span><span>Wireshark</span><span>Jupyter Notebook</span>
+          <span class="project-subheader">Paper submitted to the <em>Chinese Journal of Applied Ecology</em> (A National Core Journal, CSCD Indexed, Under Review)</span>
+          <ul class="details-list">
+            <li><strong>Co-developed</strong> the YOLOv8-MAT-2H model by integrating MSBlock and ADown modules to enhance feature extraction for small, complex targets in ecological monitoring.</li>
+            <li><strong>Optimized</strong> the model to <strong>improve mAP@0.5:0.95 from 0.704 to 0.722 (+2.57%)</strong> while simultaneously <strong>reducing model parameters by 20% and GFLOPS by 10%</strong>, ideal for edge device deployment.</li>
+            <li><strong>Spearheaded</strong> strategies to handle environmental occlusions in real-world river settings, contributing directly to the system's final operational <strong>accuracy of nearly 80%</strong> for the Beijing Water Authority.</li>
+          </ul>
+          <div class="image-container">
+            <img src="assets/img/bird.jpg" alt="Intelligent Bird Recognition for River Ecosystems" style="width: 400px; max-width: 90%; flex: none; margin: 0 auto;">
           </div>
+        </li>
+        <li>
+          <div class="project-header">
+              <strong>Research Member | Fiber Optic Biosensor for Tumor Marker Detection</strong>
+              <em>Jan. 2025 - Apr. 2025</em>
+          </div>
+          <ul class="details-list">
+              <li><strong>Contributed</strong> to a project developing a fiber optic biosensor that <strong>improved the detection limit by 15 times</strong> compared to traditional ELISA technology.</li>
+              <li><strong>Executed</strong> data processing algorithm optimization and participated in sensor design and validation, helping to <strong>reduce detection time from hours to just 5 minutes</strong>.</li>
+          </ul>
+          <div class="image-container">
+            <img src="assets/img/Biosensor.jpg" alt="Fiber Optic Biosensor for Tumor Marker Detection" style="width: 300px; max-width: 90%; flex: none; margin: 0 auto;">
+          </div>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="collapsible-section" id="projects">
+    <h2 class="collapsible-header collapsed">Key Engineering & Competition Projects <i data-feather="chevron-down" class="collapse-icon"></i></h2>
+    <div class="collapsible-content">
+      <ul>
+        <li>
+          <div class="project-header">
+            <strong>Team Captain | "Siemens Cup" China Intelligent Manufacturing Challenge</strong>
+            <em>Aug. 2024</em>
+          </div>
+          <span class="project-subheader"><em>Information & Networking Track,</em> <strong>1st Prize (North China Region)</strong></span>
+          <ul class="details-list">
+            <li><strong>Led a team</strong> to design and deploy a complete industrial network system for a simulated factory environment.</li>
+            <li><strong>Architected</strong> the network topology from abstract requirements, defining the IP schema, VLAN segmentation, and firewall access control policies.</li>
+            <li><strong>Engineered and commissioned</strong> the entire system, configuring Siemens S7 PLCs and industrial switches via TIA Portal to ensure robust, redundant communication.</li>
+          </ul>
+          <div class="image-container">
+            <img src="assets/img/Siemens.jpg" alt="Siemens Cup Challenge" style="width: 350px; max-width: 90%; flex: none; margin: 0 auto;">
+          </div>
+        </li>
+        <li>
+          <div class="project-header">
+            <strong>Team Captain | Raicom Robot Developer Competition</strong>
+            <em>Oct. 2024</em>
+          </div>
+          <span class="project-subheader"><em>Quadruped Robot Collaborative Challenge,</em> <strong>2nd Prize (National Final)</strong></span>
+          <ul class="details-list">
+            <li><strong>Directed the team</strong> and developed main functional packages using ROS for a quadruped robot to perform autonomous navigation, object manipulation, and animal recognition.</li>
+            <li><strong>Engineered an innovative solution</strong> to overcome hardware limitations of the Raspberry Pi by implementing a "position-then-detect" strategy, capturing and processing a single frame to bypass real-time video latency.</li>
+            <li><strong>Trained and deployed a YOLOv8 model</strong> that <strong>achieved 98.8% accuracy</strong> in identifying six types of animals under variable lighting conditions through targeted data augmentation.</li>
+          </ul>
+          <div class="image-container">
+            <img src="assets/img/Raicom.jpg" alt="Raicom Robot Developer Competition" >
+            <img src="assets/img/Raicom2.gif" alt="Raicom Robot Developer Competition Details">
+          </div>
+        </li>
+        <li>
+          <div class="project-header">
+            <strong>Team Member | "China International College Students' Innovation Competition</strong>
+            <em>July 2025</em>
+          </div>
+          <span class="project-subheader"><em>Project: An intelligent monitoring system for industrial centrifuges,</em> <strong>Provincial Semi-finalist</strong></span>
+          <ul class="details-list">
+            <li><strong>Owned</strong> the functional development and data analysis for the monitoring subsystem within a complex project targeted at the nuclear sector.</li>
+            <li><strong>Delivered</strong> critical code modules that ensured the stability and integrity of the multi-sensor data stream, foundational for the system's fault diagnosis and vibration suppression capabilities.</li>
+          </ul>
+          <div class="image-container">
+            <img src="assets/img/Innovation.jpg" alt="Innovation Competition Project" style="width: 550px; max-width: 90%; flex: none; margin: 0 auto;" >
+          </div>
+        </li>
+      </ul>
+    </div>
+  </section>
+  
+  <section class="collapsible-section" id="internship">
+    <h2 class="collapsible-header collapsed">Internship Experience <i data-feather="chevron-down" class="collapse-icon"></i></h2>
+    <div class="collapsible-content">
+      <ul>
+        <li>
+          <div class="project-header">
+            <strong>Testing Intern | <em>Guangzhou Dapsen Intelligent Equipment Co., Ltd.</em></strong>
+            <em>July 2024 – Aug. 2024</em>
+          </div>
+          <ul class="details-list">
+            <li><strong>Analyzed</strong> a plastic bottle inspection line to identify critical failure points in the assembly and sensor calibration processes.</li>
+            <li><strong>Engineered</strong> a revised debugging workflow which was adopted by the team, <strong>reducing setup time by an estimated 15%</strong> and improving overall operational stability.</li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="collapsible-section" id="awards">
+    <h2 class="collapsible-header collapsed">Honors & Awards <i data-feather="chevron-down" class="collapse-icon"></i></h2>
+    <div class="collapsible-content">
+      <ul>
+        <li class="award-item"><span><strong>2nd Prize</strong>, "Shuwei Cup" University Student Mathematical Modeling Challenge (National)</span> <span><em>May 2025</em></span></li>
+        <li class="award-item"><span><strong>2nd Prize</strong>, Raicom Robot Developer Competition (National)</span> <span><em>Oct. 2024</em></span></li>
+        <li class="award-item"><span><strong>1st Prize</strong>, "Siemens Cup" China Intelligent Manufacturing Challenge (Regional | North China)</span> <span><em>Aug. 2024</em></span></li>
+        <li class="award-item"><span><strong>3rd Prize</strong>, iCAN Innovation and Entrepreneurship Competition (Regional | Beijing)</span> <span><em>Nov. 2024</em></span></li>
+        <li class="award-item"><span><strong>1st Prize</strong>, RoboCup China Family Group Project Competition (University Level)</span> <span><em>Dec. 2024</em></span></li>
+        <li class="award-item"><span><strong>2nd Prize</strong>, People's Scholarship (University Level)</span> <span><em>2023 & 2025</em></span></li>
+        <li class="award-item"><span><strong>3rd Prize</strong>, People's Scholarship (University Level)</span> <span><em>2024</em></span></li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="skills">
+    <h2>Technical Skills</h2>
+    <div class="skills-container">
+      <div class="skill-category">
+        <h3>Programming & AI</h3>
+        <div class="tags">
+          <span>Python</span><span>C</span><span>ROS</span><span>MATLAB</span><span>OpenCV</span><span>PyTorch</span><span>YOLO</span><span>Pandas</span><span>SPSS</span>
         </div>
       </div>
-    </section>
-
-    <section style="display: flex; flex-direction: column; align-items: center; margin-top: 4rem;">
-      <div class="image-container" style="margin-bottom: 2rem; justify-content: center;">
-        <img src="assets/img/other.gif" alt="NUEDC GIF" >
-        <img src="assets/img/robocup.gif" alt="RoboCup GIF" >
+      <div class="skill-category">
+        <h3>Control & Automation</h3>
+        <div class="tags">
+          <span>Siemens S7-1200/S7-300 PLC</span><span>TIA Portal</span><span>DCS (Zhejiang SUPCON ECS-700)</span><span>MATLAB/Simulink</span><span>Industrial Network Design</span>
+        </div>
       </div>
-      <a class="btn" href="resume8.pdf" target="_blank">Download CV (PDF)</a>
-    </section>
-  </main>
-</div>
+      <div class="skill-category">
+        <h3>Embedded Systems & Hardware</h3>
+        <div class="tags">
+          <span>Raspberry Pi</span><span>Arduino</span><span>STM32</span><span>PLC</span><span>Sensor Integration</span><span>EDA (Altium Designer, Proteus)</span>
+        </div>
+      </div>
+      <div class="skill-category">
+        <h3>Software & Tools</h3>
+        <div class="tags">
+          <span>Linux (Ubuntu)</span><span>Git</span><span>VS Code</span><span>PyCharm</span><span>Wireshark</span><span>Jupyter Notebook</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section style="display: flex; flex-direction: column; align-items: center; margin-top: 4rem;">
+    <div class="image-container" style="margin-bottom: 2rem; justify-content: center;">
+      <img src="assets/img/other.gif" alt="NUEDC GIF" >
+      <img src="assets/img/robocup.gif" alt="RoboCup GIF" >
+    </div>
+    <a class="btn" href="resume8.pdf" target="_blank">Download CV (PDF)</a>
+  </section>
+</main>
 
 <footer>
   © 2025 Qi Haoran • Built with <i data-feather="heart"></i> and GitHub Pages
@@ -272,6 +324,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollToPlugin.min.js"></script>
+<script>
+</script>
 <script src="assets/js/main.js"></script>
 </body>
 </html>
