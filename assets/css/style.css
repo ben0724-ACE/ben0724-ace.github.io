@@ -401,3 +401,12 @@ footer {
   box-shadow: none !important;
   transform: none !important;
 }
+
+/* Image Specific Styles */
+.smaller-image {
+    width: 600px; /* 设置图片宽度 */
+    max-width: 100%; /* 确保图片不会超出容器 */
+    height: auto; /* 高度自动，保持图片比例 */
+    display: block; /* 使图片独占一行 */
+    margin: 0 auto; /* 图片居中显示 */
+}
