@@ -357,11 +357,12 @@ footer {
     height: auto;
     border-radius: 8px;
 }
-.image-container .smaller-image {
-    flex: 0 0 550px;  /* 您可以在这里设置为您想要的宽度，例如 550px */
-    max-width: 90%;     /* 在小屏幕上依然保持响应性 */
-    margin-left: auto;  /* 居中显示 */
-    margin-right: auto; /* 居中显示 */
+
+li .image-container .smaller-image {
+    flex: 0 0 400px;      /* 在这里设置为您想要的宽度 */
+    max-width: 90%;         /* 在小屏幕上依然保持响应性 */
+    margin-left: auto;      /* 居中显示 */
+    margin-right: auto;     /* 居中显示 */
 }
 
 
