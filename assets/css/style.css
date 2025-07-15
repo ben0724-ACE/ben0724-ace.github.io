@@ -15,12 +15,12 @@
 
 :root.dark-mode {
   /* 深色主题：深蓝灰为主，蓝绿点缀，橙色高亮，科技感强 */
-  --bg: #181f2a;              /* 深蓝灰背景，沉稳不死黑 */
+  --bg: #0c0f13;              /* 深蓝灰背景，沉稳不死黑 */
   --fg: #f1f3f8;              /* 亮灰白主文字，清晰对比 */
   --accent: #4f9cff;          /* 明亮蓝色，深色下依然活力 */
   --accent-secondary: #1a996a;/* 绿色点缀，深色下更显活力 */
   --highlight: #ffb300;       /* 橙色高亮，深色下依然醒目 */
-  --card-bg: #232b3a;         /* 深蓝卡片，层次分明 */
+  --card-bg: #12161e;         /* 深蓝卡片，层次分明 */
   --border-color: #2c3442;    /* 深灰蓝边框 */
   --shadow: 0 4px 16px rgba(20, 30, 50, 0.32); /* 深色阴影 */
   --text-color-light: #b6c2d1;/* 次要文字，浅蓝灰 */
@@ -195,7 +195,7 @@ li::before {
   height: 100%;   /* 进一步缩小初始尺寸 */
   background: conic-gradient(from 180deg at 50% 50%, var(--accent) 0deg, var(--accent-secondary) 60deg, var(--highlight) 120deg, #8e44ad 180deg, var(--accent) 360deg);
   opacity: 0;
-  transform: translate(-50%, -50%) scale(0.6); /* 进一步缩小初始大小 */
+  transform: translate(-50%, -50%) scale(0.2); /* 进一步缩小初始大小 */
   transition: opacity 0.4s ease-in-out, transform 0.4s ease-in-out;
   animation: rotateGradient 8s linear infinite;
   border-radius: inherit; /* 继承 li 的 border-radius */
