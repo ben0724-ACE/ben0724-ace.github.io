@@ -5,7 +5,7 @@
   --bg: #eaeef1;              /* 柔和冷白底色，清新不刺眼 */
   --fg: #23272f;              /* 深灰蓝主文字，正式且易读 */
   --accent: #1a73e8;          /* Google风格活力蓝，专业且有科技感 */
-  --accent-secondary: #2745bd;/* 绿色点缀，活力且不跳脱 */
+  --accent-secondary: #3d5cd5;/* 绿色点缀，活力且不跳脱 */rgb(61, 117, 213)rgb(99, 147, 229)
   --highlight: #ffb300;       /* 温和橙色高亮，适合按钮/hover */
   --card-bg: #ffffff;         /* 卡片纯白，干净清爽 */
   --border-color: #e3e7ed;    /* 浅灰蓝边框，低调有层次 */
@@ -20,7 +20,7 @@
   --bg: #181f2a;              /* 深蓝灰背景，沉稳不死黑 */
   --fg: #f1f3f8;              /* 亮灰白主文字，清晰对比 */
   --accent: #4f9cff;          /* 明亮蓝色，深色下依然活力 */
-  --accent-secondary: #3c2c96;/* 绿色点缀，深色下更显活力 */
+  --accent-secondary: #3b7da8;/* 绿色点缀，深色下更显活力 */
   --highlight: #ffb300;       /* 橙色高亮，深色下依然醒目 */
   --card-bg: #232b3a;         /* 深蓝卡片，层次分明 */
   --border-color: #2c3442;    /* 深灰蓝边框 */

@@ -55,21 +55,20 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // --- 滚动动画 ---
-    gsap.utils.toArray('.collapsible-content ul').forEach(list => {
-        gsap.from(list.children, {
-            autoAlpha: 0,
-            y: 20,
-            duration: 0.6,
-            stagger: 0.15,
-            ease: 'power2.out',
+    gsap.utils.toArray('main li, .skill-category').forEach(elem => {
+        gsap.from(elem, {
+            autoAlpha: 0,       // 从完全透明开始
+            y: 50,              // 从下方50像素的位置开始
+            duration: 1.2,      // 动画持续时间更长，显得更从容
+            ease: 'power3.out', // 使用一个更平滑、优雅的缓动函数
             scrollTrigger: {
-                trigger: list,
-                start: 'top 85%',
-                toggleActions: 'play none none none',
+                trigger: elem,
+                start: 'top 90%', // 当元素顶部进入视口90%时触发
+                toggleActions: 'play none none none', // 只播放一次
+                once: true        // 确保动画只触发一次，滚动回去不会重置
             }
         });
     });
-
     // --- 快速导航 --- 
     const quickNavLinks = document.querySelectorAll('.quick-nav a');
     const mainSections = document.querySelectorAll('main section.collapsible-section');
