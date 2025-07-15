@@ -103,7 +103,7 @@ In the `assets/js/main.js` file:
 
 ## Changelog
 
-### v1.1.0 (2025-07-15)
+### v1.2.0 (2025-07-15)
 - Further optimized webpage aesthetics and adjusted font colors for enhanced readability
 - Added quick index navigation on the left side for easy content access
 - Added content collapse functionality for optimized information display
