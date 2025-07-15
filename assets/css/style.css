@@ -349,22 +349,19 @@ footer {
   color: #fff;
 }
 
-/* --- 新增和整合的图片样式 --- */
+/* --- 图片样式 --- */
 .image-container img {
-    flex: 1 1 200px; /* 默认图片可伸缩 */
+    flex: 1 1 200px;
     min-width: 200px;
     max-width: 100%;
     height: auto;
     border-radius: 8px;
 }
-
 .image-container .smaller-image {
-    width: 450px;           /* 在这里调整为你想要的尺寸 */
-    max-width: 90%;         /* 在小屏幕上防止溢出，更具响应性 */
-    flex-grow: 0;           /* 关键：阻止它伸展 */
-    flex-shrink: 0;         /* 关键：阻止它收缩 */
-    margin-left: auto;      /* 关键：与下一行一起实现居中 */
-    margin-right: auto;     /* 关键：与上一行一起实现居中 */
+    flex: 0 0 550px;  /* 您可以在这里设置为您想要的宽度，例如 550px */
+    max-width: 90%;     /* 在小屏幕上依然保持响应性 */
+    margin-left: auto;  /* 居中显示 */
+    margin-right: auto; /* 居中显示 */
 }
 
 
