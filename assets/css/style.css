@@ -157,14 +157,13 @@ li {
   /* 外层li作为辉光容器 */
   background: transparent;
   border: 1px solid var(--border-color);
-  padding: 1.5rem; /* 恢复内边距以包含内容 */
+  padding: 0.8rem; /* 减小内边距以使边框更细 */
   margin-bottom: 1rem;
   border-radius: 10px; /* 圆角 */
   box-shadow: var(--shadow);
   transition: transform 0.3s ease-in-out;
   position: relative;
   overflow: hidden;
-  z-index: 1; /* 确保 li 在 ::before 之上 */
 }
 li:hover {
   transform: translateY(-5px);
@@ -174,13 +173,12 @@ li strong { color: var(--accent); }
 /* 内容包裹层，拥有背景色和内边距，与辉光分离 */
 .card-content-wrapper {
   background-color: var(--card-bg);
+  padding: 1.5rem;
   border-radius: 8px; /* 内层圆角 */
   width: 100%;
   height: 100%;
   color: var(--text-color-light);
   font-size: 1rem;
-  position: relative; /* 确保内容在辉光之上 */
-  z-index: 2;
 }
 
 /* 辉光效果的伪元素 */
@@ -197,7 +195,7 @@ li::before {
   transition: opacity 0.4s ease-in-out, transform 0.4s ease-in-out;
   animation: rotateGradient 8s linear infinite;
   border-radius: inherit; /* 继承 li 的 border-radius */
-  z-index: 0; /* 辉光在内容之下 */
+  z-index: -1;
 }
 li:hover::before {
   opacity: 1;
@@ -291,6 +289,14 @@ li:hover::before {
     height: auto;
     border-radius: 8px;
     object-fit: contain;
+}
+.image-container.raicom-images {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+.image-container.raicom-images img {
+    max-width: 50%;
 }
 /* 新增的图片尺寸修饰符类 */
 .image-container .img-size-s { flex: 0 0 auto; width: 300px; max-width: 90%; }
