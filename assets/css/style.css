@@ -358,21 +358,6 @@ footer {
     border-radius: 8px;
 }
 
-li .image-container .smaller-image {
-    flex: 0 0 350px;      /* 在这里设置为您想要的宽度 */
-    max-width: 90%;         /* 在小屏幕上依然保持响应性 */
-    margin-left: auto;      /* 居中显示 */
-    margin-right: auto;     /* 居中显示 */
-}
-
-li .image-container .smallest-image {
-  flex: 0 0 250px;      /* 在这里设置为您想要的宽度 */
-  max-width: 90%;         /* 在小屏幕上依然保持响应性 */
-  margin-left: auto;      /* 居中显示 */
-  margin-right: auto;     /* 居中显示 */
-}
-
-
 /* --- 媒体查询，用于响应式布局 --- */
 @media (max-width: 992px) {
   .quick-nav { display: none; }

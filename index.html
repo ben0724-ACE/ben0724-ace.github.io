@@ -42,6 +42,14 @@
         flex-wrap: wrap;
         gap: 1rem;
         margin-top: 1rem;
+        justify-content: center; /* 让容器内元素整体居中 */
+    }
+    .image-container img {
+        flex: 1 1 200px;
+        min-width: 200px;
+        max-width: 100%;
+        height: auto;
+        border-radius: 8px;
     }
     /* Style for links within project cards */
     li a {
@@ -149,7 +157,7 @@
             <li><strong>Devised</strong> a custom 3D-printed black-box environment and disabled camera auto-white-balance to eliminate light interference, ensuring data integrity and measurement repeatability.</li>
           </ul>
           <div class="image-container">
-            <img src="assets/img/Solution.jpg" alt="Solution Concentration Monitoring Device Design" class="smaller-image">
+            <img src="assets/img/Solution.jpg" alt="Solution Concentration Monitoring Device Design" style="width: 400px; max-width: 90%; flex: none; margin: 0 auto;">
           </div>
         </li>
         <li>
@@ -164,7 +172,7 @@
             <li><strong>Spearheaded</strong> strategies to handle environmental occlusions in real-world river settings, contributing directly to the system's final operational <strong>accuracy of nearly 80%</strong> for the Beijing Water Authority.</li>
           </ul>
           <div class="image-container">
-            <img src="assets/img/bird.jpg" alt="Intelligent Bird Recognition for River Ecosystems" class="smaller-image">
+            <img src="assets/img/bird.jpg" alt="Intelligent Bird Recognition for River Ecosystems" style="width: 400px; max-width: 90%; flex: none; margin: 0 auto;">
           </div>
         </li>
         <li>
@@ -177,7 +185,7 @@
               <li><strong>Executed</strong> data processing algorithm optimization and participated in sensor design and validation, helping to <strong>reduce detection time from hours to just 5 minutes</strong>.</li>
           </ul>
           <div class="image-container">
-            <img src="assets/img/Biosensor.jpg" alt="Fiber Optic Biosensor for Tumor Marker Detection" class="smallest-image">
+            <img src="assets/img/Biosensor.jpg" alt="Fiber Optic Biosensor for Tumor Marker Detection" style="width: 300px; max-width: 90%; flex: none; margin: 0 auto;">
           </div>
         </li>
       </ul>
@@ -200,7 +208,7 @@
             <li><strong>Engineered and commissioned</strong> the entire system, configuring Siemens S7 PLCs and industrial switches via TIA Portal to ensure robust, redundant communication.</li>
           </ul>
           <div class="image-container">
-            <img src="assets/img/Siemens.jpg" alt="Siemens Cup Challenge" class="smaller-image">
+            <img src="assets/img/Siemens.jpg" alt="Siemens Cup Challenge" style="width: 350px; max-width: 90%; flex: none; margin: 0 auto;">
           </div>
         </li>
         <li>
@@ -230,7 +238,7 @@
             <li><strong>Delivered</strong> critical code modules that ensured the stability and integrity of the multi-sensor data stream, foundational for the system's fault diagnosis and vibration suppression capabilities.</li>
           </ul>
           <div class="image-container">
-            <img src="assets/img/Innovation.jpg" alt="Innovation Competition Project" class="smaller-image" >
+            <img src="assets/img/Innovation.jpg" alt="Innovation Competition Project" style="width: 550px; max-width: 90%; flex: none; margin: 0 auto;" >
           </div>
         </li>
       </ul>
@@ -302,8 +310,8 @@
 
   <section style="display: flex; flex-direction: column; align-items: center; margin-top: 4rem;">
     <div class="image-container" style="margin-bottom: 2rem; justify-content: center;">
-      <img src="assets/img/other.gif" alt="NUEDC GIF" style="border-radius: 8px;">
-      <img src="assets/img/robocup.gif" alt="RoboCup GIF" style="border-radius: 8px;">
+      <img src="assets/img/other.gif" alt="NUEDC GIF" >
+      <img src="assets/img/robocup.gif" alt="RoboCup GIF" >
     </div>
     <a class="btn" href="resume8.pdf" target="_blank">Download CV (PDF)</a>
   </section>
