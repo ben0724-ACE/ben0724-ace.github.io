@@ -403,8 +403,10 @@ footer {
 }
 
 /* Image Specific Styles */
-.smaller-image {
-    height: 300px; /* 设置图片宽度 */
+.image-container .smaller-image {
+    width: 300px; /* 设置图片宽度 */
+    flex: none; /* 阻止图片根据flex布局伸缩 */
+    object-fit: contain; /* 确保图片完整显示不被裁剪 */
     max-width: 100%; /* 确保图片不会超出容器 */
     height: auto; /* 高度自动，保持图片比例 */
     display: block; /* 使图片独占一行 */
