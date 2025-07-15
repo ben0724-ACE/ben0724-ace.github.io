@@ -182,16 +182,20 @@ li strong { color: var(--accent); }
 }
 
 /* 辉光效果的伪元素 */
+/* 
+  如果你想让辉光区域进一步缩小，只需要把 width、height 和 scale 的数值调小即可。
+  例如，width/height 改为 100%，scale 改为 0.6，效果会更小更集中。
+*/
 li::before {
   content: "";
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 120%; /* 缩小初始尺寸 */
-  height: 120%; /* 缩小初始尺寸 */
+  width: 100%;    /* 进一步缩小初始尺寸 */
+  height: 100%;   /* 进一步缩小初始尺寸 */
   background: conic-gradient(from 180deg at 50% 50%, var(--accent) 0deg, var(--accent-secondary) 60deg, var(--highlight) 120deg, #8e44ad 180deg, var(--accent) 360deg);
   opacity: 0;
-  transform: translate(-50%, -50%) scale(0.8); /* 进一步缩小初始大小 */
+  transform: translate(-50%, -50%) scale(0.6); /* 进一步缩小初始大小 */
   transition: opacity 0.4s ease-in-out, transform 0.4s ease-in-out;
   animation: rotateGradient 8s linear infinite;
   border-radius: inherit; /* 继承 li 的 border-radius */
