@@ -156,10 +156,10 @@ ul { list-style: none; padding-left: 0; }
 li {
   /* 外层li作为辉光容器 */
   background: transparent;
-  border: 1px solid var(--border-color);
-  padding: 0.8rem; /* 减小内边距以使边框更细 */
+  border: none; /* 移除外层边框，完全由辉光效果代替 */
+  padding: 2px; /* 关键改动：将padding设为2px，这就是辉光边框的宽度 */
   margin-bottom: 1rem;
-  border-radius: 10px; /* 圆角 */
+  border-radius: 12px; /* 圆角可以稍大一些，更好看 */
   box-shadow: var(--shadow);
   transition: transform 0.3s ease-in-out;
   position: relative;
@@ -174,11 +174,12 @@ li strong { color: var(--accent); }
 .card-content-wrapper {
   background-color: var(--card-bg);
   padding: 1.5rem;
-  border-radius: 8px; /* 内层圆角 */
+  border-radius: 10px; /* 内层圆角要比外层li稍小，避免角落穿帮 */
   width: 100%;
   height: 100%;
   color: var(--text-color-light);
   font-size: 1rem;
+  border: 1px solid var(--border-color); /* 将边框加在内容层上 */
 }
 
 /* 辉光效果的伪元素 */
