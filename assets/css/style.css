@@ -31,7 +31,7 @@
 
 html {
   background-color: var(--bg);
-  scroll-behavior: smooth; /* 让滚动更平滑 */
+  scroll-behavior: smooth;
 }
 
 body {
@@ -43,17 +43,17 @@ body {
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-/* ===方案1: 增强页头=== */
+/* ===页头修复=== */
 header {
   text-align: center;
   margin-bottom: 4rem;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  padding: 6rem 2rem 4rem;
+  padding: 5rem 2rem 3rem; /* 减小了上下内边距 */
   color: #fff;
   position: relative;
-  min-height: 400px;
+  min-height: 350px; /* 减小了最小高度 */
   display: flex; 
   flex-direction: column;
   align-items: center;
@@ -81,6 +81,23 @@ header > * {
   margin-bottom: 1.5rem;
   border: 4px solid rgba(255, 255, 255, 0.8);
   box-shadow: 0 0 25px rgba(79, 156, 255, 0.5), 0 4px 16px rgba(30, 42, 80, 0.08);
+}
+.header-bg-slider {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+}
+.header-bg-slider img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
 }
 h1 { font-size: 3rem; margin-bottom: .5rem; font-weight: 700; text-shadow: 1px 1px 3px rgba(0,0,0,0.4); }
 header p { font-size: 1.2rem; color: #e0e0e0; text-shadow: 1px 1px 3px rgba(0,0,0,0.4);}
@@ -135,7 +152,7 @@ h3 {
 section { margin-bottom: 2rem; }
 ul { list-style: none; padding-left: 0; }
 
-/* ===方案2: 卡片辉光效果=== */
+/* ===卡片辉光效果与文字布局修复=== */
 li {
   background: var(--card-bg);
   border: 1px solid var(--border-color);
@@ -146,8 +163,8 @@ li {
   transition: transform 0.2s ease-in-out, background-color 0.3s ease, border-color 0.3s ease;
   font-size: 1rem;
   color: var(--text-color-light);
-  position: relative; /* 为伪元素定位提供基准 */
-  overflow: hidden;   /* 隐藏伪元素超出边框的部分 */
+  position: relative;
+  overflow: hidden;
 }
 li:hover {
   transform: translateY(-5px);
@@ -182,21 +199,24 @@ li::after {
   background-color: var(--card-bg);
   border-radius: 6px;
   z-index: 0;
+  transition: background-color 0.3s ease; /* 让背景色也能平滑过渡 */
 }
 @keyframes rotateGradient {
   from { transform: translate(-50%, -50%) rotate(0deg); }
   to { transform: translate(-50%, -50%) rotate(360deg); }
 }
-li > * {
+
+/* 文字布局修复：使用更精确的选择器 */
+.project-header, .project-subheader, .details-list, .image-container, .project-tags, .award-item {
   position: relative;
   z-index: 1;
 }
 
-/* ===方案3: 技能区美化=== */
+/* ===技能区美化=== */
 .skills-container {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 2.5rem;
+  gap: 1.5rem; /* 调整间距 */
   background: transparent;
   border: none;
   padding: 0;
@@ -209,10 +229,11 @@ li > * {
   border-radius: 12px;
   border: 1px solid var(--border-color);
   box-shadow: var(--shadow);
-  transition: transform 0.3s ease;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 .skill-category:hover {
   transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(30, 42, 80, 0.12);
 }
 .skill-category h3 {
   font-size: 1.3rem;
@@ -241,7 +262,7 @@ li > * {
   box-shadow: 0 4px 8px rgba(0,0,0,0.1);
 }
 
-/* ===方案2: 项目技术标签=== */
+/* ===项目技术标签=== */
 .project-tags {
     margin-top: 1.5rem;
     padding-top: 1rem;
@@ -257,6 +278,23 @@ li > * {
     border-radius: 16px;
     margin-right: 0.5rem;
     margin-bottom: 0.5rem;
+}
+
+/* ===图片居中和大小修复=== */
+.image-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-top: 1rem;
+    justify-content: center;
+    align-items: center;
+}
+.image-container img {
+    flex-shrink: 0; /* 防止图片被压缩 */
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    object-fit: contain;
 }
 
 /* --- 其他组件样式 --- */
@@ -413,10 +451,10 @@ footer {
   border: none;
   box-shadow: none;
   transform: none;
-  overflow: visible; /* 修正辉光效果对导航栏的影响 */
+  overflow: visible;
   position: static;
 }
-.quick-nav li::before, .quick-nav li::after { display: none; } /* 禁用导航栏的辉光效果 */
+.quick-nav li::before, .quick-nav li::after { display: none; }
 .quick-nav li a {
   text-decoration: none;
   color: var(--text-color-light);
@@ -431,13 +469,7 @@ footer {
   background-color: var(--accent);
   color: #fff;
 }
-.image-container img {
-    flex: 1 1 200px;
-    min-width: 200px;
-    max-width: 100%;
-    height: auto;
-    border-radius: 8px;
-}
+
 @media (max-width: 992px) {
   .quick-nav { display: none; }
   main, footer {
