@@ -404,7 +404,7 @@ footer {
 
 /* Image Specific Styles */
 .smaller-image {
-    width: 300px; /* 设置图片宽度 */
+    height: 300px; /* 设置图片宽度 */
     max-width: 100%; /* 确保图片不会超出容器 */
     height: auto; /* 高度自动，保持图片比例 */
     display: block; /* 使图片独占一行 */
