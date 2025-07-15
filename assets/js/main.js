@@ -119,7 +119,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- 自定义光标 ---
     const cursor = document.querySelector('.cursor');
-    const interactiveElements = document.querySelectorAll('a, button, .collapsible-header, .theme-switcher');
+    // **唯一的修改在这里：增加了对 .tags span 和 .project-tags .tag 的选择**
+    const interactiveElements = document.querySelectorAll('a, button, .collapsible-header, .theme-switcher, .tags span, .project-tags .tag');
 
     document.addEventListener('mousemove', e => {
         cursor.setAttribute('style', `top: ${e.clientY}px; left: ${e.clientX}px;`);

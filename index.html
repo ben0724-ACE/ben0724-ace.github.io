@@ -10,75 +10,7 @@
   <link rel="stylesheet" href="assets/css/style.css">
   <link rel="icon" href="assets/img/favicon.ico">
   <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
-  <style>
-    .project-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-      flex-wrap: wrap;
-      gap: 1rem;
-    }
-    .project-subheader {
-      margin-top: 0.5rem;
-      font-style: italic;
-      display: block;
-    }
-    .details-list {
-      list-style-type: disc;
-      padding-left: 20px;
-      margin-top: 0.5rem;
-    }
-    .details-list li, .details-list li:hover {
-      background: none !important;
-      border: none !important;
-      padding: 0.2rem 0 !important;
-      margin-bottom: 0.2rem !important;
-      box-shadow: none !important;
-      transform: none !important;
-      }
-    /* Helper style for image containers */
-    .image-container {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 1rem;
-        margin-top: 1rem;
-        justify-content: center; /* 让容器内元素整体居中 */
-    }
-    .image-container img {
-        flex: 1 1 200px;
-        min-width: 200px;
-        max-width: 100%;
-        height: auto;
-        border-radius: 8px;
-    }
-    /* Style for links within project cards */
-    li a {
-        color: var(--accent);
-        text-decoration: none;
-        transition: text-decoration 0.2s ease;
-    }
-    li a:hover {
-        text-decoration: underline;
-    }
-    .header-bg-slider {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        z-index: 0;
-    }
-    .header-bg-slider img {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        opacity: 0;
-    }
-    </style>
-  </head>
+</head>
 <body>
 <div class="cursor"></div>
 <div class="preloader"><div class="loader"></div></div>
@@ -159,6 +91,9 @@
           <div class="image-container">
             <img src="assets/img/Solution.jpg" alt="Solution Concentration Monitoring Device Design" style="width: 400px; max-width: 90%; flex: none; margin: 0 auto;">
           </div>
+          <div class="project-tags">
+            <span class="tag">OpenCV</span><span class="tag">Python</span><span class="tag">Raspberry Pi</span><span class="tag">Computer Vision</span>
+          </div>
         </li>
         <li>
           <div class="project-header">
@@ -174,6 +109,9 @@
           <div class="image-container">
             <img src="assets/img/bird.jpg" alt="Intelligent Bird Recognition for River Ecosystems" style="width: 400px; max-width: 90%; flex: none; margin: 0 auto;">
           </div>
+          <div class="project-tags">
+            <span class="tag">YOLOv8</span><span class="tag">PyTorch</span><span class="tag">Machine Learning</span><span class="tag">Ecology</span>
+          </div>
         </li>
         <li>
           <div class="project-header">
@@ -186,6 +124,9 @@
           </ul>
           <div class="image-container">
             <img src="assets/img/Biosensor.jpg" alt="Fiber Optic Biosensor for Tumor Marker Detection" style="width: 300px; max-width: 90%; flex: none; margin: 0 auto;">
+          </div>
+          <div class="project-tags">
+            <span class="tag">Biosensor</span><span class="tag">Data Analysis</span><span class="tag">LabVIEW</span>
           </div>
         </li>
       </ul>
@@ -210,6 +151,9 @@
           <div class="image-container">
             <img src="assets/img/Siemens.jpg" alt="Siemens Cup Challenge" style="width: 350px; max-width: 90%; flex: none; margin: 0 auto;">
           </div>
+          <div class="project-tags">
+            <span class="tag">Siemens PLC</span><span class="tag">TIA Portal</span><span class="tag">Industrial Network</span>
+          </div>
         </li>
         <li>
           <div class="project-header">
@@ -226,6 +170,9 @@
             <img src="assets/img/Raicom.jpg" alt="Raicom Robot Developer Competition" >
             <img src="assets/img/Raicom2.gif" alt="Raicom Robot Developer Competition Details">
           </div>
+          <div class="project-tags">
+            <span class="tag">ROS</span><span class="tag">YOLOv8</span><span class="tag">Python</span><span class="tag">Quadruped Robot</span>
+          </div>
         </li>
         <li>
           <div class="project-header">
@@ -239,6 +186,9 @@
           </ul>
           <div class="image-container">
             <img src="assets/img/Innovation.jpg" alt="Innovation Competition Project" style="width: 550px; max-width: 90%; flex: none; margin: 0 auto;" >
+          </div>
+          <div class="project-tags">
+            <span class="tag">Data Analysis</span><span class="tag">Sensors</span><span class="tag">Fault Diagnosis</span>
           </div>
         </li>
       </ul>
@@ -313,7 +263,7 @@
       <img src="assets/img/other.gif" alt="NUEDC GIF" >
       <img src="assets/img/robocup.gif" alt="RoboCup GIF" >
     </div>
-    <a class="btn" href="resume8.pdf" target="_blank">Download CV</a>
+    <a class="btn" href="resume8.pdf" target="_blank">Download CV (PDF)</a>
   </section>
 </main>
 
@@ -324,8 +274,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollToPlugin.min.js"></script>
-<script>
-</script>
 <script src="assets/js/main.js"></script>
 </body>
 </html>
