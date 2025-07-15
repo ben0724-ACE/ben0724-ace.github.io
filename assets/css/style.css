@@ -1,5 +1,6 @@
 /* --- 优化的颜色变量 --- */
 :root {
+  --accent-rgb: 26, 115, 232; /* 对应 --accent: #1a73e8; */
   /* 明亮主题：正式但有活力的蓝蓝绿配色，带有温和灰色和橙色点缀 */
   --bg: #eaeef1;              /* 柔和冷白底色，清新不刺眼 */
   --fg: #23272f;              /* 深灰蓝主文字，正式且易读 */
@@ -14,13 +15,14 @@
 }
 
 :root.dark-mode {
+  --accent-rgb: 79, 156, 255; /* 对应 --accent: #4f9cff; */
   /* 深色主题：深蓝灰为主，蓝绿点缀，橙色高亮，科技感强 */
-  --bg: #0c0f13;              /* 深蓝灰背景，沉稳不死黑 */
+  --bg: #181f2a;              /* 深蓝灰背景，沉稳不死黑 */
   --fg: #f1f3f8;              /* 亮灰白主文字，清晰对比 */
   --accent: #4f9cff;          /* 明亮蓝色，深色下依然活力 */
   --accent-secondary: #1a996a;/* 绿色点缀，深色下更显活力 */
   --highlight: #ffb300;       /* 橙色高亮，深色下依然醒目 */
-  --card-bg: #12161e;         /* 深蓝卡片，层次分明 */
+  --card-bg: #232b3a;         /* 深蓝卡片，层次分明 */
   --border-color: #2c3442;    /* 深灰蓝边框 */
   --shadow: 0 4px 16px rgba(20, 30, 50, 0.32); /* 深色阴影 */
   --text-color-light: #b6c2d1;/* 次要文字，浅蓝灰 */
@@ -54,7 +56,7 @@ header {
   color: #fff;
   position: relative;
   min-height: 350px;
-  display: flex;
+  display: flex; 
   flex-direction: column;
   align-items: center;
   justify-content: center;
@@ -118,8 +120,8 @@ main {
 }
 
 h2 {
-  margin: 3rem 0 1.5rem;
-  font-size: 2rem;
+  margin: 3rem 0 1.5rem; 
+  font-size: 2rem; 
   font-weight: 600;
   padding-bottom: .5rem;
   display: inline-block;
@@ -154,12 +156,11 @@ ul { list-style: none; padding-left: 0; }
 
 /* ===卡片辉光效果与文字布局最终修复=== */
 li {
-  /* 外层li作为辉光容器 */
   background: transparent;
-  border: none; /* 移除外层边框，完全由辉光效果代替 */
-  padding: 2px; /* 关键改动：将padding设为2px，这就是辉光边框的宽度 */
+  border: none;
+  padding: 2px; /* 辉光边框的宽度 */
   margin-bottom: 1rem;
-  border-radius: 12px; /* 圆角可以稍大一些，更好看 */
+  border-radius: 12px;
   box-shadow: var(--shadow);
   transition: transform 0.3s ease-in-out;
   position: relative;
@@ -170,45 +171,49 @@ li:hover {
 }
 li strong { color: var(--accent); }
 
-/* 内容包裹层，拥有背景色和内边距，与辉光分离 */
 .card-content-wrapper {
   background-color: var(--card-bg);
   padding: 1.5rem;
-  border-radius: 10px; /* 内层圆角要比外层li稍小，避免角落穿帮 */
+  border-radius: 10px;
   width: 100%;
   height: 100%;
   color: var(--text-color-light);
   font-size: 1rem;
-  border: 1px solid var(--border-color); /* 将边框加在内容层上 */
+  border: 1px solid var(--border-color);
+  position: relative; /* 添加此行以确保z-index生效 */
+  z-index: 1; /* 内容在辉光之上 */
 }
 
-/* 辉光效果的伪元素 */
-/* 
-  如果你想让辉光区域进一步缩小，只需要把 width、height 和 scale 的数值调小即可。
-  例如，width/height 改为 100%，scale 改为 0.6，效果会更小更集中。
-*/
 li::before {
   content: "";
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 100%;    /* 进一步缩小初始尺寸 */
-  height: 100%;   /* 进一步缩小初始尺寸 */
-  background: conic-gradient(from 180deg at 50% 50%, var(--accent) 0deg, var(--accent-secondary) 60deg, var(--highlight) 120deg, #8e44ad 180deg, var(--accent) 360deg);
-  opacity: 0;
-  transform: translate(-50%, -50%) scale(0.2); /* 进一步缩小初始大小 */
-  transition: opacity 0.4s ease-in-out, transform 0.4s ease-in-out;
-  animation: rotateGradient 8s linear infinite;
-  border-radius: inherit; /* 继承 li 的 border-radius */
-  z-index: -1;
+  width: 150%;
+  height: 150%;
+  background: radial-gradient(circle, 
+    rgba(var(--accent-rgb), 0.8) 0%, 
+    rgba(var(--accent-rgb), 0.2) 40%,
+    transparent 70%
+  );
+  transform: translate(-50%, -50%);
+  transition: opacity 0.5s, transform 0.5s;
+  animation: pulseGlow 4s ease-in-out infinite;
+  z-index: 0; /* 确保辉光在最底层 */
 }
-li:hover::before {
-  opacity: 1;
-  transform: translate(-50%, -50%) scale(1);
-}
-@keyframes rotateGradient {
-  from { transform: translate(-50%, -50%) rotate(0deg); }
-  to { transform: translate(-50%, -50%) rotate(360deg); }
+@keyframes pulseGlow {
+  0% {
+    opacity: 0.3;
+    transform: translate(-50%, -50%) scale(0.9);
+  }
+  50% {
+    opacity: 0.8;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  100% {
+    opacity: 0.3;
+    transform: translate(-50%, -50%) scale(0.9);
+  }
 }
 
 /* ===技能区美化=== */
@@ -301,9 +306,10 @@ li:hover::before {
     gap: 1rem;
 }
 .image-container.raicom-images img {
+    flex: 1;
     max-width: 50%;
+    object-fit: contain;
 }
-/* 新增的图片尺寸修饰符类 */
 .image-container .img-size-s { flex: 0 0 auto; width: 300px; max-width: 90%; }
 .image-container .img-size-m { flex: 0 0 auto; width: 400px; max-width: 90%; }
 .image-container .img-size-l { flex: 0 0 auto; width: 550px; max-width: 90%; }
@@ -337,15 +343,15 @@ li:hover::before {
   background-color: var(--highlight);
   transform: translateY(-2px);
 }
-footer {
+footer { 
   max-width: 1100px;
   margin: 4rem auto 0;
   padding: 2rem;
   padding-left: 220px;
-  font-size: 1rem;
-  text-align: center;
-  opacity: .8;
-  color: var(--text-color-dark);
+  font-size: 1rem; 
+  text-align: center; 
+  opacity: .8; 
+  color: var(--text-color-dark); 
 }
 .theme-switcher {
   position: fixed;
@@ -518,7 +524,7 @@ footer {
   background: transparent !important;
   border: none !important;
   padding: 0.2rem 0 !important;
-  margin-bottom: 0.2rem !important;
+  margin: 0 !important;
   box-shadow: none !important;
   transform: none !important;
   position: static !important;
