@@ -34,7 +34,6 @@ html {
   scroll-behavior: smooth; /* 让滚动更平滑 */
 }
 
-/* 已修改：移除了 max-width, margin, 和大部分 padding，让 body 全屏 */
 body {
   font-family: 'Inter', 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
   background: var(--bg);
@@ -47,7 +46,6 @@ body {
 header {
   text-align: center;
   margin-bottom: 4rem;
-  background-image: url('../img/header-bg.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -55,7 +53,7 @@ header {
   color: #fff;
   position: relative;
   min-height: 400px;
-  display: flex; /* 使用 flex 布局让内容垂直居中 */
+  display: flex; 
   flex-direction: column;
   align-items: center;
   justify-content: center;
@@ -80,18 +78,17 @@ header > * {
   height: 140px;
   border-radius: 50%;
   margin-bottom: 1.5rem;
-  border: 5px solid rgba(255, 255, 255, 0.8); /* 边框稍微透明，更有质感 */
+  border: 5px solid rgba(255, 255, 255, 0.8);
   box-shadow: var(--shadow);
 }
 h1 { font-size: 3rem; margin-bottom: .5rem; font-weight: 700; text-shadow: 1px 1px 3px rgba(0,0,0,0.4); }
 header p { font-size: 1.2rem; color: #e0e0e0; text-shadow: 1px 1px 3px rgba(0,0,0,0.4);}
 
-/* 新增：为 main 元素添加布局约束 */
 main {
-  max-width: 1100px; /* 从 900px 增加到 1100px */
-  margin: 0 auto; /* 页面居中 */
+  max-width: 1100px;
+  margin: 0 auto;
   padding: 2rem;
-  padding-left: 220px; /* 相应地增加左边距 (180px 导航 + 40px 间距) */
+  padding-left: 220px;
 }
 
 h2 {
@@ -152,7 +149,7 @@ li strong { color: var(--accent); }
   color: var(--text-color-light);
 }
 .skills-container {
-  display: grid; /* 改为 grid 布局，更灵活 */
+  display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 2rem;
   background: var(--card-bg);
@@ -163,7 +160,7 @@ li strong { color: var(--accent); }
   transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 .skill-category {
-  min-width: 0; /* 配合 grid 布局 */
+  min-width: 0;
 }
 .tags span {
   display: inline-block;
@@ -198,25 +195,23 @@ li strong { color: var(--accent); }
 }
 .social a {
   margin: 0 .8rem;
-  color: #fff; /* header中的社交图标颜色 */
+  color: #fff;
   transition: color 0.2s;
 }
 .social a:hover {
   color: var(--accent);
 }
-/* 新增：为 footer 添加布局约束 */
 footer { 
-  max-width: 1100px; /* 与 main 保持一致 */
-  margin: 4rem auto 0; /* 页面居中 */
+  max-width: 1100px;
+  margin: 4rem auto 0;
   padding: 2rem;
-  padding-left: 220px; /* 与 main 保持一致 */
+  padding-left: 220px;
   font-size: 1rem; 
   text-align: center; 
   opacity: .8; 
   color: var(--text-color-dark); 
 }
 
-/* --- Theme Toggle, Pre-loader, Cursor 等保持不变 --- */
 .theme-switcher {
   position: fixed;
   top: 1.5rem;
@@ -285,7 +280,6 @@ footer {
   height: 40px;
 }
 
-/* --- Collapse Functionality --- */
 .collapsible-header {
   cursor: pointer;
   display: flex;
@@ -304,21 +298,19 @@ footer {
   overflow: hidden;
   transition: max-height 0.5s ease-out, opacity 0.5s ease-out;
 }
-/* 为列表添加底部内边距，防止最后一个元素被遮挡 */
 .collapsible-content ul {
-  padding-bottom: 1rem; /* 增加此行 */
+  padding-bottom: 1rem;
 }
 .collapsible-content.is-expanded {
-  max-height: 5000px; /* 已修改：大幅增加高度以避免内容被截断 */
+  max-height: 5000px;
   opacity: 1;
 }
 
-/* --- Quick Navigation --- */
 .quick-nav {
   position: fixed !important;
   left: 0;
-  top: 50%; /* 改为垂直居中 */
-  transform: translateY(-50%); /* 配合 top: 50% 实现垂直居中 */
+  top: 50%;
+  transform: translateY(-50%);
   width: 180px;
   padding: 1.5rem 1rem;
   background-color: var(--card-bg);
@@ -357,12 +349,30 @@ footer {
   color: #fff;
 }
 
+/* --- 新增和整合的图片样式 --- */
+.image-container img {
+    flex: 1 1 200px; /* 默认图片可伸缩 */
+    min-width: 200px;
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+}
+
+.image-container .smaller-image {
+    width: 450px;           /* 在这里调整为你想要的尺寸 */
+    max-width: 90%;         /* 在小屏幕上防止溢出，更具响应性 */
+    flex-grow: 0;           /* 关键：阻止它伸展 */
+    flex-shrink: 0;         /* 关键：阻止它收缩 */
+    margin-left: auto;      /* 关键：与下一行一起实现居中 */
+    margin-right: auto;     /* 关键：与上一行一起实现居中 */
+}
+
 
 /* --- 媒体查询，用于响应式布局 --- */
 @media (max-width: 992px) {
   .quick-nav { display: none; }
   main, footer {
-    padding: 2rem; /* 在小屏幕上移除为导航栏留出的左侧边距 */
+    padding: 2rem;
   }
 }
 
@@ -375,7 +385,6 @@ footer {
   .collapsible-header { font-size: 1.7rem; }
 }
 
-/* 内部列表样式 */
 .project-header {
   display: flex;
   justify-content: space-between;
@@ -400,15 +409,4 @@ footer {
   margin-bottom: 0.2rem !important;
   box-shadow: none !important;
   transform: none !important;
-}
-
-/* Image Specific Styles */
-.image-container .smaller-image {
-    width: 300px; /* 设置图片宽度 */
-    flex: none; /* 阻止图片根据flex布局伸缩 */
-    object-fit: contain; /* 确保图片完整显示不被裁剪 */
-    max-width: 100%; /* 确保图片不会超出容器 */
-    height: auto; /* 高度自动，保持图片比例 */
-    display: block; /* 使图片独占一行 */
-    margin: 0 auto; /* 图片居中显示 */
 }
