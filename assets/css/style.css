@@ -5,7 +5,7 @@
   --bg: #eaeef1;              /* 柔和冷白底色，清新不刺眼 */
   --fg: #23272f;              /* 深灰蓝主文字，正式且易读 */
   --accent: #1a73e8;          /* Google风格活力蓝，专业且有科技感 */
-  --accent-secondary: #3d5cd5;/* 绿色点缀，活力且不跳脱 */rgb(61, 117, 213)rgb(99, 147, 229)
+  --accent-secondary: #3d5cd5;/* 绿色点缀，活力且不跳脱 */
   --highlight: #ffb300;       /* 温和橙色高亮，适合按钮/hover */
   --card-bg: #ffffff;         /* 卡片纯白，干净清爽 */
   --border-color: #e3e7ed;    /* 浅灰蓝边框，低调有层次 */
@@ -198,12 +198,12 @@ li::before {
   );
   transform: translate(-50%, -50%);
   transition: opacity 0.5s, transform 0.5s;
-  animation: pulseGlow 4s ease-in-out infinite;
+  animation: pulseGlow 2s ease-in-out infinite;
   z-index: 0; /* 确保辉光在最底层 */
 }
 @keyframes pulseGlow {
   0% {
-    opacity: 0.3;
+    opacity: 0.4;
     transform: translate(-50%, -50%) scale(0.9);
   }
   50% {
@@ -211,7 +211,7 @@ li::before {
     transform: translate(-50%, -50%) scale(1);
   }
   100% {
-    opacity: 0.3;
+    opacity: 0.4;
     transform: translate(-50%, -50%) scale(0.9);
   }
 }
