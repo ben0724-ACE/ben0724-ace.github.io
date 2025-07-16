@@ -314,6 +314,14 @@ li::before {
 .image-container .img-size-m { flex: 0 0 auto; width: 400px; max-width: 90%; }
 .image-container .img-size-l { flex: 0 0 auto; width: 550px; max-width: 90%; }
 
+/* --- 语言切换支持 --- */
+.lang-zh {
+    display: none; /* 默认隐藏中文 */
+}
+.lang-en, .lang-zh {
+    vertical-align: middle; /* 确保切换时对齐一致 */
+}
+
 /* --- 其他组件样式 --- */
 .award-item {
   display: flex;
@@ -353,6 +361,7 @@ footer {
   opacity: .8; 
   color: var(--text-color-dark); 
 }
+
 .theme-switcher {
   position: fixed;
   top: 1.5rem;
@@ -371,6 +380,33 @@ footer {
   transition: background-color 0.3s, color 0.3s;
 }
 .theme-switcher:hover { opacity: 0.9; }
+
+/* 新增：语言切换器样式 */
+.language-switcher {
+  position: fixed;
+  top: 1.5rem;
+  right: 5rem; /* 放在主题切换器左边 */
+  z-index: 1000;
+  cursor: pointer;
+  background: var(--card-bg);
+  padding: 0.5rem;
+  border-radius: 50%;
+  box-shadow: var(--shadow);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  transition: background-color 0.3s, color 0.3s;
+  color: var(--fg); /* 文字颜色跟随主题 */
+  font-weight: bold;
+  font-size: 1rem;
+}
+.language-switcher:hover { 
+  opacity: 0.9; 
+}
+
+
 .preloader {
   position: fixed;
   top: 0;
@@ -426,6 +462,7 @@ footer {
 }
 .collapse-icon {
   transition: transform 0.3s ease;
+  margin-left: auto; /* 确保图标在最右边 */
 }
 .collapsible-header.collapsed .collapse-icon {
   transform: rotate(-90deg);

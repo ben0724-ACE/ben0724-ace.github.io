@@ -54,21 +54,60 @@ document.addEventListener('DOMContentLoaded', () => {
         setTheme(isDarkMode ? 'light' : 'dark');
     });
 
+    // --- 语言切换器 ---
+    const languageSwitcher = document.getElementById('language-switcher');
+    const langEnElements = document.querySelectorAll('.lang-en');
+    const langZhElements = document.querySelectorAll('.lang-zh');
+    const cvButton = document.querySelector('a.btn[data-cv-en]');
+
+    const setLanguage = (lang) => {
+        if (lang === 'zh') {
+            langEnElements.forEach(el => el.style.display = 'none');
+            langZhElements.forEach(el => el.style.display = 'inline');
+            languageSwitcher.innerHTML = 'EN';
+            localStorage.setItem('language', 'zh');
+            if (cvButton) {
+                cvButton.href = cvButton.getAttribute('data-cv-zh');
+            }
+        } else {
+            langZhElements.forEach(el => el.style.display = 'none');
+            langEnElements.forEach(el => el.style.display = 'inline');
+            languageSwitcher.innerHTML = '中';
+            localStorage.setItem('language', 'en');
+            if (cvButton) {
+                cvButton.href = cvButton.getAttribute('data-cv-en');
+            }
+        }
+        feather.replace(); // 切换语言后重新渲染图标
+    };
+
+    const savedLanguage = localStorage.getItem('language');
+    // 初始隐藏中文, 避免闪烁
+    langZhElements.forEach(el => el.style.display = 'none');
+    setLanguage(savedLanguage || 'en'); 
+
+    languageSwitcher.addEventListener('click', () => {
+        const currentLang = localStorage.getItem('language') || 'en';
+        setLanguage(currentLang === 'en' ? 'zh' : 'en');
+    });
+
+
     // --- 滚动动画 ---
     gsap.utils.toArray('main li, .skill-category').forEach(elem => {
         gsap.from(elem, {
-            autoAlpha: 0,       // 从完全透明开始
-            y: 50,              // 从下方50像素的位置开始
-            duration: 1.2,      // 动画持续时间更长，显得更从容
-            ease: 'power3.out', // 使用一个更平滑、优雅的缓动函数
+            autoAlpha: 0,
+            y: 50,
+            duration: 1.2,
+            ease: 'power3.out',
             scrollTrigger: {
                 trigger: elem,
-                start: 'top 90%', // 当元素顶部进入视口90%时触发
-                toggleActions: 'play none none none', // 只播放一次
-                once: true        // 确保动画只触发一次，滚动回去不会重置
+                start: 'top 90%',
+                toggleActions: 'play none none none',
+                once: true
             }
         });
     });
+
     // --- 快速导航 --- 
     const quickNavLinks = document.querySelectorAll('.quick-nav a');
     const mainSections = document.querySelectorAll('main section.collapsible-section');
@@ -118,8 +157,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- 自定义光标 ---
     const cursor = document.querySelector('.cursor');
-    // **唯一的修改在这里：增加了对 .tags span 和 .project-tags .tag 的选择**
-    const interactiveElements = document.querySelectorAll('a, button, .collapsible-header, .theme-switcher, .tags span, .project-tags .tag');
+    const interactiveElements = document.querySelectorAll('a, button, .collapsible-header, .theme-switcher, .language-switcher, .tags span, .project-tags .tag');
 
     document.addEventListener('mousemove', e => {
         cursor.setAttribute('style', `top: ${e.clientY}px; left: ${e.clientX}px;`);
@@ -144,24 +182,15 @@ document.addEventListener('DOMContentLoaded', () => {
     const bgImages = gsap.utils.toArray('.header-bg-slider img');
     let currentIndex = 0;
 
-    // 设置第一张图片为可见
     gsap.set(bgImages[0], { autoAlpha: 1 });
 
     function crossfade() {
-        // 淡出当前图片
         gsap.to(bgImages[currentIndex], { autoAlpha: 0, duration: 1.5, ease: 'power2.inOut' });
-
-        // 确定下一张图片的索引
         currentIndex = (currentIndex + 1) % bgImages.length;
-
-        // 淡入下一张图片
         gsap.to(bgImages[currentIndex], { autoAlpha: 1, duration: 1.5, ease: 'power2.inOut' });
-        
-        // 安排下一次交叉淡入淡出
-        gsap.delayedCall(3, crossfade); // 每3秒切换一次图片
+        gsap.delayedCall(3, crossfade);
     }
 
-    // 开始幻灯片放映
     gsap.delayedCall(3, crossfade);
 
     // 初始化 Feather 图标
