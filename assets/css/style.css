@@ -570,3 +570,24 @@ footer {
 .details-list li::before, .details-list li::after {
     display: none !important;
 }
+
+/* ===超链接样式优化=== */
+a {
+  color: inherit; /* 继承父元素的颜色 */
+  text-decoration: none; /* 移除下划线 */
+  transition: color 0.2s ease-in-out; /* 平滑过渡效果 */
+}
+
+a:hover {
+  color: var(--accent); /* 鼠标悬停时使用主题强调色 */
+  text-decoration: none; /* 确保悬停时也没有下划线 */
+}
+
+/* 确保在 card-content-wrapper 内部的链接颜色与普通文本接近 */
+.card-content-wrapper a {
+  color: var(--fg); /* 主文字颜色 */
+}
+
+.card-content-wrapper a:hover {
+  color: var(--accent); /* 鼠标悬停时使用主题强调色 */
+}
