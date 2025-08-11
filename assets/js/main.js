@@ -200,6 +200,34 @@ document.addEventListener('DOMContentLoaded', () => {
 
     gsap.delayedCall(3, crossfade);
 
+    // --- Mouse follow: header parallax (desktop only) ---
+    if (window.matchMedia('(pointer:fine)').matches) {
+      const headerEl = document.querySelector('header');
+      const parallaxTargets = gsap.utils.toArray('.header-bg-slider img');
+      headerEl?.addEventListener('mousemove', (e) => {
+        const rect = headerEl.getBoundingClientRect();
+        const cx = (e.clientX - rect.left) / rect.width - 0.5;
+        const cy = (e.clientY - rect.top) / rect.height - 0.5;
+        parallaxTargets.forEach((img, i) => {
+          const depth = (i + 1) * 6; // small shift
+          gsap.to(img, { x: cx * depth, y: cy * depth, duration: 0.3, overwrite: true });
+        });
+      });
+
+      // --- Mouse follow: service card tilt ---
+      document.querySelectorAll('.service-card').forEach(card => {
+        card.addEventListener('mousemove', (e) => {
+          const r = card.getBoundingClientRect();
+          const rx = (e.clientY - r.top - r.height/2) / r.height * -8; // tilt X
+          const ry = (e.clientX - r.left - r.width/2) / r.width * 8;   // tilt Y
+          gsap.to(card, { rotateX: rx, rotateY: ry, transformPerspective: 800, duration: 0.2, ease: 'power2.out' });
+        });
+        card.addEventListener('mouseleave', () => {
+          gsap.to(card, { rotateX: 0, rotateY: 0, duration: 0.4, ease: 'power2.out' });
+        });
+      });
+    }
+
     // --- Mini Terminal playful interaction ---
     function typeText(el, text, speed = 70) {
         if (!el) return;
