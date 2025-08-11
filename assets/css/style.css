@@ -649,3 +649,8 @@ header .social{margin-top:1rem}
   .service-card:hover{transform:none}
   .service-card::after{display:none}
 }
+
+/* Avatar container with overlay */
+.avatar-box{position:relative;display:inline-block}
+.avatar-rays{position:absolute;inset:0;pointer-events:none;mix-blend-mode:screen;opacity:.85}
+.avatar-rays line{stroke-width:2.2;stroke-linecap:round;filter:drop-shadow(0 0 6px rgba(255,255,255,.35))}

@@ -204,6 +204,24 @@ document.addEventListener('DOMContentLoaded', () => {
     if (window.matchMedia('(pointer:fine)').matches) {
       const headerEl = document.querySelector('header');
       const parallaxTargets = gsap.utils.toArray('.header-bg-slider img');
+
+      // Build avatar rays
+      const raysSvg = document.querySelector('.avatar-rays');
+      const rayColors = ['#FF5F56','#FFBD2E','#27C93F','#4F9CFF','#A86CF9','#FF7AB6'];
+      const rays = [];
+      if (raysSvg) {
+        for (let i = 0; i < 10; i++) {
+          const line = document.createElementNS('http://www.w3.org/2000/svg','line');
+          line.setAttribute('x1','100');
+          line.setAttribute('y1','100');
+          line.setAttribute('x2', String(100 + Math.cos((i/10)*Math.PI*2)*80));
+          line.setAttribute('y2', String(100 + Math.sin((i/10)*Math.PI*2)*80));
+          line.setAttribute('stroke', rayColors[i % rayColors.length]);
+          raysSvg.appendChild(line);
+          rays.push(line);
+        }
+      }
+
       headerEl?.addEventListener('mousemove', (e) => {
         const rect = headerEl.getBoundingClientRect();
         const cx = (e.clientX - rect.left) / rect.width - 0.5;
@@ -212,6 +230,26 @@ document.addEventListener('DOMContentLoaded', () => {
           const depth = (i + 1) * 16; // stronger
           gsap.to(img, { x: cx * depth, y: cy * depth, scale: 1.03, transformOrigin: 'center', duration: 0.25, overwrite: true });
         });
+
+        // Update avatar rays to point toward mouse
+        if (raysSvg && rays.length) {
+          const box = raysSvg.getBoundingClientRect();
+          const mx = (e.clientX - box.left);
+          const my = (e.clientY - box.top);
+          const cx2 = 100; const cy2 = 100; // svg viewbox center
+          rays.forEach((line, idx) => {
+            const t = idx / rays.length;
+            const blendX = cx2 + (mx / box.width * 200 - cx2) * 0.85;
+            const blendY = cy2 + (my / box.height * 200 - cy2) * 0.85;
+            const ang = t * Math.PI * 2;
+            const ox = cx2 + Math.cos(ang) * 12;
+            const oy = cy2 + Math.sin(ang) * 12;
+            line.setAttribute('x1', String(ox));
+            line.setAttribute('y1', String(oy));
+            line.setAttribute('x2', String(blendX));
+            line.setAttribute('y2', String(blendY));
+          });
+        }
       });
 
       document.querySelectorAll('.service-card').forEach(card => {
