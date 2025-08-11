@@ -21,6 +21,7 @@
 <aside class="quick-nav">
   <h3><span class="lang-en">Contents</span><span class="lang-zh">目录</span></h3>
   <ul>
+    <li><a href="#about"><span class="lang-en">About</span><span class="lang-zh">关于我</span></a></li>
     <li><a href="#education"><span class="lang-en">Education</span><span class="lang-zh">教育背景</span></a></li>
     <li><a href="#research"><span class="lang-en">Research & Publications</span><span class="lang-zh">科研经历</span></a></li>
     <li><a href="#projects"><span class="lang-en">Key Engineering & Competition Projects</span><span class="lang-zh">工程与竞赛</span></a></li>
@@ -46,12 +47,83 @@
       <i data-feather="mail" style="vertical-align: middle;"></i> haoran.qi0724@gmail.com
     </a>
   </p>
+  <p class="tagline">
+    <span class="lang-en">AI + Robotics + Automation — I build practical intelligent systems that work in the real world.</span>
+    <span class="lang-zh">AI × 机器人 × 自动化 —— 我做能落地的智能系统。</span>
+  </p>
+  <div class="hero-tags">
+    <span class="pill"><i data-feather="cpu"></i><span class="lang-en">Computer Vision</span><span class="lang-zh">计算机视觉</span></span>
+    <span class="pill"><i data-feather="git-branch"></i><span class="lang-en">Robotics/ROS</span><span class="lang-zh">机器人/ROS</span></span>
+    <span class="pill"><i data-feather="activity"></i><span class="lang-en">Industrial Automation</span><span class="lang-zh">工业自动化</span></span>
+    <span class="pill"><i data-feather="bar-chart-2"></i><span class="lang-en">Data Analysis</span><span class="lang-zh">数据分析</span></span>
+  </div>
+  <div class="hero-ctas">
+    <a class="btn" href="CV.pdf" data-cv-en="CV.pdf" data-cv-zh="简历.pdf" target="_blank">
+      <i data-feather="download"></i>
+      <span class="lang-en">Download CV</span><span class="lang-zh">下载简历</span>
+    </a>
+    <a class="btn secondary" href="mailto:haoran.qi0724@gmail.com">
+      <i data-feather="send"></i>
+      <span class="lang-en">Contact Me</span><span class="lang-zh">联系我</span>
+    </a>
+  </div>
   <div class="social">
     <a href="https://github.com/ben0724-ACE" title="GitHub" target="_blank"><i data-feather="github"></i></a>
   </div>
 </header>
 
 <main>
+  <section id="about">
+    <h2>
+      <span class="lang-en">What I Do</span><span class="lang-zh">我能做什么</span>
+    </h2>
+    <div class="service-grid">
+      <div class="service-card">
+        <i data-feather="camera"></i>
+        <h3><span class="lang-en">Vision Systems</span><span class="lang-zh">视觉系统</span></h3>
+        <p>
+          <span class="lang-en">OpenCV/YOLO solutions for detection, tracking, and measurement on edge devices.</span>
+          <span class="lang-zh">基于OpenCV/YOLO的检测、追踪与测量，适配边缘设备。</span>
+        </p>
+      </div>
+      <div class="service-card">
+        <i data-feather="cpu"></i>
+        <h3><span class="lang-en">Robotics & ROS</span><span class="lang-zh">机器人与ROS</span></h3>
+        <p>
+          <span class="lang-en">Navigation, manipulation, and perception pipelines for real tasks.</span>
+          <span class="lang-zh">导航、操控与感知流程，面向真实任务。</span>
+        </p>
+      </div>
+      <div class="service-card">
+        <i data-feather="box"></i>
+        <h3><span class="lang-en">Industrial Automation</span><span class="lang-zh">工业自动化</span></h3>
+        <p>
+          <span class="lang-en">Siemens PLC + TIA Portal, robust networks, and on-site commissioning.</span>
+          <span class="lang-zh">西门子PLC与TIA Portal，工业网络与现场调试。</span>
+        </p>
+      </div>
+      <div class="service-card">
+        <i data-feather="bar-chart-2"></i>
+        <h3><span class="lang-en">Data & Research</span><span class="lang-zh">数据与研究</span></h3>
+        <p>
+          <span class="lang-en">Modeling, experimentation, and reproducible analysis for decisions and papers.</span>
+          <span class="lang-zh">建模与实验，数据驱动的决策与论文产出。</span>
+        </p>
+      </div>
+    </div>
+
+    <div class="terminal" id="mini-terminal">
+      <div class="terminal-header">
+        <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+        <span class="title"><span class="lang-en">Console</span><span class="lang-zh">命令行</span></span>
+      </div>
+      <div class="terminal-body">
+        <div class="line"><span class="prompt">$</span> <span id="terminal-input"></span></div>
+        <div class="line result" id="terminal-output"></div>
+      </div>
+    </div>
+  </section>
+
   <section class="collapsible-section" id="education">
     <h2 class="collapsible-header collapsed">
         <span class="lang-en">Education</span><span class="lang-zh">教育背景</span> 
@@ -78,8 +150,8 @@
                     </span>
                 </div>
                 <ul class="details-list">
-                    <li><strong><span class="lang-en">Average Overall Score:</span><span class="lang-zh">均分:</span></strong> <strong>88.03/100</strong></li>
-                    <li><strong><span class="lang-en">Core Courses:</span><span class="lang-zh">核心课程:</span></strong> <span class="lang-en">Signals and Systems (<strong>93</strong>), Linear Algebra (<strong>92</strong>), Embedded System Design (<strong>A</strong>), Digital Image Processing (<strong>A</strong>)</span><span class="lang-zh">信号与系统 (<strong>93</strong>), 线性代数 (<strong>92</strong>), 嵌入式系统 (<strong>A</strong>), 数字图像处理 (<strong>A</strong>)</span></li>
+                    <li><strong><span class="lang-en">Average Overall Score:</span><span class="lang-zh">均分:</span></strong> <strong>88.05/100</strong></li>
+                    <li><strong><span class="lang-en">Core Courses:</span><span class="lang-zh">核心课程:</span></strong> <span class="lang-en">Signals and Systems (<strong>93</strong>), Linear Algebra (<strong>92</strong>), Embedded System Design (<strong>A</strong>), Digital Image Processing (<strong>A</strong>), Modern Control Theory (<strong>88</strong>)</span><span class="lang-zh">信号与系统 (<strong>93</strong>), 线性代数 (<strong>92</strong>), 嵌入式系统 (<strong>A</strong>), 数字图像处理 (<strong>A</strong>), 现代控制理论 (<strong>88</strong>)</span></li>
                 </ul>
             </div></li>
         </ul>
@@ -107,7 +179,7 @@
           </span>
           <ul class="details-list">
             <li><span class="lang-en"><strong>Authored</strong> a first-author paper (<strong><a href="https://www.dxhx.pku.edu.cn/CN/10.12461/PKU.DXHX202404036" target="_blank" rel="noopener noreferrer">DOI: 10.12461/PKU.DXHX202404036</a></strong>) detailing a novel vision-based concentration detection device.</span><span class="lang-zh"><strong>作为第一作者</strong>撰写论文(<strong><a href="https://www.dxhx.pku.edu.cn/CN/10.12461/PKU.DXHX202404036" target="_blank" rel="noopener noreferrer">DOI: 10.12461/PKU.DXHX202404036</a></strong>)，详细介绍了一种基于视觉的创新浓度检测装置。</span></li>
-            <li><span class="lang-en"><strong>Architected</strong> a vision-based system using a Raspberry Pi and OpenCV, establishing a linear model between solution color (HSV) and concentration based on the Lambert-Beer law to <strong>achieve a 90% accuracy rate</strong>.</span><span class="lang-zh"><strong>构建</strong>了基于树莓派与OpenCV的视觉系统，依据朗伯-比尔定律建立溶液颜色(HSV)与浓度的线性模型，<strong>准确率达90%</strong>。</span></li>
+            <li><span class="lang-en"><strong>Engineered</strong> a Raspberry Pi + OpenCV vision system; built a regression between solution color (HSV) and concentration based on Lambert–Beer law, achieving a correlation coefficient <strong>R² > 0.99</strong>.</span><span class="lang-zh"><strong>开发</strong>了树莓派+OpenCV视觉系统；依据朗伯–比尔定律建立颜色(HSV)与浓度的回归关系，相关系数<strong>R² > 0.99</strong>。</span></li>
             <li><span class="lang-en"><strong>Devised</strong> a custom 3D-printed black-box environment and disabled camera auto-white-balance to eliminate light interference, ensuring data integrity and measurement repeatability.</span><span class="lang-zh"><strong>设计</strong>了定制的3D打印黑箱环境，并禁用相机自动白平衡以消除光线干扰，确保了数据完整性和测量可重复性。</span></li>
           </ul>
           <div class="image-container">
@@ -325,7 +397,7 @@
       <img src="assets/img/other.gif" alt="NUEDC GIF" >
       <img src="assets/img/robocup.gif" alt="RoboCup GIF" >
     </div>
-    <a class="btn" href="resume8.pdf" data-cv-en="resume8.pdf" data-cv-zh="简历.pdf" target="_blank">
+    <a class="btn" href="CV.pdf" data-cv-en="CV.pdf" data-cv-zh="简历.pdf" target="_blank">
         <span class="lang-en">Download CV (PDF)</span>
         <span class="lang-zh">下载简历 (PDF)</span>
     </a>

@@ -58,7 +58,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const languageSwitcher = document.getElementById('language-switcher');
     const langEnElements = document.querySelectorAll('.lang-en');
     const langZhElements = document.querySelectorAll('.lang-zh');
-    const cvButton = document.querySelector('a.btn[data-cv-en]');
+    const cvButtons = document.querySelectorAll('a.btn[data-cv-en]');
 
     const setLanguage = (lang) => {
         if (lang === 'zh') {
@@ -66,17 +66,13 @@ document.addEventListener('DOMContentLoaded', () => {
             langZhElements.forEach(el => el.style.display = 'inline');
             languageSwitcher.innerHTML = 'EN';
             localStorage.setItem('language', 'zh');
-            if (cvButton) {
-                cvButton.href = cvButton.getAttribute('data-cv-zh');
-            }
+            cvButtons.forEach(btn => btn.setAttribute('href', btn.getAttribute('data-cv-zh')));
         } else {
             langZhElements.forEach(el => el.style.display = 'none');
             langEnElements.forEach(el => el.style.display = 'inline');
             languageSwitcher.innerHTML = '中';
             localStorage.setItem('language', 'en');
-            if (cvButton) {
-                cvButton.href = cvButton.getAttribute('data-cv-en');
-            }
+            cvButtons.forEach(btn => btn.setAttribute('href', btn.getAttribute('data-cv-en')));
         }
         feather.replace(); // 切换语言后重新渲染图标
     };
@@ -93,11 +89,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     // --- 滚动动画 ---
-    gsap.utils.toArray('main li, .skill-category').forEach(elem => {
+    gsap.utils.toArray('main li, .skill-category, .service-card').forEach(elem => {
         gsap.from(elem, {
             autoAlpha: 0,
             y: 50,
-            duration: 1.2,
+            duration: 1.0,
             ease: 'power3.out',
             scrollTrigger: {
                 trigger: elem,
@@ -110,7 +106,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- 快速导航 --- 
     const quickNavLinks = document.querySelectorAll('.quick-nav a');
-    const mainSections = document.querySelectorAll('main section.collapsible-section');
+    const mainSections = document.querySelectorAll('main section.collapsible-section, #about');
     
     quickNavLinks.forEach(link => {
         link.addEventListener('click', (e) => {
@@ -157,7 +153,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- 自定义光标 ---
     const cursor = document.querySelector('.cursor');
-    const interactiveElements = document.querySelectorAll('a, button, .collapsible-header, .theme-switcher, .language-switcher, .tags span, .project-tags .tag');
+    const interactiveElements = document.querySelectorAll('a, button, .collapsible-header, .theme-switcher, .language-switcher, .tags span, .project-tags .tag, .service-card');
 
     document.addEventListener('mousemove', e => {
         cursor.setAttribute('style', `top: ${e.clientY}px; left: ${e.clientX}px;`);
@@ -192,6 +188,61 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     gsap.delayedCall(3, crossfade);
+
+    // --- Mini Terminal playful interaction ---
+    const terminalInput = document.getElementById('terminal-input');
+    const terminalOutput = document.getElementById('terminal-output');
+    const phrases = [
+        { en: 'hi', zh: '你好' },
+        { en: 'help', zh: '帮助' },
+        { en: 'skills', zh: '技能' }
+    ];
+
+    function typeText(el, text, speed = 80) {
+        el.textContent = '';
+        let i = 0;
+        const timer = setInterval(() => {
+            el.textContent += text[i];
+            i++;
+            if (i >= text.length) clearInterval(timer);
+        }, speed);
+    }
+
+    function showHelp(lang) {
+        terminalOutput.textContent = lang === 'zh' 
+          ? '可用命令: help, skills, about' 
+          : 'Commands: help, skills, about';
+    }
+
+    function showSkills(lang) {
+        terminalOutput.textContent = lang === 'zh' 
+          ? '视觉/ROS/自动化/数据分析' 
+          : 'Vision / ROS / Automation / Data Analysis';
+    }
+
+    // Initial greeting
+    const lang = localStorage.getItem('language') || 'en';
+    typeText(terminalInput, (lang === 'zh') ? 'help' : 'help');
+    setTimeout(() => showHelp(lang), 1400);
+
+    // Click to cycle demo commands
+    document.getElementById('mini-terminal')?.addEventListener('click', () => {
+        const current = terminalInput.textContent.trim();
+        if (current === 'help') {
+            typeText(terminalInput, 'skills');
+            setTimeout(() => showSkills(localStorage.getItem('language') || 'en'), 1200);
+        } else if (current === 'skills') {
+            typeText(terminalInput, 'about');
+            setTimeout(() => {
+                terminalOutput.textContent = (localStorage.getItem('language') || 'en') === 'zh' 
+                  ? '我做能落地的智能系统。' 
+                  : 'I build practical intelligent systems.';
+            }, 1200);
+        } else {
+            typeText(terminalInput, 'help');
+            setTimeout(() => showHelp(localStorage.getItem('language') || 'en'), 1400);
+        }
+    });
 
     // 初始化 Feather 图标
     feather.replace();

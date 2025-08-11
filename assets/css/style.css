@@ -102,7 +102,13 @@ header > * {
     opacity: 0;
 }
 h1 { font-size: 3rem; margin-bottom: .5rem; font-weight: 700; text-shadow: 1px 1px 3px rgba(0,0,0,0.4); }
-header p { font-size: 1.2rem; color: #e0e0e0; text-shadow: 1px 1px 3px rgba(0,0,0,0.4);}
+header p { font-size: 1.2rem; color: #e0e0e0; text-shadow: 1px 1px 3px rgba(0,0,0,0.4);} 
+.tagline{margin-top:.5rem;color:#e6edf5;opacity:.95}
+.hero-tags{margin-top:1rem;display:flex;gap:.6rem;flex-wrap:wrap;justify-content:center}
+.pill{display:inline-flex;gap:.35rem;align-items:center;padding:.4rem .7rem;border-radius:999px;background:rgba(255,255,255,.12);backdrop-filter: blur(6px);border:1px solid rgba(255,255,255,.25);font-size:.9rem}
+.hero-ctas{margin-top:1.2rem;display:flex;gap:.8rem;justify-content:center;flex-wrap:wrap}
+.btn.secondary{background:transparent;color:#fff;border:1px solid rgba(255,255,255,.6)}
+.btn.secondary:hover{background:var(--accent);border-color:var(--accent);}
 .social a {
   margin: 0 .8rem;
   color: #fff;
@@ -590,4 +596,26 @@ a:hover {
 
 .card-content-wrapper a:hover {
   color: var(--accent); /* 鼠标悬停时使用主题强调色 */
+}
+
+/* About / Services */
+.service-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:1rem;margin-top:1rem}
+.service-card{background:var(--card-bg);border:1px solid var(--border-color);border-radius:12px;padding:1.2rem;box-shadow:var(--shadow);transition:transform .25s ease, box-shadow .25s ease}
+.service-card:hover{transform:translateY(-4px);box-shadow:0 10px 22px rgba(30,42,80,.12)}
+.service-card h3{display:flex;align-items:center;gap:.5rem;color:var(--accent);margin:.4rem 0 0.5rem}
+.service-card p{color:var(--text-color-light);font-size:.98rem}
+.service-card i{color:var(--accent)}
+
+/* Mini Terminal */
+.terminal{margin-top:1.2rem;border:1px solid var(--border-color);border-radius:12px;overflow:hidden;background:var(--card-bg);box-shadow:var(--shadow)}
+.terminal-header{display:flex;align-items:center;gap:.4rem;padding:.5rem .8rem;background:linear-gradient(180deg, rgba(0,0,0,.08), rgba(0,0,0,.02));border-bottom:1px solid var(--border-color)}
+.terminal-header .dot{width:10px;height:10px;border-radius:50%;display:inline-block}
+.terminal-header .dot.red{background:#ff5f56}.terminal-header .dot.yellow{background:#ffbd2e}.terminal-header .dot.green{background:#27c93f}
+.terminal-header .title{margin-left:.6rem;color:var(--text-color-light);font-weight:600}
+.terminal-body{padding:1rem;font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;font-size:.95rem}
+.terminal .prompt{color:var(--accent)}
+.terminal .result{margin-top:.4rem;color:var(--text-color-light)}
+
+@media (max-width: 600px){
+  .pill{font-size:.85rem}
 }

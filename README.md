@@ -48,7 +48,7 @@ This is a modern personal homepage project showcasing my education background, r
 my-homepage/
 ├── index.html              # Main page file
 ├── README.md              # Project documentation
-├── resume8.pdf            # Personal CV PDF
+├── CV.pdf                 # Personal CV PDF
 ├── assets/
 │   ├── css/
 │   │   └── style.css      # Stylesheet file
@@ -80,13 +80,20 @@ Modify the following content in the `index.html` file:
 - Name and contact information
 - Avatar image path
 - Social media links
-- CV PDF file
+- CV PDF file (now `CV.pdf`)
+
+### About / Services
+- Edit the `#about` section cards to reflect your focus areas.
+- The mini-terminal supports playful demo commands. Click it to cycle: `help → skills → about`.
 
 ### Adjust Styles
 In the `assets/css/style.css` file:
 - Modify CSS variables to adjust theme colors
 - Adjust font sizes and spacing
 - Customize animation effects
+- Hero additions: `.tagline`, `.hero-tags .pill`, `.hero-ctas`, `.btn.secondary`
+- Services: `.service-grid`, `.service-card`
+- Terminal: `.terminal`, `.terminal-header`, `.terminal-body`
 - **Important Note on Asset Paths**: When referencing images, fonts, or other assets in CSS, ensure you use the correct relative paths. For example, if your `style.css` is in `assets/css/` and your image is in `assets/img/`, the path in CSS should be `../img/your-image.jpg` (using `../` to go up one directory).
 
 ### Add New Features
@@ -102,6 +109,12 @@ In the `assets/js/main.js` file:
 - Lazy loading and preloading strategies
 
 ## Changelog
+
+### v1.3.0 (2025-08-11)
+- Added hero tagline, capability pills, and dual CTA for faster self-intro and contact
+- Introduced About/What I Do section with four concise service cards
+- Added playful mini-terminal interaction with demo commands (help/skills/about)
+- Updated CV link to `CV.pdf` and README file structure accordingly
 
 ### v1.2.0 (2025-07-15)
 - Further optimized webpage aesthetics and adjusted font colors for enhanced readability
@@ -176,7 +189,7 @@ Welcome to submit Issues and Pull Requests to improve this project!
 my-homepage/
 ├── index.html              # 主页文件
 ├── README.md              # 项目文档
-├── resume8.pdf            # 个人简历PDF
+├── CV.pdf                 # 个人简历PDF
 ├── assets/
 │   ├── css/
 │   │   └── style.css      # 样式表文件
@@ -208,13 +221,20 @@ my-homepage/
 - 姓名和联系方式
 - 头像图片路径
 - 社交媒体链接
-- 简历PDF文件
+- 简历PDF文件（现为 `CV.pdf`）
+
+### 关于我 / 服务
+- 编辑 `#about` 版块服务卡片，贴合你的优势方向。
+- 迷你终端支持趣味演示命令，点击循环：`help → skills → about`。
 
 ### 调整样式
 在 `assets/css/style.css` 文件中：
 - 修改CSS变量以调整主题颜色
 - 调整字体大小和间距
 - 自定义动画效果
+- 页头新增：`.tagline`、`.hero-tags .pill`、`.hero-ctas`、`.btn.secondary`
+- 服务区：`.service-grid`、`.service-card`
+- 终端：`.terminal`、`.terminal-header`、`.terminal-body`
 - **关于资源路径的重要说明**: 在CSS中引用图片、字体或其他资源时，请确保使用正确的相对路径。例如，如果您的 `style.css` 在 `assets/css/` 目录下，而您的图片在 `assets/img/` 目录下，那么CSS中的路径应为 `../img/your-image.jpg`（使用 `../` 返回上一级目录）。
 
 ### 添加新功能
@@ -230,6 +250,12 @@ my-homepage/
 - 懒加载和预加载策略
 
 ## 更新日志
+
+### v1.3.0 (2025-08-11)
+- 增加页头标语、能力标签与双CTA，快速传达“你是谁、能做什么”
+- 新增“关于我/我能做什么”版块，4张服务卡片概述优势能力
+- 新增趣味迷你终端交互（help/skills/about）
+- 更新简历链接为 `CV.pdf` 并同步README文件结构
 
 ### v1.1.0 (2025-07-15)
 - 进一步优化了网页美观度，调整了字体颜色以增强可读性
