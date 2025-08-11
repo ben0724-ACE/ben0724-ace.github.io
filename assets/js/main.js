@@ -60,6 +60,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const langZhElements = document.querySelectorAll('.lang-zh');
     const cvButtons = document.querySelectorAll('a.btn[data-cv-en]');
 
+    // --- Mini Terminal refs (moved earlier to avoid temporal dead zone) ---
+    const terminalInput = document.getElementById('terminal-input');
+    const terminalOutput = document.getElementById('terminal-output');
+    const terminalCaret = document.getElementById('terminal-caret');
+    let typerTimer = null;
+
     const setLanguage = (lang) => {
         if (lang === 'zh') {
             langEnElements.forEach(el => el.style.display = 'none');
@@ -195,11 +201,6 @@ document.addEventListener('DOMContentLoaded', () => {
     gsap.delayedCall(3, crossfade);
 
     // --- Mini Terminal playful interaction ---
-    const terminalInput = document.getElementById('terminal-input');
-    const terminalOutput = document.getElementById('terminal-output');
-    const terminalCaret = document.getElementById('terminal-caret');
-    let typerTimer = null;
-
     function typeText(el, text, speed = 70) {
         if (!el) return;
         if (typerTimer) clearInterval(typerTimer);
