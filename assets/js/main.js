@@ -209,23 +209,22 @@ document.addEventListener('DOMContentLoaded', () => {
         const cx = (e.clientX - rect.left) / rect.width - 0.5;
         const cy = (e.clientY - rect.top) / rect.height - 0.5;
         parallaxTargets.forEach((img, i) => {
-          const depth = (i + 1) * 10; // slightly stronger
-          gsap.to(img, { x: cx * depth, y: cy * depth, scale: 1.02, transformOrigin: 'center', duration: 0.3, overwrite: true });
+          const depth = (i + 1) * 16; // stronger
+          gsap.to(img, { x: cx * depth, y: cy * depth, scale: 1.03, transformOrigin: 'center', duration: 0.25, overwrite: true });
         });
       });
 
-      // --- Mouse follow: service card tilt + light follow ---
       document.querySelectorAll('.service-card').forEach(card => {
         card.addEventListener('mousemove', (e) => {
           const r = card.getBoundingClientRect();
-          const rx = (e.clientY - r.top - r.height/2) / r.height * -10;
-          const ry = (e.clientX - r.left - r.width/2) / r.width * 10;
+          const rx = (e.clientY - r.top - r.height/2) / r.height * -12;
+          const ry = (e.clientX - r.left - r.width/2) / r.width * 12;
           card.style.setProperty('--mx', `${e.clientX - r.left}px`);
           card.style.setProperty('--my', `${e.clientY - r.top}px`);
-          gsap.to(card, { rotateX: rx, rotateY: ry, transformPerspective: 900, duration: 0.2, ease: 'power2.out' });
+          gsap.to(card, { rotateX: rx, rotateY: ry, boxShadow: '0 18px 32px rgba(0,0,0,0.18)', transformPerspective: 1000, duration: 0.18, ease: 'power2.out' });
         });
         card.addEventListener('mouseleave', () => {
-          gsap.to(card, { rotateX: 0, rotateY: 0, duration: 0.4, ease: 'power2.out' });
+          gsap.to(card, { rotateX: 0, rotateY: 0, boxShadow: 'var(--shadow)', duration: 0.35, ease: 'power2.out' });
         });
       });
     }
