@@ -74,7 +74,12 @@ document.addEventListener('DOMContentLoaded', () => {
             localStorage.setItem('language', 'en');
             cvButtons.forEach(btn => btn.setAttribute('href', btn.getAttribute('data-cv-en')));
         }
-        feather.replace(); // 切换语言后重新渲染图标
+        // sync terminal text if present
+        if (terminalOutput) {
+            const L = localStorage.getItem('language') || 'en';
+            terminalOutput.textContent = (L === 'zh') ? '可用命令: help, skills, about' : 'Commands: help, skills, about';
+        }
+        feather.replace();
     };
 
     const savedLanguage = localStorage.getItem('language');
@@ -192,57 +197,59 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Mini Terminal playful interaction ---
     const terminalInput = document.getElementById('terminal-input');
     const terminalOutput = document.getElementById('terminal-output');
-    const phrases = [
-        { en: 'hi', zh: '你好' },
-        { en: 'help', zh: '帮助' },
-        { en: 'skills', zh: '技能' }
-    ];
+    const terminalCaret = document.getElementById('terminal-caret');
+    let typerTimer = null;
 
-    function typeText(el, text, speed = 80) {
+    function typeText(el, text, speed = 70) {
+        if (!el) return;
+        if (typerTimer) clearInterval(typerTimer);
         el.textContent = '';
         let i = 0;
-        const timer = setInterval(() => {
-            el.textContent += text[i];
+        typerTimer = setInterval(() => {
+            el.textContent += text[i] || '';
             i++;
-            if (i >= text.length) clearInterval(timer);
+            if (i >= text.length) { clearInterval(typerTimer); typerTimer = null; }
         }, speed);
     }
 
     function showHelp(lang) {
+        if (!terminalOutput) return;
         terminalOutput.textContent = lang === 'zh' 
           ? '可用命令: help, skills, about' 
           : 'Commands: help, skills, about';
     }
 
     function showSkills(lang) {
+        if (!terminalOutput) return;
         terminalOutput.textContent = lang === 'zh' 
           ? '视觉/ROS/自动化/数据分析' 
           : 'Vision / ROS / Automation / Data Analysis';
     }
 
-    // Initial greeting
-    const lang = localStorage.getItem('language') || 'en';
-    typeText(terminalInput, (lang === 'zh') ? 'help' : 'help');
-    setTimeout(() => showHelp(lang), 1400);
+    if (terminalInput) {
+      const lang = localStorage.getItem('language') || 'en';
+      typeText(terminalInput, 'help');
+      setTimeout(() => showHelp(lang), 1200);
 
-    // Click to cycle demo commands
-    document.getElementById('mini-terminal')?.addEventListener('click', () => {
-        const current = terminalInput.textContent.trim();
-        if (current === 'help') {
-            typeText(terminalInput, 'skills');
-            setTimeout(() => showSkills(localStorage.getItem('language') || 'en'), 1200);
-        } else if (current === 'skills') {
-            typeText(terminalInput, 'about');
-            setTimeout(() => {
-                terminalOutput.textContent = (localStorage.getItem('language') || 'en') === 'zh' 
-                  ? '我做能落地的智能系统。' 
-                  : 'I build practical intelligent systems.';
-            }, 1200);
-        } else {
-            typeText(terminalInput, 'help');
-            setTimeout(() => showHelp(localStorage.getItem('language') || 'en'), 1400);
-        }
-    });
+      document.getElementById('mini-terminal')?.addEventListener('click', () => {
+          const L = localStorage.getItem('language') || 'en';
+          const current = terminalInput.textContent.trim();
+          if (current === 'help') {
+              typeText(terminalInput, 'skills');
+              setTimeout(() => showSkills(L), 900);
+          } else if (current === 'skills') {
+              typeText(terminalInput, 'about');
+              setTimeout(() => {
+                  if (terminalOutput) terminalOutput.textContent = (L === 'zh')
+                    ? '我做能落地的智能系统。'
+                    : 'I build practical intelligent systems.';
+              }, 900);
+          } else {
+              typeText(terminalInput, 'help');
+              setTimeout(() => showHelp(L), 1200);
+          }
+      });
+    }
 
     // 初始化 Feather 图标
     feather.replace();

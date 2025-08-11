@@ -48,8 +48,8 @@
     </a>
   </p>
   <p class="tagline">
-    <span class="lang-en">AI + Robotics + Automation — I build practical intelligent systems that work in the real world.</span>
-    <span class="lang-zh">AI × 机器人 × 自动化 —— 我做能落地的智能系统。</span>
+    <span class="lang-en">AI + Robotics + Automation</span>
+    <span class="lang-zh">AI × 机器人 × 自动化</span>
   </p>
   <div class="hero-tags">
     <span class="pill"><i data-feather="cpu"></i><span class="lang-en">Computer Vision</span><span class="lang-zh">计算机视觉</span></span>
@@ -118,7 +118,7 @@
         <span class="title"><span class="lang-en">Console</span><span class="lang-zh">命令行</span></span>
       </div>
       <div class="terminal-body">
-        <div class="line"><span class="prompt">$</span> <span id="terminal-input"></span></div>
+        <div class="line"><span class="prompt">$</span> <span id="terminal-input"></span><span id="terminal-caret" class="caret"></span></div>
         <div class="line result" id="terminal-output"></div>
       </div>
     </div>
@@ -203,7 +203,7 @@
           </span>
           <ul class="details-list">
             <li><span class="lang-en"><strong>Co-developed</strong> the YOLOv8-MAT-2H model by integrating MSBlock and ADown modules to enhance feature extraction for small, complex targets in ecological monitoring.</span><span class="lang-zh"><strong>合作开发</strong>了YOLOv8-MAT-2H模型，通过集成MSBlock和ADown模块增强了对生态监测中小而复杂目标的特征提取能力。</span></li>
-            <li><span class="lang-en"><strong>Optimized</strong> the model to <strong>improve mAP@0.5:0.95 from 0.704 to 0.722 (+2.57%)</strong> while simultaneously <strong>reducing model parameters by 20% and GFLOPS by 10%</strong>, ideal for edge device deployment.</span><span class="lang-zh"><strong>优化</strong>模型将<strong>mAP@0.5:0.95从0.704提升至0.722(+2.57%)</strong>，同时<strong>将模型参数减少20%，GFLOPS减少10%</strong>，完美适用于边缘设备部署。</span></li>
+            <li><span class="lang-en"><strong>Optimized</strong> the model to <strong>improve mAP@0.5:0.95 by 2.57%</strong> while simultaneously <strong>reducing model parameters by 20%</strong>, ideal for edge device deployment.</span><span class="lang-zh"><strong>优化</strong>模型使<strong>mAP@0.5:0.95提升2.57%</strong>，同时<strong>将模型参数减少20%</strong>，适合边缘设备部署。</span></li>
             <li><span class="lang-en"><strong>Spearheaded</strong> strategies to handle environmental occlusions in real-world river settings, contributing directly to the system's final operational <strong>accuracy of nearly 80%</strong> for the Beijing Water Authority.</span><span class="lang-zh"><strong>主导</strong>制定了应对真实河流环境中遮挡问题的策略，为系统最终达到<strong>接近80%的业务准确率</strong>(服务于北京市水务局)做出了直接贡献。</span></li>
           </ul>
           <div class="image-container">
@@ -282,7 +282,7 @@
           <ul class="details-list">
             <li><span class="lang-en"><strong>Directed the team</strong> and developed main functional packages using ROS for a quadruped robot to perform autonomous navigation, object manipulation, and animal recognition.</span><span class="lang-zh"><strong>指导团队</strong>并使用ROS为主功能包进行开发，使四足机器人能够执行自主导航、物体操纵和动物识别。</span></li>
             <li><span class="lang-en"><strong>Engineered an innovative solution</strong> to overcome hardware limitations of the Raspberry Pi by implementing a "position-then-detect" strategy, capturing and processing a single frame to bypass real-time video latency.</span><span class="lang-zh"><strong>设计了一种创新方案</strong>，通过实施“先定位后检测”策略，捕捉和处理单帧图像，绕过实时视频延迟，从而克服了树莓派的硬件限制。</span></li>
-            <li><span class="lang-en"><strong>Trained and deployed a YOLOv8 model</strong> that <strong>achieved 98.8% accuracy</strong> in identifying six types of animals under variable lighting conditions through targeted data augmentation.</span><span class="lang-zh"><strong>训练并部署了一个YOLOv8模型</strong>，通过有针对性的数据增强，在多变的光照条件下识别六种动物的<strong>准确率达到98.8%</strong>。</span></li>
+            <li><span class="lang-en"><strong>Trained and deployed a YOLOv8 model</strong> that <strong>achieved 91.5% accuracy</strong> in identifying six types of animals under variable lighting conditions through targeted data augmentation.</span><span class="lang-zh"><strong>训练并部署了一个YOLOv8模型</strong>，通过有针对性的数据增强，在多变的光照条件下识别六种动物的<strong>准确率达到91.5%</strong>。</span></li>
           </ul>
           <div class="image-container raicom-images">
             <img src="assets/img/Raicom.jpg" alt="Raicom Robot Developer Competition" >
@@ -291,6 +291,43 @@
           <div class="project-tags">
             <span class="tag">ROS</span><span class="tag">YOLOv8</span><span class="tag">Python</span><span class="tag">Quadruped Robot</span>
           </div>
+        </div></li>
+        <li><div class="card-content-wrapper">
+          <div class="project-header">
+            <strong>
+                <span class="lang-en">Modeling & Programming Lead | Tourism Prediction Model</span>
+                <span class="lang-zh">建模与编程负责人 | 旅游预测模型</span>
+            </strong>
+            <em><span class="lang-en">May 2025</span><span class="lang-zh">2025.05</span></em>
+          </div>
+          <span class="project-subheader">
+            <span class="lang-en">"Shuwei Cup" University Student Mathematical Modeling Challenge</span>
+            <span class="lang-zh">“数维杯”全国大学生数学建模竞赛</span>
+            — <strong><span class="lang-en">National Second Prize</span><span class="lang-zh">全国二等奖</span></strong>
+          </span>
+          <ul class="details-list">
+            <li><span class="lang-en">Architected and fused Random Forest and XGBoost models on 20 years of meteorological data to predict regional weather phenomena.</span><span class="lang-zh">基于20年气象数据，融合Random Forest与XGBoost预测区域性气象现象。</span></li>
+            <li><span class="lang-en">Modeled and validated a Growing Degree Days (GDD) model to forecast flowering periods for ecological and tourism applications.</span><span class="lang-zh">建立并验证GDD模型预测植物花期，为生态与旅游提供量化依据。</span></li>
+          </ul>
+        </div></li>
+        <li><div class="card-content-wrapper">
+          <div class="project-header">
+            <strong>
+                <span class="lang-en">Core Member | Monocular Vision Measurement Device</span>
+                <span class="lang-zh">核心成员 | 单目视觉测量装置</span>
+            </strong>
+            <em><span class="lang-en">July 2025</span><span class="lang-zh">2025.07</span></em>
+          </div>
+          <span class="project-subheader">
+            <span class="lang-en">National Undergraduate Electronic Design Contest</span>
+            <span class="lang-zh">全国大学生电子设计竞赛（北京赛区）</span>
+            — <strong><span class="lang-en">Second Prize (Beijing Region)</span><span class="lang-zh">二等奖（北京赛区）</span></strong>
+          </span>
+          <ul class="details-list">
+            <li><span class="lang-en">Engineered an STM32F407-based embedded vision system to measure object distance and size with a single camera, achieving distance error < ±2cm and size error < ±0.5cm.</span><span class="lang-zh">基于STM32F407实现嵌入式视觉系统，单目测距与测尺寸，距离误差< ±2cm、尺寸误差< ±0.5cm。</span></li>
+            <li><span class="lang-en">Applied non-linear fitting for distance calibration and perspective transform to correct distortion, improving accuracy.</span><span class="lang-zh">采用非线性拟合进行距离标定并使用透视变换校正畸变，提升准确度。</span></li>
+            <li><span class="lang-en">Integrated a lightweight YOLOv5s for robust detection in complex scenes, demonstrating embedded AI capability.</span><span class="lang-zh">集成轻量YOLOv5s实现复杂场景鲁棒检测，体现嵌入式AI能力。</span></li>
+          </ul>
         </div></li>
         <li><div class="card-content-wrapper">
           <div class="project-header">
@@ -327,6 +364,20 @@
     </h2>
     <div class="collapsible-content">
       <ul>
+        <li><div class="card-content-wrapper">
+          <div class="project-header">
+            <strong>
+                <span class="lang-en">Electronic Controls Intern | <em>Shenzhen Jowin Energy Technology Co., Ltd.</em></span>
+                <span class="lang-zh">电子控制实习生 | <em>深圳市卓益节能环保设备有限公司</em></span>
+            </strong>
+            <em><span class="lang-en">Jul. 2025 – Present</span><span class="lang-zh">2025.07 – 至今</span></em>
+          </div>
+          <ul class="details-list">
+            <li><span class="lang-en">Designed PCB layout for an Automatic Sewage and Scale Removal Controller using Altium Designer.</span><span class="lang-zh">使用 Altium Designer 设计“自动排污除垢控制器”控制板 PCB。</span></li>
+            <li><span class="lang-en">Developed initial firmware in C for a 51 MCU to manage timed discharge and descaling based on sensor inputs.</span><span class="lang-zh">基于 51 单片机用 C 开发初版固件，按传感器输入执行定时排污与除垢。</span></li>
+            <li><span class="lang-en">Contributed to the electronic control solution from schematic to preliminary code for a new energy-saving product.</span><span class="lang-zh">参与从原理图到初版代码的电子控制方案，服务于节能类新品。</span></li>
+          </ul>
+        </div></li>
         <li><div class="card-content-wrapper">
           <div class="project-header">
             <strong>
@@ -380,7 +431,7 @@
       <div class="skill-category">
         <h3><span class="lang-en">Embedded Systems & Hardware</span><span class="lang-zh">嵌入式系统与硬件</span></h3>
         <div class="tags">
-          <span>Raspberry Pi</span><span>Arduino</span><span>STM32</span><span>PLC</span><span>Sensor Integration</span><span>EDA (Altium Designer, Proteus)</span>
+          <span>Raspberry Pi</span><span>Arduino</span><span>STM32</span><span>51 MCU</span><span>PLC</span><span>Sensor Integration</span><span>EDA (Altium Designer, Proteus)</span>
         </div>
       </div>
       <div class="skill-category">
