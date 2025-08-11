@@ -205,6 +205,68 @@ document.addEventListener('DOMContentLoaded', () => {
       const headerEl = document.querySelector('header');
       const parallaxTargets = gsap.utils.toArray('.header-bg-slider img');
 
+      // Rainbow bars canvas
+      const rainbowCanvas = document.getElementById('rainbow-field');
+      const ctx = rainbowCanvas?.getContext('2d');
+      const rainbowColors = ['#5B8CFF','#6BE6FF','#7CFFB2','#FFD66B','#FF8FAB','#B686FF'];
+      let bars = [];
+
+      function resizeCanvas(){
+        if (!rainbowCanvas) return;
+        const rect = headerEl.getBoundingClientRect();
+        rainbowCanvas.width = rect.width * window.devicePixelRatio;
+        rainbowCanvas.height = rect.height * window.devicePixelRatio;
+        rainbowCanvas.style.width = rect.width + 'px';
+        rainbowCanvas.style.height = rect.height + 'px';
+        generateBars();
+      }
+
+      function generateBars(){
+        if (!rainbowCanvas) return;
+        bars = [];
+        const w = rainbowCanvas.width, h = rainbowCanvas.height;
+        const count = Math.max(30, Math.floor(w/40));
+        for (let i=0;i<count;i++){
+          const x = Math.random()*w;
+          const y = (Math.random()*0.6 + 0.2) * h; // keep in middle bands
+          const len = (Math.random()*0.5 + 0.6) * 160 * window.devicePixelRatio;
+          const thick = (Math.random()*0.5 + 0.6) * 10 * window.devicePixelRatio;
+          const c = rainbowColors[i % rainbowColors.length];
+          const phase = Math.random()*Math.PI*2;
+          bars.push({x,y,len,thick,color:c,phase});
+        }
+      }
+
+      let mx = 0, my = 0;
+      function drawBars(time){
+        if (!ctx || !rainbowCanvas) return;
+        ctx.clearRect(0,0,rainbowCanvas.width,rainbowCanvas.height);
+        const w = rainbowCanvas.width, h = rainbowCanvas.height;
+        const cx = mx * window.devicePixelRatio;
+        const cy = my * window.devicePixelRatio;
+        bars.forEach((b, idx)=>{
+          const ang = Math.atan2(cy - b.y, cx - b.x); // face mouse
+          const drift = Math.sin(time/1000 + b.phase) * 0.15;
+          const a = ang + drift;
+          const dx = Math.cos(a) * (b.len/2);
+          const dy = Math.sin(a) * (b.len/2);
+          ctx.strokeStyle = b.color;
+          ctx.lineWidth = b.thick;
+          ctx.lineCap = 'round';
+          ctx.beginPath();
+          ctx.moveTo(b.x - dx, b.y - dy);
+          ctx.lineTo(b.x + dx, b.y + dy);
+          ctx.stroke();
+        });
+        requestAnimationFrame(drawBars);
+      }
+
+      if (rainbowCanvas){
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+        requestAnimationFrame(drawBars);
+      }
+
       // Build avatar rays
       const raysSvg = document.querySelector('.avatar-rays');
       const rayColors = ['#FF5F56','#FFBD2E','#27C93F','#4F9CFF','#A86CF9','#FF7AB6'];
@@ -224,6 +286,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       headerEl?.addEventListener('mousemove', (e) => {
         const rect = headerEl.getBoundingClientRect();
+        mx = e.clientX - rect.left; my = e.clientY - rect.top;
         const cx = (e.clientX - rect.left) / rect.width - 0.5;
         const cy = (e.clientY - rect.top) / rect.height - 0.5;
         parallaxTargets.forEach((img, i) => {
@@ -231,23 +294,21 @@ document.addEventListener('DOMContentLoaded', () => {
           gsap.to(img, { x: cx * depth, y: cy * depth, scale: 1.03, transformOrigin: 'center', duration: 0.25, overwrite: true });
         });
 
-        // Update avatar rays to point toward mouse
         if (raysSvg && rays.length) {
           const box = raysSvg.getBoundingClientRect();
-          const mx = (e.clientX - box.left);
-          const my = (e.clientY - box.top);
-          const cx2 = 100; const cy2 = 100; // svg viewbox center
+          const cx2 = 100, cy2 = 100;
+          const targetX = (mx / box.width) * 200;
+          const targetY = (my / box.height) * 200;
           rays.forEach((line, idx) => {
             const t = idx / rays.length;
-            const blendX = cx2 + (mx / box.width * 200 - cx2) * 0.85;
-            const blendY = cy2 + (my / box.height * 200 - cy2) * 0.85;
             const ang = t * Math.PI * 2;
             const ox = cx2 + Math.cos(ang) * 12;
             const oy = cy2 + Math.sin(ang) * 12;
+            const blend = 0.85;
             line.setAttribute('x1', String(ox));
             line.setAttribute('y1', String(oy));
-            line.setAttribute('x2', String(blendX));
-            line.setAttribute('y2', String(blendY));
+            line.setAttribute('x2', String(cx2 + (targetX - cx2) * blend));
+            line.setAttribute('y2', String(cy2 + (targetY - cy2) * blend));
           });
         }
       });
