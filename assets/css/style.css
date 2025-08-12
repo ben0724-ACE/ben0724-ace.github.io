@@ -650,9 +650,8 @@ header .social{margin-top:1rem}
   .service-card::after{display:none}
 }
 
-/* Avatar container with overlay */
+/* Avatar container */
 .avatar-box{position:relative;display:inline-block}
-.avatar-rays{position:absolute;inset:0;pointer-events:none;mix-blend-mode:screen;opacity:.85}
-.avatar-rays line{stroke-width:2.2;stroke-linecap:round;filter:drop-shadow(0 0 6px rgba(255,255,255,.35))}
-.hero-rainbow{position:absolute;inset:0;z-index:1;pointer-events:none;opacity:.9}
+.hero-rainbow{position:absolute;top:0;right:0;width:55%;height:60%;z-index:1;pointer-events:none;opacity:.85}
+.effects-canvas{position:fixed;left:0;top:0;width:100%;height:100%;pointer-events:none;z-index:1000}
 header > *:not(.header-bg-slider):not(.hero-rainbow){position:relative;z-index:2}

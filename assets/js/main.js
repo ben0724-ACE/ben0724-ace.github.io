@@ -213,11 +213,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
       function resizeCanvas(){
         if (!rainbowCanvas) return;
-        const rect = headerEl.getBoundingClientRect();
+        const rect = rainbowCanvas.getBoundingClientRect();
         rainbowCanvas.width = rect.width * window.devicePixelRatio;
         rainbowCanvas.height = rect.height * window.devicePixelRatio;
-        rainbowCanvas.style.width = rect.width + 'px';
-        rainbowCanvas.style.height = rect.height + 'px';
         generateBars();
       }
 
@@ -225,12 +223,12 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!rainbowCanvas) return;
         bars = [];
         const w = rainbowCanvas.width, h = rainbowCanvas.height;
-        const count = Math.max(30, Math.floor(w/40));
+        const count = Math.max(20, Math.floor(w/45));
         for (let i=0;i<count;i++){
-          const x = Math.random()*w;
-          const y = (Math.random()*0.6 + 0.2) * h; // keep in middle bands
-          const len = (Math.random()*0.5 + 0.6) * 160 * window.devicePixelRatio;
-          const thick = (Math.random()*0.5 + 0.6) * 10 * window.devicePixelRatio;
+          const x = Math.random()*w*0.9 + w*0.1; // bias to right
+          const y = Math.random()*h*0.9 + h*0.05; // keep inside panel
+          const len = (Math.random()*0.5 + 0.6) * 140 * window.devicePixelRatio;
+          const thick = (Math.random()*0.5 + 0.6) * 9 * window.devicePixelRatio;
           const c = rainbowColors[i % rainbowColors.length];
           const phase = Math.random()*Math.PI*2;
           bars.push({x,y,len,thick,color:c,phase});
@@ -241,11 +239,10 @@ document.addEventListener('DOMContentLoaded', () => {
       function drawBars(time){
         if (!ctx || !rainbowCanvas) return;
         ctx.clearRect(0,0,rainbowCanvas.width,rainbowCanvas.height);
-        const w = rainbowCanvas.width, h = rainbowCanvas.height;
-        const cx = mx * window.devicePixelRatio;
-        const cy = my * window.devicePixelRatio;
-        bars.forEach((b, idx)=>{
-          const ang = Math.atan2(cy - b.y, cx - b.x); // face mouse
+        const cx = (mx - rainbowCanvas.getBoundingClientRect().left) * window.devicePixelRatio;
+        const cy = (my - rainbowCanvas.getBoundingClientRect().top) * window.devicePixelRatio;
+        bars.forEach((b)=>{
+          const ang = Math.atan2(cy - b.y, cx - b.x);
           const drift = Math.sin(time/1000 + b.phase) * 0.15;
           const a = ang + drift;
           const dx = Math.cos(a) * (b.len/2);
@@ -267,50 +264,67 @@ document.addEventListener('DOMContentLoaded', () => {
         requestAnimationFrame(drawBars);
       }
 
-      // Build avatar rays
-      const raysSvg = document.querySelector('.avatar-rays');
-      const rayColors = ['#FF5F56','#FFBD2E','#27C93F','#4F9CFF','#A86CF9','#FF7AB6'];
-      const rays = [];
-      if (raysSvg) {
-        for (let i = 0; i < 10; i++) {
-          const line = document.createElementNS('http://www.w3.org/2000/svg','line');
-          line.setAttribute('x1','100');
-          line.setAttribute('y1','100');
-          line.setAttribute('x2', String(100 + Math.cos((i/10)*Math.PI*2)*80));
-          line.setAttribute('y2', String(100 + Math.sin((i/10)*Math.PI*2)*80));
-          line.setAttribute('stroke', rayColors[i % rayColors.length]);
-          raysSvg.appendChild(line);
-          rays.push(line);
-        }
-      }
-
       headerEl?.addEventListener('mousemove', (e) => {
         const rect = headerEl.getBoundingClientRect();
-        mx = e.clientX - rect.left; my = e.clientY - rect.top;
+        mx = e.clientX; my = e.clientY;
         const cx = (e.clientX - rect.left) / rect.width - 0.5;
         const cy = (e.clientY - rect.top) / rect.height - 0.5;
         parallaxTargets.forEach((img, i) => {
-          const depth = (i + 1) * 16; // stronger
+          const depth = (i + 1) * 16;
           gsap.to(img, { x: cx * depth, y: cy * depth, scale: 1.03, transformOrigin: 'center', duration: 0.25, overwrite: true });
         });
+      });
 
-        if (raysSvg && rays.length) {
-          const box = raysSvg.getBoundingClientRect();
-          const cx2 = 100, cy2 = 100;
-          const targetX = (mx / box.width) * 200;
-          const targetY = (my / box.height) * 200;
-          rays.forEach((line, idx) => {
-            const t = idx / rays.length;
-            const ang = t * Math.PI * 2;
-            const ox = cx2 + Math.cos(ang) * 12;
-            const oy = cy2 + Math.sin(ang) * 12;
-            const blend = 0.85;
-            line.setAttribute('x1', String(ox));
-            line.setAttribute('y1', String(oy));
-            line.setAttribute('x2', String(cx2 + (targetX - cx2) * blend));
-            line.setAttribute('y2', String(cy2 + (targetY - cy2) * blend));
+      // Click effects (confetti)
+      const effectsCanvas = document.getElementById('click-effects');
+      const ectx = effectsCanvas?.getContext('2d');
+      let particles = [];
+      function resizeEffects(){
+        if (!effectsCanvas) return;
+        effectsCanvas.width = window.innerWidth * window.devicePixelRatio;
+        effectsCanvas.height = window.innerHeight * window.devicePixelRatio;
+        effectsCanvas.style.width = '100%';
+        effectsCanvas.style.height = '100%';
+      }
+      resizeEffects();
+      window.addEventListener('resize', resizeEffects);
+
+      function spawnConfetti(x, y){
+        const count = 24;
+        for (let i=0;i<count;i++){
+          const angle = Math.random()*Math.PI*2;
+          const speed = Math.random()*3 + 2;
+          particles.push({
+            x: x*window.devicePixelRatio,
+            y: y*window.devicePixelRatio,
+            vx: Math.cos(angle)*speed,
+            vy: Math.sin(angle)*speed - 2,
+            g: 0.08,
+            life: 60 + Math.random()*30,
+            color: rainbowColors[i % rainbowColors.length]
           });
         }
+      }
+      function tick(){
+        if (!ectx || !effectsCanvas) return;
+        ectx.clearRect(0,0,effectsCanvas.width,effectsCanvas.height);
+        particles.forEach(p => {
+          p.vy += p.g;
+          p.x += p.vx;
+          p.y += p.vy;
+          p.life -= 1;
+          ectx.fillStyle = p.color;
+          ectx.globalAlpha = Math.max(p.life/90, 0);
+          ectx.fillRect(p.x, p.y, 6, 3);
+        });
+        particles = particles.filter(p => p.life > 0);
+        requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
+
+      document.addEventListener('click', (ev)=>{
+        // avoid clicks on header controls causing double spawn; always allow visually
+        spawnConfetti(ev.clientX, ev.clientY);
       });
 
       document.querySelectorAll('.service-card').forEach(card => {
