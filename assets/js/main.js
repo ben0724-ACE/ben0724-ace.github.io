@@ -211,6 +211,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const rainbowColors = ['#377DFF','#26A0DA','#17C964','#FFC22E','#FF5A8A','#7A5AF8'];
       let bars = [];
       let hovering = false;
+      let ready = false;
 
       function resizeCanvas(){
         if (!rainbowCanvas) return;
@@ -218,6 +219,7 @@ document.addEventListener('DOMContentLoaded', () => {
         rainbowCanvas.width = rect.width * window.devicePixelRatio;
         rainbowCanvas.height = rect.height * window.devicePixelRatio;
         generateBars();
+        ready = true;
       }
 
       function generateBars(){
@@ -226,7 +228,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const w = rainbowCanvas.width, h = rainbowCanvas.height;
         const count = 42; // denser
         // arrange along quarter arc (top-right around center of canvas)
-        const cx = w*0.35, cy = h*0.35; // arc center offset to left/bottom to wrap avatar on left-bottom
+        const cx = w*0.35, cy = h*0.35; // arc center
         const rMin = Math.min(w,h)*0.28;
         const rMax = Math.min(w,h)*0.46;
         for (let i=0;i<count;i++){
@@ -235,23 +237,23 @@ document.addEventListener('DOMContentLoaded', () => {
           const r = rMin + (rMax-rMin)*t;
           const x = cx + Math.cos(ang)*r;
           const y = cy + Math.sin(ang)*r;
-          const len = (0.5 + t)*120 * window.devicePixelRatio; // arc ends longer when active
+          const len = (0.5 + t)*120 * window.devicePixelRatio;
           const thick = (0.7 + 0.3*Math.random()) * 9 * window.devicePixelRatio;
           const c = rainbowColors[i % rainbowColors.length];
           const phase = Math.random()*Math.PI*2;
-          bars.push({x,y,len,baseLen:len*0.55,thick,color:c,phase});
+          bars.push({x,y,len,baseLen:len*0.45,thick,color:c,phase,baseAngle:ang});
         }
       }
 
       let mx = 0, my = 0;
       function drawBars(time){
-        if (!ctx || !rainbowCanvas) return;
+        if (!ctx || !rainbowCanvas || !ready) return;
         ctx.clearRect(0,0,rainbowCanvas.width,rainbowCanvas.height);
         const cxm = (mx - rainbowCanvas.getBoundingClientRect().left) * window.devicePixelRatio;
         const cym = (my - rainbowCanvas.getBoundingClientRect().top) * window.devicePixelRatio;
         bars.forEach((b)=>{
-          // base direction along arc tangent (pointing outward initially)
-          let a = Math.atan2(b.y, b.x) + Math.PI/2;
+          // base tangent along arc (perpendicular to radius)
+          let a = b.baseAngle + Math.PI/2;
           if (hovering){
             const toMouse = Math.atan2(cym - b.y, cxm - b.x);
             const drift = Math.sin(time/1000 + b.phase) * 0.1;
