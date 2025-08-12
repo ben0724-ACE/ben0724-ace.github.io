@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const frag = document.createDocumentFragment();
         [...text].forEach((ch, idx) => {
             const span = document.createElement('span');
-            span.textContent = ch;
+            if (ch === ' ') { span.innerHTML = '&nbsp;'; } else { span.textContent = ch; }
             span.style.display = 'inline-block';
             span.style.transform = 'translateY(30px)';
             span.style.opacity = '0';
@@ -189,6 +189,14 @@ document.addEventListener('DOMContentLoaded', () => {
                     if(link) link.classList.remove('active');
                 }
             }
+        });
+    });
+
+    // 点击后给导航提供即时选中反馈（即使滚动尚未到达）
+    quickNavLinks.forEach(link => {
+        link.addEventListener('click', () => {
+            quickNavLinks.forEach(l => l.classList.remove('active'));
+            link.classList.add('active');
         });
     });
 
