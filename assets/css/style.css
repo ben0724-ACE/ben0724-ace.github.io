@@ -60,6 +60,7 @@ header {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  overflow: hidden; /* 防止视差位移时露出边缘 */
 }
 header::before {
   content: '';
@@ -91,15 +92,18 @@ header > * {
     width: 100%;
     height: 100%;
     z-index: 0;
+    overflow: hidden; /* 额外保险：裁剪内部位移 */
 }
 .header-bg-slider img {
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+    top: 50%;
+    left: 50%;
+    width: 110%; /* 超采样，避免鼠标位移出现空白边 */
+    height: 110%;
+    transform: translate(-50%, -50%);
     object-fit: cover;
     opacity: 0;
+    will-change: transform; /* 提升动画性能 */
 }
 h1 { font-size: 3rem; margin-bottom: .5rem; font-weight: 700; text-shadow: 1px 1px 3px rgba(0,0,0,0.4); }
 header p { font-size: 1.2rem; color: #e0e0e0; text-shadow: 1px 1px 3px rgba(0,0,0,0.4);} 
@@ -661,3 +665,10 @@ header::before{background:linear-gradient(to top, rgba(0,0,0,0.78) 0%, rgba(0,0,
 
 /* Skills grid compress to one column */
 .skills-container{grid-template-columns:1fr}
+
+/* --- 顶部滚动进度条 --- */
+.scroll-progress{position:fixed;top:0;left:0;width:100%;height:4px;z-index:1100;background:transparent;pointer-events:none}
+.scroll-progress .bar{height:100%;width:0;background:linear-gradient(90deg, var(--accent), var(--highlight));box-shadow:0 0 6px rgba(var(--accent-rgb),.7)}
+
+/* --- 磁性按钮轻微跟随 --- */
+.btn, .pill{transition: transform .15s ease, background-color .2s ease, border-color .2s ease}

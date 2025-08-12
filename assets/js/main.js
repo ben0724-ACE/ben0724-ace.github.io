@@ -204,6 +204,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (window.matchMedia('(pointer:fine)').matches) {
       const headerEl = document.querySelector('header');
       const parallaxTargets = gsap.utils.toArray('.header-bg-slider img');
+      const maxShift = 0.35; // 限制鼠标影响，避免位移过大
       headerEl?.addEventListener('mousemove', (e) => {
         const rect = headerEl.getBoundingClientRect();
         const cx = (e.clientX - rect.left) / rect.width - 0.5;
@@ -212,7 +213,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const clamp = (v, m) => Math.max(-m, Math.min(m, v));
         parallaxTargets.forEach((img, i) => {
           const depth = (i + 1) * 12;
-          gsap.to(img, { x: clamp(cx, 0.5) * depth, y: clamp(cy, 0.5) * depth, scale: 1.02, transformOrigin: 'center', duration: 0.25, overwrite: true });
+          gsap.to(img, { x: clamp(cx, maxShift) * depth, y: clamp(cy, maxShift) * depth, scale: 1.04, transformOrigin: 'center', duration: 0.25, overwrite: true });
         });
       });
 
@@ -222,6 +223,13 @@ document.addEventListener('DOMContentLoaded', () => {
           gsap.to(img, { x: 0, y: 0, duration: 0.4, ease: 'power2.out' });
         });
       });
+
+      // 当页面发生滚动时，逐步衰减并复位背景，避免滚动后下沿脱离蒙版的视觉问题
+      let scrollTween = null;
+      window.addEventListener('scroll', () => {
+        if (scrollTween && scrollTween.isActive()) return;
+        scrollTween = gsap.to(parallaxTargets, { x: 0, y: 0, duration: 0.5, ease: 'power2.out' });
+      }, { passive: true });
 
       // Click effects (confetti)
       const effectsCanvas = document.getElementById('click-effects');
@@ -301,6 +309,33 @@ document.addEventListener('DOMContentLoaded', () => {
         });
       });
     }
+
+    // --- 顶部滚动进度条 ---
+    const progressBar = document.querySelector('.scroll-progress .bar');
+    if (progressBar) {
+        const updateProgress = () => {
+            const h = document.documentElement;
+            const max = h.scrollHeight - h.clientHeight;
+            const p = max > 0 ? (h.scrollTop / max) * 100 : 0;
+            progressBar.style.width = `${p}%`;
+        };
+        updateProgress();
+        document.addEventListener('scroll', updateProgress, { passive: true });
+        window.addEventListener('resize', updateProgress);
+    }
+
+    // --- 磁性按钮（CTA 与社交、Pills 轻微跟随）---
+    const magneticTargets = gsap.utils.toArray('.btn, .pill, header .social a');
+    magneticTargets.forEach(el => {
+        const strength = el.classList.contains('btn') ? 10 : 6;
+        el.addEventListener('mousemove', (e) => {
+            const r = el.getBoundingClientRect();
+            const dx = (e.clientX - (r.left + r.width/2)) / (r.width/2);
+            const dy = (e.clientY - (r.top + r.height/2)) / (r.height/2);
+            gsap.to(el, { x: dx*strength, y: dy*strength, duration: 0.18, ease: 'power2.out' });
+        });
+        el.addEventListener('mouseleave', () => gsap.to(el, { x: 0, y: 0, duration: 0.3 }));
+    });
 
     // --- Mini Terminal playful interaction ---
     function typeText(el, text, speed = 70) {
