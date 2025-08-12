@@ -3,12 +3,25 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- 预加载动画 ---
     const preloader = document.querySelector('.preloader');
+    // 页面入场动画
+    function startIntro(){
+        const tl = gsap.timeline({ defaults: { duration: 0.7, ease: 'power3.out' } });
+        tl.from('.avatar', { scale: 0.85, autoAlpha: 0 })
+          .from('header h1', { y: 24, autoAlpha: 0 }, '-=0.4')
+          .from('header p', { y: 20, autoAlpha: 0 }, '-=0.5')
+          .from('.hero-tags .pill', { y: 18, autoAlpha: 0, stagger: 0.08 }, '-=0.4')
+          .from('.hero-ctas .btn', { y: 16, autoAlpha: 0, stagger: 0.1 }, '-=0.5')
+          .from('header .social a', { y: 12, autoAlpha: 0, stagger: 0.06 }, '-=0.5')
+          .from('.quick-nav', { x: -30, autoAlpha: 0 }, '-=0.6');
+    }
+
     const hidePreloader = () => {
         gsap.to(preloader, { 
             opacity: 0, 
             duration: 0.8, 
             onComplete: () => {
                 preloader.style.display = 'none';
+                startIntro();
             }
         });
     };
@@ -280,43 +293,7 @@ document.addEventListener('DOMContentLoaded', () => {
         ripples.push({x:x*window.devicePixelRatio,y:y*window.devicePixelRatio,r:0,alpha:0.35});
       }
 
-      // 英雄区标签进场：粒子从屏幕边缘聚拢到每个 pill，再轻微散开
-      function spawnHeroGather(){
-        const pills = document.querySelectorAll('.hero-tags .pill');
-        const dpr = Math.max(1, window.devicePixelRatio || 1);
-        pills.forEach(pill => {
-          const r = pill.getBoundingClientRect();
-          const tx = (r.left + r.width/2) * dpr;
-          const ty = (r.top + r.height/2) * dpr;
-          const n = 18;
-          for (let i=0;i<n;i++){
-            const edge = Math.floor(Math.random()*4);
-            let sx, sy;
-            if (edge===0){ sx = Math.random()*effectsCanvas.width; sy = -30*dpr; }
-            else if(edge===1){ sx = effectsCanvas.width+30*dpr; sy = Math.random()*effectsCanvas.height; }
-            else if(edge===2){ sx = Math.random()*effectsCanvas.width; sy = effectsCanvas.height+30*dpr; }
-            else { sx = -30*dpr; sy = Math.random()*effectsCanvas.height; }
-            particles.push({ mode:'seek', x:sx, y:sy, vx:0, vy:0, tx, ty, friction:0.88, life: 120, size: 3+Math.random()*2, color: 'rgba(255,255,255,0.95)' });
-          }
-        });
-        setTimeout(spawnHeroScatter, 1000);
-      }
-
-      function spawnHeroScatter(){
-        const pills = document.querySelectorAll('.hero-tags .pill');
-        const dpr = Math.max(1, window.devicePixelRatio || 1);
-        pills.forEach(pill => {
-          const r = pill.getBoundingClientRect();
-          const cx = (r.left + r.width/2) * dpr;
-          const cy = (r.top + r.height/2) * dpr;
-          const n = 10;
-          for (let i=0;i<n;i++){
-            const ang = Math.random()*Math.PI*2;
-            const spd = 2 + Math.random()*3;
-            particles.push({ mode:'confetti', x:cx, y:cy, vx:Math.cos(ang)*spd, vy:Math.sin(ang)*spd, g:0.06, life: 45+Math.random()*20, color: themeGradient || '#ffffff' });
-          }
-        });
-      }
+      // 移除英雄区粒子效果
       function tick(){
         if (!ectx || !effectsCanvas) return;
         ectx.clearRect(0,0,effectsCanvas.width,effectsCanvas.height);
@@ -355,16 +332,7 @@ document.addEventListener('DOMContentLoaded', () => {
         spawnConfetti(ev.clientX, ev.clientY);
       });
 
-      // 触发能力标签的粒子聚拢动画（可重复播放，加入冷却防抖）
-      let lastHeroPlay = 0;
-      const cooldownMs = 800; // 最小间隔
-      ScrollTrigger.create({
-        trigger: '.hero-tags',
-        start: 'top 90%',
-        end: 'bottom top',
-        onEnter: () => { const now = Date.now(); if (now - lastHeroPlay > cooldownMs){ spawnHeroGather(); lastHeroPlay = now; } },
-        onEnterBack: () => { const now = Date.now(); if (now - lastHeroPlay > cooldownMs){ spawnHeroGather(); lastHeroPlay = now; } }
-      });
+      // 英雄区粒子效果已移除
 
       // 主题切换时更新渐变
       const observer = new MutationObserver(() => refreshThemeGradient());

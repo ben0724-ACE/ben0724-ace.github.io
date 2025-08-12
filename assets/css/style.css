@@ -112,7 +112,10 @@ header p { font-size: 1.2rem; color: #e0e0e0; text-shadow: 1px 1px 3px rgba(0,0,
 .pill{display:inline-flex;gap:.35rem;align-items:center;padding:.4rem .7rem;border-radius:999px;background:rgba(255,255,255,.12);backdrop-filter: blur(6px);border:1px solid rgba(255,255,255,.25);font-size:.9rem}
 .hero-ctas{margin-top:1.2rem;display:flex;gap:.8rem;justify-content:center;flex-wrap:wrap}
 .btn.secondary{background:transparent;color:#fff;border:1px solid rgba(255,255,255,.6)}
-.btn.secondary:hover{background:var(--accent);border-color:var(--accent);}
+.btn.secondary:hover{background:var(--accent);border-color:var(--accent);} 
+/* ghost 与 secondary 在 hover 时一致 */
+.btn.ghost{background:transparent;color:#fff;border:1.6px solid rgba(255,255,255,.75)}
+.btn.ghost:hover{background:var(--accent);border-color:var(--accent);}
 .social a {
   margin: 0 .8rem;
   color: #fff;
