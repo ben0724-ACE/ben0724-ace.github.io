@@ -105,6 +105,11 @@ header > * {
     opacity: 0;
     will-change: transform; /* 提升动画性能 */
 }
+@media (min-width: 992px) {
+  .header-bg-slider img {
+    transform: translate(calc(-50% - 110px), -50%);
+  }
+}
 h1 { font-size: 3rem; margin-bottom: .5rem; font-weight: 700; text-shadow: 1px 1px 3px rgba(0,0,0,0.4); }
 header p { font-size: 1.2rem; color: #e0e0e0; text-shadow: 1px 1px 3px rgba(0,0,0,0.4);} 
 .tagline{margin-top:.5rem;color:#e6edf5;opacity:.95}
