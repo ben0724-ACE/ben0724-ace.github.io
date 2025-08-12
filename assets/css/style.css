@@ -100,7 +100,7 @@ header > * {
     left: 50%;
     width: 110%; /* 超采样，避免鼠标位移出现空白边 */
     height: 110%;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%); /* 仅提供初始基准，运行时由 JS 用 xPercent/yPercent 锁定 */
     object-fit: cover;
     opacity: 0;
     will-change: transform; /* 提升动画性能 */

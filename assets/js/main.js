@@ -261,20 +261,20 @@ document.addEventListener('DOMContentLoaded', () => {
       const headerEl = document.querySelector('header');
       const parallaxTargets = gsap.utils.toArray('.header-bg-slider img');
       const maxShift = 0.35; // 限制鼠标影响，避免位移过大
-      // 初始保持居中，无静态位移
-      gsap.set(parallaxTargets, { x: 0 });
+      // 以百分比锁定基准居中，再在此基础上用像素做微偏移
+      gsap.set(parallaxTargets, { xPercent: -50, yPercent: -50, x: 0, y: 0 });
       headerEl?.addEventListener('mousemove', (e) => {
         const rect = headerEl.getBoundingClientRect();
-        // 以“视觉中心”为零点：桌面端向右补偿左侧目录的一半宽度(~110px)
+        // 以“视觉中心”为零点：桌面端向右补偿左侧目录的宽度（与 main 左 padding 保持一致）
         const desktop = window.matchMedia('(min-width: 992px)').matches;
-        const compensation = desktop ? 110 : 0; // 与 main 左侧 padding 对齐
-        const cx = ((e.clientX - rect.left) - (rect.width/2 + compensation)) / rect.width; // 已以视觉中心为基准
-        const cy = (e.clientY - rect.top) / rect.height - 0.5;
+        const compensationX = desktop ? 220 : 0; // 与 main/footer 的 padding-left:220px 对齐
+        const cx = ((e.clientX - rect.left) - (rect.width/2 + compensationX/2)) / rect.width;
+        const cy = ((e.clientY - rect.top) - (rect.height/2)) / rect.height;
         // clamp parallax to prevent background from escaping overlay edges
         const clamp = (v, m) => Math.max(-m, Math.min(m, v));
         parallaxTargets.forEach((img, i) => {
           const depth = (i + 1) * 12;
-          gsap.to(img, { x: clamp(cx, maxShift) * depth, y: clamp(cy, maxShift) * depth, scale: 1.04, transformOrigin: 'center', duration: 0.25, overwrite: true });
+          gsap.to(img, { x: clamp(cx, maxShift) * depth, y: clamp(cy, maxShift) * depth, scale: 1.02, transformOrigin: 'center', duration: 0.25, overwrite: true });
         });
       });
 
