@@ -672,3 +672,6 @@ header::before{background:linear-gradient(to top, rgba(0,0,0,0.78) 0%, rgba(0,0,
 
 /* --- 磁性按钮轻微跟随 --- */
 .btn, .pill{transition: transform .15s ease, background-color .2s ease, border-color .2s ease}
+
+/* --- 点击彩色纸屑画布，固定覆盖并不占据文档流 --- */
+.effects-canvas{position:fixed;inset:0;z-index:2000;pointer-events:none;display:block}

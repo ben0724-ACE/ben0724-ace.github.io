@@ -114,7 +114,6 @@ In the `assets/js/main.js` file:
 - Added hero tagline, capability pills, and dual CTA for faster self-intro and contact
 - Introduced About/What I Do section with four concise service cards
 - Added playful mini-terminal interaction with demo commands (help/skills/about)
-- Updated CV link to `CV.pdf` and README file structure accordingly
 - New rainbow arc field in header (top-right), denser bars that rotate/stretch on hover, revert to short arc when idle
 - Added click confetti effects for content area interactions
 
@@ -257,7 +256,6 @@ my-homepage/
 - 增加页头标语、能力标签与双CTA，快速传达“你是谁、能做什么”
 - 新增“关于我/我能做什么”版块，4张服务卡片概述优势能力
 - 新增趣味迷你终端交互（help/skills/about）
-- 新增右上角1/4圆弧彩虹条（鼠标靠近旋转并拉伸，离开复位为短弧）
 - 新增底部区域点击彩色纸屑特效
 - 技能区栅格压缩为单列，移动端浏览更友好
 

@@ -263,17 +263,61 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         ripples.push({x:x*window.devicePixelRatio,y:y*window.devicePixelRatio,r:0,alpha:0.35});
       }
+
+      // 英雄区标签进场：粒子从屏幕边缘聚拢到每个 pill，再轻微散开
+      function spawnHeroGather(){
+        const pills = document.querySelectorAll('.hero-tags .pill');
+        const dpr = Math.max(1, window.devicePixelRatio || 1);
+        pills.forEach(pill => {
+          const r = pill.getBoundingClientRect();
+          const tx = (r.left + r.width/2) * dpr;
+          const ty = (r.top + r.height/2) * dpr;
+          const n = 18;
+          for (let i=0;i<n;i++){
+            const edge = Math.floor(Math.random()*4);
+            let sx, sy;
+            if (edge===0){ sx = Math.random()*effectsCanvas.width; sy = -30*dpr; }
+            else if(edge===1){ sx = effectsCanvas.width+30*dpr; sy = Math.random()*effectsCanvas.height; }
+            else if(edge===2){ sx = Math.random()*effectsCanvas.width; sy = effectsCanvas.height+30*dpr; }
+            else { sx = -30*dpr; sy = Math.random()*effectsCanvas.height; }
+            particles.push({ mode:'seek', x:sx, y:sy, vx:0, vy:0, tx, ty, friction:0.88, life: 120, size: 3+Math.random()*2, color: 'rgba(255,255,255,0.95)' });
+          }
+        });
+        setTimeout(spawnHeroScatter, 1000);
+      }
+
+      function spawnHeroScatter(){
+        const pills = document.querySelectorAll('.hero-tags .pill');
+        const dpr = Math.max(1, window.devicePixelRatio || 1);
+        pills.forEach(pill => {
+          const r = pill.getBoundingClientRect();
+          const cx = (r.left + r.width/2) * dpr;
+          const cy = (r.top + r.height/2) * dpr;
+          const n = 10;
+          for (let i=0;i<n;i++){
+            const ang = Math.random()*Math.PI*2;
+            const spd = 2 + Math.random()*3;
+            particles.push({ mode:'confetti', x:cx, y:cy, vx:Math.cos(ang)*spd, vy:Math.sin(ang)*spd, g:0.06, life: 45+Math.random()*20, color: ['#FFFFFF','#E6EDF5','#9EC9FF','#7CFFB2','#FFD66B'][i%5] });
+          }
+        });
+      }
       function tick(){
         if (!ectx || !effectsCanvas) return;
         ectx.clearRect(0,0,effectsCanvas.width,effectsCanvas.height);
         particles.forEach(p => {
-          p.vy += p.g;
-          p.x += p.vx;
-          p.y += p.vy;
-          p.life -= 1;
-          ectx.fillStyle = p.color;
-          ectx.globalAlpha = Math.max(p.life/90, 0);
-          ectx.fillRect(p.x, p.y, 6, 3);
+          if (p.mode === 'seek'){
+            const dx = p.tx - p.x, dy = p.ty - p.y;
+            p.vx = (p.vx + dx*0.02) * p.friction;
+            p.vy = (p.vy + dy*0.02) * p.friction;
+            p.x += p.vx; p.y += p.vy; p.life -= 1;
+            ectx.fillStyle = p.color; ectx.globalAlpha = 1;
+            ectx.beginPath(); ectx.arc(p.x, p.y, p.size || 3, 0, Math.PI*2); ectx.fill();
+          } else {
+            p.vy += (p.g || 0);
+            p.x += p.vx; p.y += p.vy; p.life -= 1;
+            ectx.fillStyle = p.color; ectx.globalAlpha = Math.max(p.life/90, 0);
+            ectx.fillRect(p.x, p.y, 6, 3);
+          }
         });
         particles = particles.filter(p => p.life > 0);
         // ripple rings
@@ -293,6 +337,14 @@ document.addEventListener('DOMContentLoaded', () => {
       document.addEventListener('click', (ev)=>{
         // avoid clicks on header controls causing double spawn; always allow visually
         spawnConfetti(ev.clientX, ev.clientY);
+      });
+
+      // 触发能力标签的粒子聚拢动画
+      ScrollTrigger.create({
+        trigger: '.hero-tags',
+        start: 'top 90%',
+        once: true,
+        onEnter: () => spawnHeroGather()
       });
 
       document.querySelectorAll('.service-card').forEach(card => {
