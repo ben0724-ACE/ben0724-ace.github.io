@@ -261,25 +261,27 @@ document.addEventListener('DOMContentLoaded', () => {
       const headerEl = document.querySelector('header');
       const parallaxTargets = gsap.utils.toArray('.header-bg-slider img');
       const maxShift = 0.35; // 限制鼠标影响，避免位移过大
-      // 桌面端为背景提供基础左移偏置，避免视觉中心受左侧目录影响
-      const baseOffsetX = window.matchMedia('(min-width: 992px)').matches ? -110 : 0;
-      gsap.set(parallaxTargets, { x: baseOffsetX });
+      // 初始保持居中，无静态位移
+      gsap.set(parallaxTargets, { x: 0 });
       headerEl?.addEventListener('mousemove', (e) => {
         const rect = headerEl.getBoundingClientRect();
-        const cx = (e.clientX - rect.left) / rect.width - 0.5;
+        // 以“视觉中心”为零点：桌面端向右补偿左侧目录的一半宽度(~110px)
+        const desktop = window.matchMedia('(min-width: 992px)').matches;
+        const compensation = desktop ? 110 : 0; // 与 main 左侧 padding 对齐
+        const cx = ((e.clientX - rect.left) - (rect.width/2 + compensation)) / rect.width; // 已以视觉中心为基准
         const cy = (e.clientY - rect.top) / rect.height - 0.5;
         // clamp parallax to prevent background from escaping overlay edges
         const clamp = (v, m) => Math.max(-m, Math.min(m, v));
         parallaxTargets.forEach((img, i) => {
           const depth = (i + 1) * 12;
-          gsap.to(img, { x: baseOffsetX + clamp(cx, maxShift) * depth, y: clamp(cy, maxShift) * depth, scale: 1.04, transformOrigin: 'center', duration: 0.25, overwrite: true });
+          gsap.to(img, { x: clamp(cx, maxShift) * depth, y: clamp(cy, maxShift) * depth, scale: 1.04, transformOrigin: 'center', duration: 0.25, overwrite: true });
         });
       });
 
       // also reset parallax when leaving header to avoid residual offset
       headerEl?.addEventListener('mouseleave', () => {
         parallaxTargets.forEach((img) => {
-          gsap.to(img, { x: baseOffsetX, y: 0, duration: 0.4, ease: 'power2.out' });
+          gsap.to(img, { x: 0, y: 0, duration: 0.4, ease: 'power2.out' });
         });
       });
 
@@ -287,7 +289,7 @@ document.addEventListener('DOMContentLoaded', () => {
       let scrollTween = null;
       window.addEventListener('scroll', () => {
         if (scrollTween && scrollTween.isActive()) return;
-        scrollTween = gsap.to(parallaxTargets, { x: baseOffsetX, y: 0, duration: 0.5, ease: 'power2.out' });
+        scrollTween = gsap.to(parallaxTargets, { x: 0, y: 0, duration: 0.5, ease: 'power2.out' });
       }, { passive: true });
 
       // Click effects (confetti)
