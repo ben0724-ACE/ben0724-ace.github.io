@@ -4,33 +4,47 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- 预加载动画 ---
     const preloader = document.querySelector('.preloader');
     // 页面入场动画
+    function animateLettersIn(containerSelector){
+        const el = typeof containerSelector === 'string' ? document.querySelector(containerSelector) : containerSelector;
+        if (!el || el.getAttribute('data-letters-animated') === '1') return;
+        const L = localStorage.getItem('language') || 'en';
+        const target = el.querySelector(L === 'zh' ? '.lang-zh' : '.lang-en') || el;
+        const text = (target.textContent || '').trim();
+        if (!text) return;
+        target.innerHTML = '';
+        const frag = document.createDocumentFragment();
+        [...text].forEach((ch, idx) => {
+            const span = document.createElement('span');
+            span.textContent = ch;
+            span.style.display = 'inline-block';
+            span.style.transform = 'translateY(30px)';
+            span.style.opacity = '0';
+            frag.appendChild(span);
+            gsap.to(span, { delay: idx*0.05, duration: 0.6, y: 0, opacity: 1, ease: 'back.out(2)' });
+        });
+        target.appendChild(frag);
+        el.setAttribute('data-letters-animated','1');
+    }
+
     function startIntro(){
         const tl = gsap.timeline({ defaults: { duration: 0.7, ease: 'power3.out' } });
         tl.from('.avatar', { scale: 0.85, autoAlpha: 0 })
           .from('header h1', { y: 24, autoAlpha: 0 }, '-=0.4')
-          // 标题逐字显现 + 轻微回弹
-          .add(() => {
-            const h1 = document.querySelector('header h1');
-            if (!h1) return;
-            const text = h1.textContent || '';
-            h1.innerHTML = '';
-            const frag = document.createDocumentFragment();
-            [...text].forEach((ch, idx) => {
-              const span = document.createElement('span');
-              span.textContent = ch;
-              span.style.display = 'inline-block';
-              span.style.transform = 'translateY(30px)';
-              span.style.opacity = '0';
-              frag.appendChild(span);
-              gsap.to(span, { delay: idx*0.05, duration: 0.6, y: 0, opacity: 1, ease: 'back.out(2)' });
-            });
-            h1.appendChild(frag);
-          })
+          .add(() => animateLettersIn('header h1'))
           .from('header p', { y: 20, autoAlpha: 0 }, '-=0.5')
-          .from('.hero-tags .pill', { y: 0, autoAlpha: 0, stagger: 0.08 }, '-=0.4')
-          .from('.hero-ctas .btn', { y: 0, autoAlpha: 0, stagger: 0.1 }, '-=0.5')
+          .from('.hero-tags .pill', { autoAlpha: 0, stagger: 0.08 }, '-=0.4')
+          .from('.hero-ctas .btn', { autoAlpha: 0, stagger: 0.1 }, '-=0.5')
           .from('header .social a', { y: 12, autoAlpha: 0, stagger: 0.06 }, '-=0.5')
-          .from('.quick-nav', { x: -30, autoAlpha: 0 }, '-=0.6');
+          .from('.quick-nav', { x: -30, autoAlpha: 0 }, '-=0.6')
+          .add(() => {
+              // 左侧目录依次高亮引导
+              const links = document.querySelectorAll('.quick-nav li a');
+              links.forEach((a, idx) => {
+                  gsap.fromTo(a, { backgroundColor: 'transparent', color: getComputedStyle(a).color }, {
+                      backgroundColor: 'var(--accent)', color: '#fff', duration: 0.35, yoyo: true, repeat: 1, delay: idx * 0.08, ease: 'power1.inOut'
+                  });
+              });
+          });
     }
 
     const hidePreloader = () => {
@@ -120,9 +134,9 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     const savedLanguage = localStorage.getItem('language');
-    // 初始隐藏中文, 避免闪烁
+    // 初始隐藏中文, 避免闪烁；根据本地存储设置语言
     langZhElements.forEach(el => el.style.display = 'none');
-    setLanguage(savedLanguage || 'en'); 
+    setLanguage(savedLanguage || 'en');
 
     languageSwitcher.addEventListener('click', () => {
         const currentLang = localStorage.getItem('language') || 'en';
@@ -206,12 +220,15 @@ document.addEventListener('DOMContentLoaded', () => {
         el.addEventListener('mouseleave', () => cursor.classList.remove('grow'));
     });
 
-    // --- 标题下划线动画 ---
+    // --- 标题下划线动画 + h2逐字显现 ---
     gsap.utils.toArray('h2').forEach(h2 => {
         ScrollTrigger.create({
           trigger: h2,
           start: 'top 90%',
-          onEnter: () => h2.classList.add('is-visible'),
+          onEnter: () => {
+            h2.classList.add('is-visible');
+            animateLettersIn(h2);
+          },
           once: true
         });
     });
