@@ -115,6 +115,11 @@ In the `assets/js/main.js` file:
 - Introduced About/What I Do section with four concise service cards
 - Added playful mini-terminal interaction with demo commands (help/skills/about)
 - Updated CV link to `CV.pdf` and README file structure accordingly
+- New rainbow arc field in header (top-right), denser bars that rotate/stretch on hover, revert to short arc when idle
+- Added click confetti effects for content area interactions
+- Skills grid condensed to single column for better scan on mobile
+- Top hero “Download CV” button changed to transparent ghost style; bottom button remains solid
+- Awards list normalized and sorted with consistent bilingual dates
 
 ### v1.2.0 (2025-07-15)
 - Further optimized webpage aesthetics and adjusted font colors for enhanced readability
@@ -255,7 +260,11 @@ my-homepage/
 - 增加页头标语、能力标签与双CTA，快速传达“你是谁、能做什么”
 - 新增“关于我/我能做什么”版块，4张服务卡片概述优势能力
 - 新增趣味迷你终端交互（help/skills/about）
-- 更新简历链接为 `CV.pdf` 并同步README文件结构
+- 新增右上角1/4圆弧彩虹条（鼠标靠近旋转并拉伸，离开复位为短弧），密度提升与颜色加深
+- 新增底部区域点击彩色纸屑特效
+- 技能区栅格压缩为单列，移动端浏览更友好
+- 顶部“下载简历”改为透明按钮（bottom处保持实体按钮）
+- 奖项列表统一中英日期并按时间排序
 
 ### v1.1.0 (2025-07-15)
 - 进一步优化了网页美观度，调整了字体颜色以增强可读性

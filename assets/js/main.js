@@ -208,8 +208,9 @@ document.addEventListener('DOMContentLoaded', () => {
       // Rainbow bars canvas
       const rainbowCanvas = document.getElementById('rainbow-field');
       const ctx = rainbowCanvas?.getContext('2d');
-      const rainbowColors = ['#5B8CFF','#6BE6FF','#7CFFB2','#FFD66B','#FF8FAB','#B686FF'];
+      const rainbowColors = ['#377DFF','#26A0DA','#17C964','#FFC22E','#FF5A8A','#7A5AF8'];
       let bars = [];
+      let hovering = false;
 
       function resizeCanvas(){
         if (!rainbowCanvas) return;
@@ -223,15 +224,22 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!rainbowCanvas) return;
         bars = [];
         const w = rainbowCanvas.width, h = rainbowCanvas.height;
-        const count = Math.max(20, Math.floor(w/45));
+        const count = 42; // denser
+        // arrange along quarter arc (top-right around center of canvas)
+        const cx = w*0.35, cy = h*0.35; // arc center offset to left/bottom to wrap avatar on left-bottom
+        const rMin = Math.min(w,h)*0.28;
+        const rMax = Math.min(w,h)*0.46;
         for (let i=0;i<count;i++){
-          const x = Math.random()*w*0.9 + w*0.1; // bias to right
-          const y = Math.random()*h*0.9 + h*0.05; // keep inside panel
-          const len = (Math.random()*0.5 + 0.6) * 140 * window.devicePixelRatio;
-          const thick = (Math.random()*0.5 + 0.6) * 9 * window.devicePixelRatio;
+          const t = i/(count-1);
+          const ang = (Math.PI*1.5) + t*(Math.PI/2); // 270° to 360° quadrant
+          const r = rMin + (rMax-rMin)*t;
+          const x = cx + Math.cos(ang)*r;
+          const y = cy + Math.sin(ang)*r;
+          const len = (0.5 + t)*120 * window.devicePixelRatio; // arc ends longer when active
+          const thick = (0.7 + 0.3*Math.random()) * 9 * window.devicePixelRatio;
           const c = rainbowColors[i % rainbowColors.length];
           const phase = Math.random()*Math.PI*2;
-          bars.push({x,y,len,thick,color:c,phase});
+          bars.push({x,y,len,baseLen:len*0.55,thick,color:c,phase});
         }
       }
 
@@ -239,14 +247,19 @@ document.addEventListener('DOMContentLoaded', () => {
       function drawBars(time){
         if (!ctx || !rainbowCanvas) return;
         ctx.clearRect(0,0,rainbowCanvas.width,rainbowCanvas.height);
-        const cx = (mx - rainbowCanvas.getBoundingClientRect().left) * window.devicePixelRatio;
-        const cy = (my - rainbowCanvas.getBoundingClientRect().top) * window.devicePixelRatio;
+        const cxm = (mx - rainbowCanvas.getBoundingClientRect().left) * window.devicePixelRatio;
+        const cym = (my - rainbowCanvas.getBoundingClientRect().top) * window.devicePixelRatio;
         bars.forEach((b)=>{
-          const ang = Math.atan2(cy - b.y, cx - b.x);
-          const drift = Math.sin(time/1000 + b.phase) * 0.15;
-          const a = ang + drift;
-          const dx = Math.cos(a) * (b.len/2);
-          const dy = Math.sin(a) * (b.len/2);
+          // base direction along arc tangent (pointing outward initially)
+          let a = Math.atan2(b.y, b.x) + Math.PI/2;
+          if (hovering){
+            const toMouse = Math.atan2(cym - b.y, cxm - b.x);
+            const drift = Math.sin(time/1000 + b.phase) * 0.1;
+            a = toMouse + drift; // face mouse with slight drift
+          }
+          const len = hovering ? b.len : b.baseLen; // stretch when hover
+          const dx = Math.cos(a) * (len/2);
+          const dy = Math.sin(a) * (len/2);
           ctx.strokeStyle = b.color;
           ctx.lineWidth = b.thick;
           ctx.lineCap = 'round';
@@ -274,6 +287,8 @@ document.addEventListener('DOMContentLoaded', () => {
           gsap.to(img, { x: cx * depth, y: cy * depth, scale: 1.03, transformOrigin: 'center', duration: 0.25, overwrite: true });
         });
       });
+      rainbowCanvas?.addEventListener('mouseenter', ()=> hovering = true);
+      rainbowCanvas?.addEventListener('mouseleave', ()=> hovering = false);
 
       // Click effects (confetti)
       const effectsCanvas = document.getElementById('click-effects');
@@ -384,8 +399,8 @@ document.addEventListener('DOMContentLoaded', () => {
               typeText(terminalInput, 'about');
               setTimeout(() => {
                   if (terminalOutput) terminalOutput.textContent = (L === 'zh')
-                    ? '我做能落地的智能系统。'
-                    : 'I build practical intelligent systems.';
+                    ? '自动化初学者。'
+                    : 'Automation beginner.';
               }, 900);
           } else {
               typeText(terminalInput, 'help');
