@@ -8,9 +8,27 @@ document.addEventListener('DOMContentLoaded', () => {
         const tl = gsap.timeline({ defaults: { duration: 0.7, ease: 'power3.out' } });
         tl.from('.avatar', { scale: 0.85, autoAlpha: 0 })
           .from('header h1', { y: 24, autoAlpha: 0 }, '-=0.4')
+          // 标题逐字显现 + 轻微回弹
+          .add(() => {
+            const h1 = document.querySelector('header h1');
+            if (!h1) return;
+            const text = h1.textContent || '';
+            h1.innerHTML = '';
+            const frag = document.createDocumentFragment();
+            [...text].forEach((ch, idx) => {
+              const span = document.createElement('span');
+              span.textContent = ch;
+              span.style.display = 'inline-block';
+              span.style.transform = 'translateY(30px)';
+              span.style.opacity = '0';
+              frag.appendChild(span);
+              gsap.to(span, { delay: idx*0.05, duration: 0.6, y: 0, opacity: 1, ease: 'back.out(2)' });
+            });
+            h1.appendChild(frag);
+          })
           .from('header p', { y: 20, autoAlpha: 0 }, '-=0.5')
-          .from('.hero-tags .pill', { y: 18, autoAlpha: 0, stagger: 0.08 }, '-=0.4')
-          .from('.hero-ctas .btn', { y: 16, autoAlpha: 0, stagger: 0.1 }, '-=0.5')
+          .from('.hero-tags .pill', { y: 0, autoAlpha: 0, stagger: 0.08 }, '-=0.4')
+          .from('.hero-ctas .btn', { y: 0, autoAlpha: 0, stagger: 0.1 }, '-=0.5')
           .from('header .social a', { y: 12, autoAlpha: 0, stagger: 0.06 }, '-=0.5')
           .from('.quick-nav', { x: -30, autoAlpha: 0 }, '-=0.6');
     }
@@ -365,6 +383,18 @@ document.addEventListener('DOMContentLoaded', () => {
         updateProgress();
         document.addEventListener('scroll', updateProgress, { passive: true });
         window.addEventListener('resize', updateProgress);
+    }
+
+    // --- 回到顶部按钮 ---
+    const backTopBtn = document.getElementById('back-to-top');
+    if (backTopBtn){
+        const toggleBtn = () => {
+            const y = window.scrollY || document.documentElement.scrollTop;
+            if (y > 500) backTopBtn.classList.add('visible'); else backTopBtn.classList.remove('visible');
+        };
+        toggleBtn();
+        document.addEventListener('scroll', toggleBtn, { passive: true });
+        backTopBtn.addEventListener('click', () => gsap.to(window, { duration: 0.8, scrollTo: {y: 0}, ease: 'power2.out' }));
     }
 
     // --- 磁性按钮（CTA 与社交、Pills 轻微跟随）---
