@@ -246,6 +246,22 @@ document.addEventListener('DOMContentLoaded', () => {
       resizeEffects();
       window.addEventListener('resize', resizeEffects);
 
+      // 生成渐变（跟随主题颜色）
+      function makeThemeGradient(){
+        if (!ectx || !effectsCanvas) return null;
+        const g = ectx.createLinearGradient(0,0,effectsCanvas.width,0);
+        // 读取 CSS 变量
+        const styles = getComputedStyle(document.documentElement);
+        const accent = styles.getPropertyValue('--accent').trim() || '#4f9cff';
+        const highlight = styles.getPropertyValue('--highlight').trim() || '#ffb300';
+        g.addColorStop(0, accent);
+        g.addColorStop(1, highlight);
+        return g;
+      }
+      let themeGradient = null;
+      const refreshThemeGradient = () => { themeGradient = makeThemeGradient(); };
+      refreshThemeGradient();
+
       function spawnConfetti(x, y){
         const count = 24;
         for (let i=0;i<count;i++){
@@ -258,7 +274,7 @@ document.addEventListener('DOMContentLoaded', () => {
             vy: Math.sin(angle)*speed - 2,
             g: 0.08,
             life: 60 + Math.random()*30,
-            color: ['#5B8CFF','#6BE6FF','#7CFFB2','#FFD66B','#FF8FAB','#B686FF'][i % 6]
+            color: themeGradient || ['#5B8CFF','#6BE6FF','#7CFFB2','#FFD66B','#FF8FAB','#B686FF'][i % 6]
           });
         }
         ripples.push({x:x*window.devicePixelRatio,y:y*window.devicePixelRatio,r:0,alpha:0.35});
@@ -297,7 +313,7 @@ document.addEventListener('DOMContentLoaded', () => {
           for (let i=0;i<n;i++){
             const ang = Math.random()*Math.PI*2;
             const spd = 2 + Math.random()*3;
-            particles.push({ mode:'confetti', x:cx, y:cy, vx:Math.cos(ang)*spd, vy:Math.sin(ang)*spd, g:0.06, life: 45+Math.random()*20, color: ['#FFFFFF','#E6EDF5','#9EC9FF','#7CFFB2','#FFD66B'][i%5] });
+            particles.push({ mode:'confetti', x:cx, y:cy, vx:Math.cos(ang)*spd, vy:Math.sin(ang)*spd, g:0.06, life: 45+Math.random()*20, color: themeGradient || '#ffffff' });
           }
         });
       }
@@ -339,13 +355,20 @@ document.addEventListener('DOMContentLoaded', () => {
         spawnConfetti(ev.clientX, ev.clientY);
       });
 
-      // 触发能力标签的粒子聚拢动画
+      // 触发能力标签的粒子聚拢动画（可重复播放，加入冷却防抖）
+      let lastHeroPlay = 0;
+      const cooldownMs = 800; // 最小间隔
       ScrollTrigger.create({
         trigger: '.hero-tags',
         start: 'top 90%',
-        once: true,
-        onEnter: () => spawnHeroGather()
+        end: 'bottom top',
+        onEnter: () => { const now = Date.now(); if (now - lastHeroPlay > cooldownMs){ spawnHeroGather(); lastHeroPlay = now; } },
+        onEnterBack: () => { const now = Date.now(); if (now - lastHeroPlay > cooldownMs){ spawnHeroGather(); lastHeroPlay = now; } }
       });
+
+      // 主题切换时更新渐变
+      const observer = new MutationObserver(() => refreshThemeGradient());
+      observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
 
       document.querySelectorAll('.service-card').forEach(card => {
         card.addEventListener('mousemove', (e) => {

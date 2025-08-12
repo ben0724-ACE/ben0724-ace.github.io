@@ -661,7 +661,7 @@ header::before{background:linear-gradient(to top, rgba(0,0,0,0.78) 0%, rgba(0,0,
 
 /* transparent ghost button for hero */
 .btn.ghost{background:transparent;color:#fff;border:1.6px solid rgba(255,255,255,.75)}
-.btn.ghost:hover{background:rgba(255,255,255,.12);border-color:#fff}
+.btn.ghost:hover{background:var(--accent);border-color:var(--accent);}
 
 /* Skills grid compress to one column */
 .skills-container{grid-template-columns:1fr}
