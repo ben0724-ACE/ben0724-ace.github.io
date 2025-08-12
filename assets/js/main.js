@@ -204,98 +204,30 @@ document.addEventListener('DOMContentLoaded', () => {
     if (window.matchMedia('(pointer:fine)').matches) {
       const headerEl = document.querySelector('header');
       const parallaxTargets = gsap.utils.toArray('.header-bg-slider img');
-
-      // Rainbow bars canvas
-      const rainbowCanvas = document.getElementById('rainbow-field');
-      const ctx = rainbowCanvas?.getContext('2d');
-      const rainbowColors = ['#377DFF','#26A0DA','#17C964','#FFC22E','#FF5A8A','#7A5AF8'];
-      let bars = [];
-      let hovering = false;
-      let ready = false;
-
-      function resizeCanvas(){
-        if (!rainbowCanvas) return;
-        const rect = rainbowCanvas.getBoundingClientRect();
-        rainbowCanvas.width = rect.width * window.devicePixelRatio;
-        rainbowCanvas.height = rect.height * window.devicePixelRatio;
-        generateBars();
-        ready = true;
-      }
-
-      function generateBars(){
-        if (!rainbowCanvas) return;
-        bars = [];
-        const w = rainbowCanvas.width, h = rainbowCanvas.height;
-        const count = 42; // denser
-        // arrange along quarter arc (top-right around center of canvas)
-        const cx = w*0.35, cy = h*0.35; // arc center
-        const rMin = Math.min(w,h)*0.28;
-        const rMax = Math.min(w,h)*0.46;
-        for (let i=0;i<count;i++){
-          const t = i/(count-1);
-          const ang = (Math.PI*1.5) + t*(Math.PI/2); // 270° to 360° quadrant
-          const r = rMin + (rMax-rMin)*t;
-          const x = cx + Math.cos(ang)*r;
-          const y = cy + Math.sin(ang)*r;
-          const len = (0.5 + t)*120 * window.devicePixelRatio;
-          const thick = (0.7 + 0.3*Math.random()) * 9 * window.devicePixelRatio;
-          const c = rainbowColors[i % rainbowColors.length];
-          const phase = Math.random()*Math.PI*2;
-          bars.push({x,y,len,baseLen:len*0.45,thick,color:c,phase,baseAngle:ang});
-        }
-      }
-
-      let mx = 0, my = 0;
-      function drawBars(time){
-        if (!ctx || !rainbowCanvas || !ready) return;
-        ctx.clearRect(0,0,rainbowCanvas.width,rainbowCanvas.height);
-        const cxm = (mx - rainbowCanvas.getBoundingClientRect().left) * window.devicePixelRatio;
-        const cym = (my - rainbowCanvas.getBoundingClientRect().top) * window.devicePixelRatio;
-        bars.forEach((b)=>{
-          // base tangent along arc (perpendicular to radius)
-          let a = b.baseAngle + Math.PI/2;
-          if (hovering){
-            const toMouse = Math.atan2(cym - b.y, cxm - b.x);
-            const drift = Math.sin(time/1000 + b.phase) * 0.1;
-            a = toMouse + drift; // face mouse with slight drift
-          }
-          const len = hovering ? b.len : b.baseLen; // stretch when hover
-          const dx = Math.cos(a) * (len/2);
-          const dy = Math.sin(a) * (len/2);
-          ctx.strokeStyle = b.color;
-          ctx.lineWidth = b.thick;
-          ctx.lineCap = 'round';
-          ctx.beginPath();
-          ctx.moveTo(b.x - dx, b.y - dy);
-          ctx.lineTo(b.x + dx, b.y + dy);
-          ctx.stroke();
-        });
-        requestAnimationFrame(drawBars);
-      }
-
-      if (rainbowCanvas){
-        resizeCanvas();
-        window.addEventListener('resize', resizeCanvas);
-        requestAnimationFrame(drawBars);
-      }
-
       headerEl?.addEventListener('mousemove', (e) => {
         const rect = headerEl.getBoundingClientRect();
-        mx = e.clientX; my = e.clientY;
         const cx = (e.clientX - rect.left) / rect.width - 0.5;
         const cy = (e.clientY - rect.top) / rect.height - 0.5;
+        // clamp parallax to prevent background from escaping overlay edges
+        const clamp = (v, m) => Math.max(-m, Math.min(m, v));
         parallaxTargets.forEach((img, i) => {
-          const depth = (i + 1) * 16;
-          gsap.to(img, { x: cx * depth, y: cy * depth, scale: 1.03, transformOrigin: 'center', duration: 0.25, overwrite: true });
+          const depth = (i + 1) * 12;
+          gsap.to(img, { x: clamp(cx, 0.5) * depth, y: clamp(cy, 0.5) * depth, scale: 1.02, transformOrigin: 'center', duration: 0.25, overwrite: true });
         });
       });
-      rainbowCanvas?.addEventListener('mouseenter', ()=> hovering = true);
-      rainbowCanvas?.addEventListener('mouseleave', ()=> hovering = false);
+
+      // also reset parallax when leaving header to avoid residual offset
+      headerEl?.addEventListener('mouseleave', () => {
+        parallaxTargets.forEach((img) => {
+          gsap.to(img, { x: 0, y: 0, duration: 0.4, ease: 'power2.out' });
+        });
+      });
 
       // Click effects (confetti)
       const effectsCanvas = document.getElementById('click-effects');
       const ectx = effectsCanvas?.getContext('2d');
       let particles = [];
+      let ripples = [];
       function resizeEffects(){
         if (!effectsCanvas) return;
         effectsCanvas.width = window.innerWidth * window.devicePixelRatio;
@@ -318,9 +250,10 @@ document.addEventListener('DOMContentLoaded', () => {
             vy: Math.sin(angle)*speed - 2,
             g: 0.08,
             life: 60 + Math.random()*30,
-            color: rainbowColors[i % rainbowColors.length]
+            color: ['#5B8CFF','#6BE6FF','#7CFFB2','#FFD66B','#FF8FAB','#B686FF'][i % 6]
           });
         }
+        ripples.push({x:x*window.devicePixelRatio,y:y*window.devicePixelRatio,r:0,alpha:0.35});
       }
       function tick(){
         if (!ectx || !effectsCanvas) return;
@@ -335,6 +268,16 @@ document.addEventListener('DOMContentLoaded', () => {
           ectx.fillRect(p.x, p.y, 6, 3);
         });
         particles = particles.filter(p => p.life > 0);
+        // ripple rings
+        ripples.forEach(r => {
+          r.r += 6; r.alpha *= 0.94;
+          ectx.strokeStyle = 'rgba(255,255,255,'+r.alpha+')';
+          ectx.lineWidth = 2;
+          ectx.beginPath();
+          ectx.arc(r.x, r.y, r.r, 0, Math.PI*2);
+          ectx.stroke();
+        });
+        ripples = ripples.filter(r => r.alpha > 0.02);
         requestAnimationFrame(tick);
       }
       requestAnimationFrame(tick);

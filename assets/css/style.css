@@ -652,11 +652,8 @@ header .social{margin-top:1rem}
 
 /* Avatar container */
 .avatar-box{position:relative;display:inline-block}
-/* Arc rainbow canvas refined placement */
-.hero-rainbow{position:absolute;right:8%;top:8%;width:320px;height:320px;max-width:35vw;max-height:35vw;pointer-events:none;z-index:1;opacity:.95}
-@media(max-width:768px){.hero-rainbow{right:6%;top:6%;width:220px;height:220px}}
-.effects-canvas{position:fixed;left:0;top:0;width:100%;height:100%;pointer-events:none;z-index:1000}
-header > *:not(.header-bg-slider):not(.hero-rainbow){position:relative;z-index:2}
+/* stronger header overlay to avoid edges showing on scroll */
+header::before{background:linear-gradient(to top, rgba(0,0,0,0.78) 0%, rgba(0,0,0,0.42) 60%, rgba(0,0,0,0.58) 100%);}
 
 /* transparent ghost button for hero */
 .btn.ghost{background:transparent;color:#fff;border:1.6px solid rgba(255,255,255,.75)}
