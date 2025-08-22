@@ -110,6 +110,15 @@ In the `assets/js/main.js` file:
 
 ## Changelog
 
+### v1.4.0 (2025-01-XX)
+- 🎨 **Color Scheme Upgrade**: Adopted warm neutral harmony color palette with primary color #C87E6A and warm off-white background #FDFBF8
+- ✨ **Enhanced Interactions**: Optimized all card hover effects with subtle lift and shadow changes, inspired by excellent web design
+- 🎯 **Navigation Enhancement**: Left navigation uses bottom border highlight design with theme color borders on hover
+- 🚀 **Button Animation**: All buttons lift slightly and show enhanced shadows on hover
+- 🎭 **Avatar & Tag Interactions**: Avatar scales slightly on hover, hero tags lift with enhanced visual effects
+- 🌟 **Service Card Beautification**: Service cards enhanced with hover animations for better UX
+- 💫 **Terminal Component**: Mini terminal enhanced with hover effects for better interactivity
+
 ### v1.3.0 (2025-08-11)
 - Added hero tagline, capability pills, and dual CTA for faster self-intro and contact
 - Introduced About/What I Do section with four concise service cards
@@ -251,6 +260,15 @@ my-homepage/
 - 懒加载和预加载策略
 
 ## 更新日志
+
+### v1.4.0 (2025-01-XX)
+- 🎨 **配色方案全面升级**：采用暖色调中性和谐配色，主色调为温暖的棕红色(#C87E6A)，背景为温暖的米白色(#FDFBF8)
+- ✨ **交互体验大幅提升**：参考优秀网页设计，优化所有卡片的悬停效果（轻微上移+阴影变化）
+- 🎯 **导航交互优化**：左侧导航采用底部边框高亮设计，悬停时显示主题色边框
+- 🚀 **按钮动效增强**：所有按钮悬停时轻微上移并显示增强阴影效果
+- 🎭 **头像和标签交互**：头像悬停时轻微放大，英雄标签悬停时上移并增强视觉效果
+- 🌟 **服务卡片美化**：服务卡片增加悬停动效，提升用户体验
+- 💫 **终端组件优化**：迷你终端增加悬停动效，增强交互性
 
 ### v1.3.0 (2025-08-11)
 - 增加页头标语、能力标签与双CTA，快速传达“你是谁、能做什么”
