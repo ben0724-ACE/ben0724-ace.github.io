@@ -110,7 +110,7 @@ In the `assets/js/main.js` file:
 
 ## Changelog
 
-### v1.4.0 (2025-01-XX)
+### v1.4.0 (2025-08-22)
 - 🎨 **Color Scheme Upgrade**: Adopted warm neutral harmony color palette with primary color #C87E6A and warm off-white background #FDFBF8
 - ✨ **Enhanced Interactions**: Optimized all card hover effects with subtle lift and shadow changes, inspired by excellent web design
 - 🎯 **Navigation Enhancement**: Left navigation uses bottom border highlight design with theme color borders on hover
@@ -261,7 +261,7 @@ my-homepage/
 
 ## 更新日志
 
-### v1.4.0 (2025-01-XX)
+### v1.4.0 (2025-08-22)
 - 🎨 **配色方案全面升级**：采用暖色调中性和谐配色，主色调为温暖的棕红色(#C87E6A)，背景为温暖的米白色(#FDFBF8)
 - ✨ **交互体验大幅提升**：参考优秀网页设计，优化所有卡片的悬停效果（轻微上移+阴影变化）
 - 🎯 **导航交互优化**：左侧导航采用底部边框高亮设计，悬停时显示主题色边框
