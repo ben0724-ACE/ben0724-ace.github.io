@@ -16,18 +16,19 @@
 }
 
 :root.dark-mode {
-  --accent-rgb: 79, 156, 255; /* 对应 --accent: #4f9cff; */
-  /* 深色主题：深蓝灰为主，蓝绿点缀，橙色高亮，科技感强 */
-  --bg: #181f2a;              /* 深蓝灰背景，沉稳不死黑 */
-  --fg: #f1f3f8;              /* 亮灰白主文字，清晰对比 */
-  --accent: #4f9cff;          /* 明亮蓝色，深色下依然活力 */
-  --accent-secondary: #3b7da8;/* 绿色点缀，深色下更显活力 */
-  --highlight: #ffb300;       /* 橙色高亮，深色下依然醒目 */
-  --card-bg: #232b3a;         /* 深蓝卡片，层次分明 */
-  --border-color: #2c3442;    /* 深灰蓝边框 */
-  --shadow: 0 4px 16px rgba(20, 30, 50, 0.32); /* 深色阴影 */
-  --text-color-light: #b6c2d1;/* 次要文字，浅蓝灰 */
-  --text-color-dark: #7a869a; /* 辅助文字，灰蓝 */
+  --accent-rgb: 200, 126, 106; /* 对应 --accent: #C87E6A; */
+  /* 深色主题：保持暖色调，深色背景 */
+  --bg: #1F2937;              /* 深蓝灰背景，沉稳不死黑 */
+  --fg: #F9FAFB;              /* 亮灰白主文字，清晰对比 */
+  --accent: #C87E6A;          /* 保持温暖棕红色，深色下依然活力 */
+  --accent-secondary: #D6BFAA;/* 温和米色，深色下更显温暖 */
+  --highlight: #B76E5A;       /* 深棕红色，深色下依然醒目 */
+  --card-bg: #374151;         /* 深灰卡片，层次分明 */
+  --border-color: #4B5563;    /* 深灰边框 */
+  --shadow: 0 4px 16px rgba(0, 0, 0, 0.32); /* 深色阴影 */
+  --text-color-light: #D1D5DB;/* 次要文字，浅灰 */
+  --text-color-dark: #9CA3AF; /* 辅助文字，中灰 */
+  --hover-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.32), 0 4px 6px -2px rgba(0, 0, 0, 0.32);
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
