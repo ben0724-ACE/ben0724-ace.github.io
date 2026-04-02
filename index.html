@@ -16,8 +16,8 @@
 <div class="cursor"></div>
 <div class="preloader"><div class="loader"></div></div>
 
-<div class="theme-switcher" id="theme-switcher"></div>
-<div class="language-switcher" id="language-switcher"></div>
+<button class="theme-switcher" id="theme-switcher" type="button" aria-label="Toggle theme" title="Toggle theme"></button>
+<button class="language-switcher" id="language-switcher" type="button" aria-label="Switch language" title="Switch language"></button>
 
 <aside class="quick-nav">
   <h3><span class="lang-en">Contents</span><span class="lang-zh">目录</span></h3>
@@ -33,13 +33,13 @@
 
 <header>
   <div class="header-bg-slider">
-    <img src="assets/img/header-bg.jpg" alt="Header Background 1">
-    <img src="assets/img/header-bg2.jpg" alt="Header Background 2">
-    <img src="assets/img/header-bg3.jpg" alt="Header Background 3">
+    <img src="assets/img/header-bg.jpg" alt="" aria-hidden="true" fetchpriority="high" decoding="async" width="1280" height="720">
+    <img src="assets/img/header-bg2.jpg" alt="" aria-hidden="true" fetchpriority="low" decoding="async" width="1620" height="1080">
+    <img src="assets/img/header-bg3.jpg" alt="" aria-hidden="true" fetchpriority="low" decoding="async" width="1706" height="1279">
   </div>
   
   <div class="avatar-box">
-    <img src="assets/img/avatar.jpg" alt="avatar" class="avatar">
+    <img src="assets/img/avatar.jpg" alt="avatar" class="avatar" fetchpriority="high" decoding="async" width="959" height="959">
   </div>
   <h1><span class="lang-en">Qi Haoran</span><span class="lang-zh">祁皓然</span></h1>
   <p>
@@ -59,6 +59,24 @@
     <span class="pill"><i data-feather="activity"></i><span class="lang-en">Industrial Automation</span><span class="lang-zh">工业自动化</span></span>
     <span class="pill"><i data-feather="bar-chart-2"></i><span class="lang-en">Data Analysis</span><span class="lang-zh">数据分析</span></span>
   </div>
+  <div class="hero-metrics" aria-label="Profile highlights">
+    <div class="metric-card">
+      <strong>3</strong>
+      <small class="metric-label"><span class="lang-en">Research Tracks</span><span class="lang-zh">&#31185;&#30740;&#26041;&#21521;</span></small>
+    </div>
+    <div class="metric-card">
+      <strong>5</strong>
+      <small class="metric-label"><span class="lang-en">Major Projects</span><span class="lang-zh">&#37325;&#28857;&#39033;&#30446;</span></small>
+    </div>
+    <div class="metric-card">
+      <strong>10+</strong>
+      <small class="metric-label"><span class="lang-en">Awards</span><span class="lang-zh">&#33635;&#35465;&#22870;&#39033;</span></small>
+    </div>
+    <div class="metric-card">
+      <strong>2</strong>
+      <small class="metric-label"><span class="lang-en">Internships</span><span class="lang-zh">&#23454;&#20064;&#32463;&#21382;</span></small>
+    </div>
+  </div>
   <div class="hero-ctas">
     <a class="btn ghost" href="CV.pdf" data-cv-en="CV.pdf" data-cv-zh="简历.pdf" target="_blank">
       <i data-feather="download"></i>
@@ -73,6 +91,15 @@
     <a href="https://github.com/ben0724-ACE" title="GitHub" target="_blank"><i data-feather="github"></i></a>
   </div>
 </header>
+
+<nav class="mobile-section-nav" aria-label="Section navigation">
+  <a href="#about"><span class="lang-en">About</span><span class="lang-zh">&#20851;&#20110;&#25105;</span></a>
+  <a href="#education"><span class="lang-en">Education</span><span class="lang-zh">&#25945;&#32946;</span></a>
+  <a href="#research"><span class="lang-en">Research</span><span class="lang-zh">&#31185;&#30740;</span></a>
+  <a href="#projects"><span class="lang-en">Projects</span><span class="lang-zh">&#39033;&#30446;</span></a>
+  <a href="#internship"><span class="lang-en">Internship</span><span class="lang-zh">&#23454;&#20064;</span></a>
+  <a href="#awards"><span class="lang-en">Awards</span><span class="lang-zh">&#22870;&#39033;</span></a>
+</nav>
 
 <main>
   <section id="about">
@@ -185,7 +212,7 @@
             <li><span class="lang-en"><strong>Devised</strong> a custom 3D-printed black-box environment and disabled camera auto-white-balance to eliminate light interference, ensuring data integrity and measurement repeatability.</span><span class="lang-zh"><strong>设计</strong>了定制的3D打印黑箱环境，并禁用相机自动白平衡以消除光线干扰，确保了数据完整性和测量可重复性。</span></li>
           </ul>
           <div class="image-container">
-            <img src="assets/img/Solution.jpg" alt="Solution Concentration Monitoring Device Design" class="img-size-m">
+            <img src="assets/img/Solution.jpg" alt="Solution Concentration Monitoring Device Design" class="img-size-m" loading="lazy" decoding="async" width="594" height="445">
           </div>
           <div class="project-tags">
             <span class="tag">OpenCV</span><span class="tag">Python</span><span class="tag">Raspberry Pi</span><span class="tag">Computer Vision</span>
@@ -209,7 +236,7 @@
             <li><span class="lang-en"><strong>Spearheaded</strong> strategies to handle environmental occlusions in real-world river settings, contributing directly to the system's final operational <strong>accuracy of nearly 80%</strong> for the Beijing Water Authority.</span><span class="lang-zh"><strong>主导</strong>制定了应对真实河流环境中遮挡问题的策略，为系统最终达到<strong>接近80%的业务准确率</strong>(服务于北京市水务局)做出了直接贡献。</span></li>
           </ul>
           <div class="image-container">
-            <img src="assets/img/bird.jpg" alt="Intelligent Bird Recognition for River Ecosystems" class="img-size-m">
+            <img src="assets/img/bird.jpg" alt="Intelligent Bird Recognition for River Ecosystems" class="img-size-m" loading="lazy" decoding="async" width="782" height="354">
           </div>
           <div class="project-tags">
             <span class="tag">YOLOv8</span><span class="tag">PyTorch</span><span class="tag">Machine Learning</span><span class="tag">Ecology</span>
@@ -228,7 +255,7 @@
               <li><span class="lang-en"><strong>Executed</strong> data processing algorithm optimization and participated in sensor design and validation, helping to <strong>reduce detection time from hours to just 5 minutes</strong>.</span><span class="lang-zh"><strong>负责</strong>数据处理算法优化及传感器设计验证，帮助将<strong>检测时间从数小时缩短至仅5分钟</strong>。</span></li>
           </ul>
           <div class="image-container">
-            <img src="assets/img/Biosensor.jpg" alt="Fiber Optic Biosensor for Tumor Marker Detection" class="img-size-s">
+            <img src="assets/img/Biosensor.jpg" alt="Fiber Optic Biosensor for Tumor Marker Detection" class="img-size-s" loading="lazy" decoding="async" width="344" height="258">
           </div>
           <div class="project-tags">
             <span class="tag">Biosensor</span><span class="tag">Data Analysis</span><span class="tag">Sensor Design</span>
@@ -263,7 +290,7 @@
             <li><span class="lang-en"><strong>Engineered and commissioned</strong> the entire system, configuring Siemens S7 PLCs and industrial switches via TIA Portal to ensure robust, redundant communication.</span><span class="lang-zh"><strong>工程实现并调试</strong>了整个系统，通过TIA Portal配置西门子S7 PLC和工业交换机，确保了稳定、冗余的通信。</span></li>
           </ul>
           <div class="image-container">
-            <img src="assets/img/Siemens.jpg" alt="Siemens Cup Challenge" class="img-size-m">
+            <img src="assets/img/Siemens.jpg" alt="Siemens Cup Challenge" class="img-size-m" loading="lazy" decoding="async" width="1080" height="1273">
           </div>
           <div class="project-tags">
             <span class="tag">Siemens PLC</span><span class="tag">TIA Portal</span><span class="tag">Industrial Network</span>
@@ -287,8 +314,8 @@
             <li><span class="lang-en"><strong>Trained and deployed a YOLOv8 model</strong> that <strong>achieved 91.5% accuracy</strong> in identifying six types of animals under variable lighting conditions through targeted data augmentation.</span><span class="lang-zh"><strong>训练并部署了一个YOLOv8模型</strong>，通过有针对性的数据增强，在多变的光照条件下识别六种动物的<strong>准确率达到91.5%</strong>。</span></li>
           </ul>
           <div class="image-container raicom-images">
-            <img src="assets/img/Raicom.jpg" alt="Raicom Robot Developer Competition" >
-            <img src="assets/img/Raicom2.gif" alt="Raicom Robot Developer Competition Details">
+            <img src="assets/img/Raicom.jpg" alt="Raicom Robot Developer Competition" loading="lazy" decoding="async" width="1706" height="1279">
+            <img src="assets/img/Raicom2.gif" alt="Raicom Robot Developer Competition Details" loading="lazy" decoding="async" width="400" height="225">
           </div>
           <div class="project-tags">
             <span class="tag">ROS</span><span class="tag">YOLOv8</span><span class="tag">Python</span><span class="tag">Quadruped Robot</span>
@@ -334,7 +361,7 @@
             <li><span class="lang-en">Integrated a lightweight YOLOv5s for robust detection in complex scenes, demonstrating embedded AI capability.</span><span class="lang-zh">集成轻量YOLOv5s实现复杂场景鲁棒检测，体现嵌入式AI能力。</span></li>
           </ul>
           <div class="image-container">
-            <img src="assets/img/ElectronicDesign.jpg" alt="National Undergraduate Electronic Design Contest Project" class="img-size-m">
+            <img src="assets/img/ElectronicDesign.jpg" alt="National Undergraduate Electronic Design Contest Project" class="img-size-m" loading="lazy" decoding="async" width="3072" height="4096">
           </div>
           <div class="project-tags">
             <span class="tag">STM32</span><span class="tag">Embedded Vision</span><span class="tag">YOLOv5s</span><span class="tag">Calibration</span>
@@ -358,7 +385,7 @@
             <li><span class="lang-en"><strong>Delivered</strong> critical code modules that ensured the stability and integrity of the multi-sensor data stream, foundational for the system's fault diagnosis and vibration suppression capabilities.</span><span class="lang-zh"><strong>交付</strong>了确保多传感器数据流稳定性和完整性的关键代码模块，为系统的故障诊断和振动抑制能力奠定了基础。</span></li>
           </ul>
           <div class="image-container">
-            <img src="assets/img/Innovation.jpg" alt="Innovation Competition Project" class="img-size-l">
+            <img src="assets/img/Innovation.jpg" alt="Innovation Competition Project" class="img-size-l" loading="lazy" decoding="async" width="1706" height="1279">
           </div>
           <div class="project-tags">
             <span class="tag">Data Analysis</span><span class="tag">Sensors</span><span class="tag">Fault Diagnosis</span>
@@ -430,10 +457,10 @@
     </div>
   </section>
 
-  <section style="display: flex; flex-direction: column; align-items: center; margin-top: 4rem;">
-    <div class="image-container" style="margin-bottom: 2rem; justify-content: center;">
-      <img src="assets/img/other.gif" alt="NUEDC GIF" >
-      <img src="assets/img/robocup.gif" alt="RoboCup GIF" >
+  <section class="showcase-strip">
+    <div class="image-container showcase-media">
+      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==" data-src="assets/img/other.gif" data-loaded="false" alt="NUEDC GIF" class="deferred-media" loading="lazy" decoding="async" width="400" height="225">
+      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==" data-src="assets/img/robocup.gif" data-loaded="false" alt="RoboCup GIF" class="deferred-media" loading="lazy" decoding="async" width="400" height="225">
     </div>
     <a class="btn" href="CV.pdf" data-cv-en="CV.pdf" data-cv-zh="简历.pdf" target="_blank">
         <span class="lang-en">Download CV (PDF)</span>
