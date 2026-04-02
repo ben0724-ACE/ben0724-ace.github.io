@@ -29,6 +29,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const bgImages = Array.from(document.querySelectorAll('.header-bg-slider img'));
     const headerEl = document.querySelector('header');
     const deferredMedia = Array.from(document.querySelectorAll('.deferred-media[data-src]'));
+    const metricCounters = Array.from(document.querySelectorAll('.hero-metrics strong[data-count]'));
+    const headings = Array.from(document.querySelectorAll('main h2'));
     const terminal = document.getElementById('mini-terminal');
     const terminalInput = document.getElementById('terminal-input');
     const terminalOutput = document.getElementById('terminal-output');
@@ -204,7 +206,93 @@ document.addEventListener('DOMContentLoaded', () => {
         navLinks.forEach((link) => {
             const isActive = link.getAttribute('href') === `#${sectionId}`;
             link.classList.toggle('active', isActive);
+
+            if (isActive && link.closest('.mobile-section-nav')) {
+                link.scrollIntoView({
+                    behavior: prefersReducedMotion.matches ? 'auto' : 'smooth',
+                    inline: 'center',
+                    block: 'nearest'
+                });
+            }
         });
+    }
+
+    function setupHeadingAccents() {
+        if (!headings.length || !('IntersectionObserver' in window)) {
+            headings.forEach((heading) => heading.classList.add('is-visible'));
+            return;
+        }
+
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    if (!entry.isIntersecting) {
+                        return;
+                    }
+
+                    entry.target.classList.add('is-visible');
+                    observer.unobserve(entry.target);
+                });
+            },
+            { rootMargin: '0px 0px -18% 0px', threshold: 0.15 }
+        );
+
+        headings.forEach((heading) => observer.observe(heading));
+    }
+
+    function setupMetricCounters() {
+        if (!metricCounters.length) {
+            return;
+        }
+
+        const animateCounter = (counter) => {
+            if (counter.dataset.counted === 'true') {
+                return;
+            }
+
+            const target = Number(counter.dataset.count || '0');
+            const suffix = counter.dataset.suffix || '';
+            counter.dataset.counted = 'true';
+
+            if (prefersReducedMotion.matches || !gsapAvailable) {
+                counter.textContent = `${target}${suffix}`;
+                return;
+            }
+
+            const value = { current: 0 };
+            gsap.to(value, {
+                current: target,
+                duration: 1.15,
+                ease: 'power2.out',
+                onUpdate: () => {
+                    counter.textContent = `${Math.round(value.current)}${suffix}`;
+                },
+                onComplete: () => {
+                    counter.textContent = `${target}${suffix}`;
+                }
+            });
+        };
+
+        if (!('IntersectionObserver' in window)) {
+            metricCounters.forEach(animateCounter);
+            return;
+        }
+
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    if (!entry.isIntersecting) {
+                        return;
+                    }
+
+                    animateCounter(entry.target);
+                    observer.unobserve(entry.target);
+                });
+            },
+            { threshold: 0.5 }
+        );
+
+        metricCounters.forEach((counter) => observer.observe(counter));
     }
 
     function scrollToSection(section) {
@@ -554,6 +642,8 @@ document.addEventListener('DOMContentLoaded', () => {
     setupNavigation();
     setupCollapsibles();
     setupDeferredMedia();
+    setupHeadingAccents();
+    setupMetricCounters();
     setupHeaderSlider();
     setupHeaderParallax();
     renderTerminalState(false);

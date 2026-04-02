@@ -860,6 +860,7 @@ header p {
   font-size: 1.65rem;
   line-height: 1;
   color: #fff;
+  font-variant-numeric: tabular-nums;
 }
 
 .metric-card .metric-label {
@@ -990,10 +991,14 @@ li:hover {
 
 .deferred-media {
   background: linear-gradient(135deg, rgba(var(--accent-rgb), 0.14), rgba(var(--accent-rgb), 0.04));
+  opacity: 0.42;
+  filter: blur(8px) saturate(0.92);
 }
 
 .deferred-media[data-loaded="true"] {
   background: none;
+  opacity: 1;
+  filter: none;
 }
 
 .quick-nav {

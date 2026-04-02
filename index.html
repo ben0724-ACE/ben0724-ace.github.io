@@ -13,7 +13,6 @@
 </head>
 <body>
 <div class="scroll-progress" aria-hidden="true"><div class="bar"></div></div>
-<div class="cursor"></div>
 <div class="preloader"><div class="loader"></div></div>
 
 <button class="theme-switcher" id="theme-switcher" type="button" aria-label="Toggle theme" title="Toggle theme"></button>
@@ -61,19 +60,19 @@
   </div>
   <div class="hero-metrics" aria-label="Profile highlights">
     <div class="metric-card">
-      <strong>3</strong>
+      <strong data-count="3">3</strong>
       <small class="metric-label"><span class="lang-en">Research Tracks</span><span class="lang-zh">&#31185;&#30740;&#26041;&#21521;</span></small>
     </div>
     <div class="metric-card">
-      <strong>5</strong>
+      <strong data-count="5">5</strong>
       <small class="metric-label"><span class="lang-en">Major Projects</span><span class="lang-zh">&#37325;&#28857;&#39033;&#30446;</span></small>
     </div>
     <div class="metric-card">
-      <strong>10+</strong>
+      <strong data-count="10" data-suffix="+">10+</strong>
       <small class="metric-label"><span class="lang-en">Awards</span><span class="lang-zh">&#33635;&#35465;&#22870;&#39033;</span></small>
     </div>
     <div class="metric-card">
-      <strong>2</strong>
+      <strong data-count="2">2</strong>
       <small class="metric-label"><span class="lang-en">Internships</span><span class="lang-zh">&#23454;&#20064;&#32463;&#21382;</span></small>
     </div>
   </div>
@@ -480,7 +479,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollToPlugin.min.js"></script>
 <script src="assets/js/main.js"></script>
-<canvas id="click-effects" class="effects-canvas" aria-hidden="true"></canvas>
 <button id="back-to-top" class="back-to-top" aria-label="Back to top" title="Back to top"><i data-feather="arrow-up"></i></button>
 </body>
 </html>
