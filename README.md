@@ -15,16 +15,15 @@ This is a modern personal homepage project showcasing my education background, r
 - **Header Background Image**: Added a dynamic background image to the header section for enhanced visual appeal.
 
 ### 🧭 Navigation
-- **Fixed Navigation Bar**: Top fixed navigation for quick jumps to sections
+- **Section Navigation**: Fixed desktop sidebar and a mobile contents menu for quick jumps to sections
 - **Smooth Scrolling**: Clicking navigation items scrolls smoothly to the corresponding area
 - **Active State**: The currently viewed section is highlighted in the navigation
 - **Quick Index Navigation**: Added a fixed left-side navigation for quick access to main content sections, with active state highlighting.
 
 ### 📱 Interactive Experience
-- **Preloader Animation**: Displays a loading animation when the page loads
 - **Hover Effects**: Cards subtly lift on hover
 - **Custom Cursor**: A custom cursor effect that follows the mouse movement
-- **Skill Tags**: Clickable skill tags, supporting categorized display
+- **Skill Tags**: Technology tags grouped by category
 - **Content Collapse**: Sections can be collapsed/expanded to optimize information presentation and space utilization
 
 ### 📄 Content Organization
@@ -48,7 +47,8 @@ This is a modern personal homepage project showcasing my education background, r
 my-homepage/
 ├── index.html              # Main page file
 ├── README.md              # Project documentation
-├── CV.pdf                 # Personal CV PDF
+├── CV.pdf                 # English CV PDF
+├── 简历.pdf               # Chinese resume PDF
 ├── assets/
 │   ├── css/
 │   │   └── style.css      # Stylesheet file
@@ -80,7 +80,7 @@ Modify the following content in the `index.html` file:
 - Name and contact information
 - Avatar image path
 - Social media links
-- CV PDF file (now `CV.pdf`)
+- Resume PDF files: `CV.pdf` in English and `简历.pdf` in Chinese; download links follow the selected language
 
 ### About / Services
 - Edit the `#about` section cards to reflect your focus areas.
@@ -113,7 +113,7 @@ Welcome to submit Issues and Pull Requests to improve this project!
 
 
 ## Contact Information
-- Email: haoran.qi0724@gmail.com
+- Email: haoranqi@link.cuhk.edu.hk (Gmail: haoran.qi0724@gmail.com)
 - GitHub: [@ben0724-ACE](https://github.com/ben0724-ACE)
 
 ---
@@ -137,16 +137,15 @@ Welcome to submit Issues and Pull Requests to improve this project!
 - **页头背景图片**: 在页头部分添加了动态背景图片，增强视觉吸引力。
 
 ### 🧭 导航
-- **固定导航栏**: 顶部固定导航，快速跳转到各个部分
+- **目录导航**: 桌面侧栏与手机目录菜单，快速跳转到各个部分
 - **平滑滚动**: 点击导航项可平滑滚动到相应区域
 - **激活状态**: 当前查看的区域在导航中高亮显示
 - **快速索引导航**: 添加了左侧固定导航，可快速访问主要内容部分，并高亮显示当前激活状态。
 
 ### 📱 交互体验
-- **预加载动画**: 页面加载时显示加载动画
 - **悬停效果**: 卡片在悬停时轻微抬起
 - **自定义光标**: 遵循鼠标移动的自定义光标效果
-- **技能标签**: 可点击的技能标签，支持分类显示
+- **技能标签**: 按类别展示技术栈
 - **内容折叠**: 部分内容可折叠/展开，优化信息呈现和空间利用
 
 ### 📄 内容组织
@@ -170,7 +169,8 @@ Welcome to submit Issues and Pull Requests to improve this project!
 my-homepage/
 ├── index.html              # 主页文件
 ├── README.md              # 项目文档
-├── CV.pdf                 # 个人简历PDF
+├── CV.pdf                 # 英文简历PDF
+├── 简历.pdf               # 中文简历PDF
 ├── assets/
 │   ├── css/
 │   │   └── style.css      # 样式表文件
@@ -202,7 +202,7 @@ my-homepage/
 - 姓名和联系方式
 - 头像图片路径
 - 社交媒体链接
-- 简历PDF文件（现为 `CV.pdf`）
+- 简历 PDF 文件：英文 `CV.pdf`、中文 `简历.pdf`，下载链接随语言切换
 
 ### 关于我 / 服务
 - 编辑 `#about` 版块服务卡片，贴合你的优势方向。
@@ -234,9 +234,24 @@ my-homepage/
 欢迎提交Issues和Pull Requests来改进本项目！
 
 ## 联系方式
-- 邮箱: haoran.qi0724@gmail.com
+- 邮箱: haoranqi@link.cuhk.edu.hk（备用 Gmail：haoran.qi0724@gmail.com）
 - GitHub: [@ben0724-ACE](https://github.com/ben0724-ACE)
 
 ---
 
 ⭐ 如果这个项目对您有帮助，请给它一个星！
+
+
+## Accessibility and loading / 可访问性与加载
+
+- Native keyboard controls support language, theme, the terminal and collapsible sections. Collapsed content cannot receive keyboard focus.
+- Desktop navigation and the mobile contents menu use shareable anchors and browser history.
+- Content and CV downloads remain available without JavaScript or external animation libraries. System theme is followed until a manual choice is saved.
+- Offscreen images load lazily, with explicit dimensions. Optimized WebP images keep the original JPG/GIF files in `assets/img/`; animated replacements retain their timing and loops.
+- Reduced-motion preferences disable decorative effects, and the particle canvas stops rendering when idle.
+
+- 语言、主题、终端和折叠区使用原生键盘控件，收起内容不会获得键盘焦点。
+- 桌面目录与手机目录均支持锚点分享和浏览器前进、返回。
+- 禁用 JavaScript 或外部动画库不可用时，正文与简历仍可访问；主题在用户手动选择前跟随系统。
+- 非首屏图片懒加载并预留尺寸；压缩版 WebP 与原始 JPG/GIF 均保留，动图保留播放时长和循环设置。
+- 尊重减少动态效果偏好，点击粒子在空闲时停止绘制。

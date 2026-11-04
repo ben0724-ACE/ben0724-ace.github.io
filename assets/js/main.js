@@ -1,497 +1,351 @@
 document.addEventListener('DOMContentLoaded', () => {
-    gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
-
-    // --- 预加载动画 ---
-    const preloader = document.querySelector('.preloader');
-    // 页面入场动画
-    function animateLettersIn(containerSelector){
-        const el = typeof containerSelector === 'string' ? document.querySelector(containerSelector) : containerSelector;
-        if (!el || el.getAttribute('data-letters-animated') === '1') return;
-        const L = localStorage.getItem('language') || 'en';
-        const target = el.querySelector(L === 'zh' ? '.lang-zh' : '.lang-en') || el;
-        const text = (target.textContent || '').trim();
-        if (!text) return;
-        target.innerHTML = '';
-        const frag = document.createDocumentFragment();
-        [...text].forEach((ch, idx) => {
-            const span = document.createElement('span');
-            if (ch === ' ') { span.innerHTML = '&nbsp;'; } else { span.textContent = ch; }
-            span.style.display = 'inline-block';
-            span.style.transform = 'translateY(30px)';
-            span.style.opacity = '0';
-            frag.appendChild(span);
-            gsap.to(span, { delay: idx*0.05, duration: 0.6, y: 0, opacity: 1, ease: 'back.out(2)' });
-        });
-        target.appendChild(frag);
-        el.setAttribute('data-letters-animated','1');
-    }
-
-    function startIntro(){
-        const tl = gsap.timeline({ defaults: { duration: 0.7, ease: 'power3.out' } });
-        tl.from('.avatar', { scale: 0.85, autoAlpha: 0 })
-          .from('header h1', { y: 24, autoAlpha: 0 }, '-=0.4')
-          .add(() => animateLettersIn('header h1'))
-          .from('header p', { y: 20, autoAlpha: 0 }, '-=0.5')
-          .from('.hero-tags .pill', { autoAlpha: 0, stagger: 0.08 }, '-=0.4')
-          .from('.hero-ctas .btn', { autoAlpha: 0, stagger: 0.1 }, '-=0.5')
-          .from('header .social a', { y: 12, autoAlpha: 0, stagger: 0.06 }, '-=0.5')
-          .from('.quick-nav', { x: -30, autoAlpha: 0 }, '-=0.6')
-          .add(() => {
-              // 左侧目录依次高亮引导
-              const links = document.querySelectorAll('.quick-nav li a');
-              links.forEach((a, idx) => {
-                  gsap.fromTo(a, { backgroundColor: 'transparent', color: getComputedStyle(a).color }, {
-                      backgroundColor: 'var(--accent)', color: '#fff', duration: 0.35, yoyo: true, repeat: 1, delay: idx * 0.08, ease: 'power1.inOut'
-                  });
-              });
-          });
-    }
-
-    const hidePreloader = () => {
-        gsap.to(preloader, { 
-            opacity: 0, 
-            duration: 0.8, 
-            onComplete: () => {
-                preloader.style.display = 'none';
-                startIntro();
-            }
-        });
+    const root = document.documentElement;
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const systemTheme = window.matchMedia('(prefers-color-scheme: dark)');
+    const mobileLayout = window.matchMedia('(max-width: 992px)');
+    const readPreference = (key) => {
+        try { return localStorage.getItem(key); } catch { return null; }
     };
-    if (document.readyState === 'complete') {
-        hidePreloader();
-    } else {
-        window.addEventListener('load', hidePreloader);
-    }
-
-    // --- 主题切换器 ---
-    const themeSwitcher = document.getElementById('theme-switcher');
-    const root = document.documentElement; 
-
-    const setTheme = (theme) => {
-        if (theme === 'dark') {
-            root.classList.add('dark-mode');
-            themeSwitcher.innerHTML = feather.icons.sun.toSvg();
-            localStorage.setItem('theme', 'dark');
-        } else {
-            root.classList.remove('dark-mode');
-            themeSwitcher.innerHTML = feather.icons.moon.toSvg();
-            localStorage.setItem('theme', 'light');
-        }
+    const savePreference = (key, value) => {
+        try { localStorage.setItem(key, value); } catch { /* 浏览器禁用存储时仍保持本次会话可用。 */ }
     };
-
-    const darkModeMediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-    
-    darkModeMediaQuery.addEventListener('change', (e) => {
-        if (!localStorage.getItem('theme')) {
-            setTheme(e.matches ? 'dark' : 'light');
-        }
-    });
-
-    const savedTheme = localStorage.getItem('theme');
-    if (savedTheme) {
-        setTheme(savedTheme);
-    } else {
-        setTheme(darkModeMediaQuery.matches ? 'dark' : 'light');
-    }
-
-    themeSwitcher.addEventListener('click', () => {
-        const isDarkMode = root.classList.contains('dark-mode');
-        setTheme(isDarkMode ? 'light' : 'dark');
-    });
-
-    // --- 语言切换器 ---
-    const languageSwitcher = document.getElementById('language-switcher');
-    const langEnElements = document.querySelectorAll('.lang-en');
-    const langZhElements = document.querySelectorAll('.lang-zh');
-    const cvButtons = document.querySelectorAll('a.btn[data-cv-en]');
-
-    // --- Mini Terminal refs (moved earlier to avoid temporal dead zone) ---
+    const icon = (name, fallback) => window.feather?.icons?.[name]?.toSvg({ 'aria-hidden': 'true' }) || fallback;
+    const replaceIcons = () => window.feather?.replace({ 'aria-hidden': 'true' });
+    const themeButton = document.getElementById('theme-switcher');
+    const languageButton = document.getElementById('language-switcher');
+    const navigation = document.getElementById('page-navigation');
+    const navButton = document.getElementById('nav-toggle');
+    const backTopButton = document.getElementById('back-to-top');
+    const terminalButton = document.getElementById('mini-terminal');
     const terminalInput = document.getElementById('terminal-input');
     const terminalOutput = document.getElementById('terminal-output');
-    const terminalCaret = document.getElementById('terminal-caret');
-    let typerTimer = null;
+    const sections = [...document.querySelectorAll('main section[id]')];
+    const navLinks = [...navigation.querySelectorAll('a[href^="#"]')];
+    const collapsibleSections = [...document.querySelectorAll('.collapsible-section')];
+    const commands = ['help', 'skills', 'about'];
+    let command = 'help';
+    let typingTimer;
+    let language = readPreference('language') === 'zh' ? 'zh' : 'en';
+    const savedTheme = readPreference('theme');
+    let themePreference = ['light', 'dark'].includes(savedTheme) ? savedTheme : null;
+    let navigationOpen = false;
+    let scrollFrame = null;
 
-    const setLanguage = (lang) => {
-        if (lang === 'zh') {
-            langEnElements.forEach(el => el.style.display = 'none');
-            langZhElements.forEach(el => el.style.display = 'inline');
-            languageSwitcher.innerHTML = 'EN';
-            localStorage.setItem('language', 'zh');
-            cvButtons.forEach(btn => btn.setAttribute('href', btn.getAttribute('data-cv-zh')));
+    function updateScrollState() {
+        const max = root.scrollHeight - root.clientHeight;
+        document.querySelector('.scroll-progress .bar').style.width = `${max > 0 ? root.scrollTop / max * 100 : 0}%`;
+        backTopButton.hidden = window.scrollY <= 500;
+        backTopButton.classList.toggle('visible', !backTopButton.hidden);
+        const current = sections.filter(section => section.getBoundingClientRect().top <= Math.max(90, window.innerHeight * 0.3)).pop() || sections[0];
+        navLinks.forEach(link => {
+            const active = link.hash === `#${current.id}`;
+            link.classList.toggle('active', active);
+            if (active) link.setAttribute('aria-current', 'location');
+            else link.removeAttribute('aria-current');
+        });
+    }
+
+    function setTheme() {
+        const dark = themePreference ? themePreference === 'dark' : systemTheme.matches;
+        root.classList.toggle('dark-mode', dark);
+        themeButton.innerHTML = dark ? icon('sun', '☀') : icon('moon', '☾');
+        themeButton.setAttribute('aria-label', language === 'zh' ? `切换为${dark ? '浅色' : '深色'}主题` : `Switch to ${dark ? 'light' : 'dark'} theme`);
+        themeButton.title = themeButton.getAttribute('aria-label');
+    }
+    themeButton.addEventListener('click', () => {
+        themePreference = root.classList.contains('dark-mode') ? 'light' : 'dark';
+        savePreference('theme', themePreference);
+        setTheme();
+    });
+    systemTheme.addEventListener('change', () => {
+        if (!themePreference) setTheme();
+    });
+
+    function renderTerminal(animate = false) {
+        clearInterval(typingTimer);
+        const outputs = {
+            en: {
+                help: 'Commands: help, skills, about',
+                skills: 'AI Agents / RAG / Vision / ROS / Automation / Data Analysis',
+                about: 'Building AI agents, robotics and automation systems.'
+            },
+            zh: {
+                help: '可用命令: help, skills, about',
+                skills: 'AI Agent / RAG / 视觉 / ROS / 自动化 / 数据分析',
+                about: '专注 AI Agent、机器人与自动化开发。'
+            }
+        };
+        terminalOutput.textContent = outputs[language][command];
+        terminalInput.textContent = animate && !reducedMotion.matches ? '' : command;
+        terminalButton.setAttribute('aria-label', language === 'zh' ? `切换命令，当前为 ${command}` : `Next command; current command: ${command}`);
+        if (animate && !reducedMotion.matches) {
+            let length = 0;
+            typingTimer = setInterval(() => {
+                terminalInput.textContent = command.slice(0, ++length);
+                if (length >= command.length) clearInterval(typingTimer);
+            }, 70);
+        }
+    }
+    terminalButton.addEventListener('click', () => {
+        command = commands[(commands.indexOf(command) + 1) % commands.length];
+        renderTerminal(true);
+    });
+
+    function setLanguage(nextLanguage, remember = false) {
+        language = nextLanguage;
+        root.lang = language === 'zh' ? 'zh-CN' : 'en';
+        document.querySelectorAll('.lang-en, .lang-zh').forEach(element => {
+            const visible = element.classList.contains(`lang-${language}`);
+            element.hidden = !visible;
+            element.style.display = visible ? 'inline' : 'none';
+        });
+        languageButton.textContent = language === 'zh' ? 'EN' : '中';
+        languageButton.setAttribute('aria-label', language === 'zh' ? 'Switch to English' : '切换为中文');
+        languageButton.title = languageButton.getAttribute('aria-label');
+        document.querySelectorAll('a[data-cv-en]').forEach(link => {
+            link.href = link.getAttribute(language === 'zh' ? 'data-cv-zh' : 'data-cv-en');
+        });
+        document.querySelectorAll('h1, h2').forEach(heading => {
+            const label = heading.querySelector(`.lang-${language}`)?.textContent.trim();
+            if (label) {
+                heading.setAttribute('aria-label', label);
+                heading.querySelector('.section-toggle')?.setAttribute('aria-label', label);
+            }
+        });
+        backTopButton.setAttribute('aria-label', language === 'zh' ? '回到顶部' : 'Back to top');
+        backTopButton.title = backTopButton.getAttribute('aria-label');
+        if (remember) savePreference('language', language);
+        renderTerminal();
+        setTheme();
+        updateScrollState();
+    }
+    languageButton.addEventListener('click', () => setLanguage(language === 'en' ? 'zh' : 'en', true));
+
+    function setExpanded(section, expanded, animate = true) {
+        const heading = section.querySelector('.collapsible-header');
+        const button = heading.querySelector('.section-toggle');
+        const content = section.querySelector('.collapsible-content');
+        const wasExpanded = content.classList.contains('is-expanded');
+        if (!expanded && content.contains(document.activeElement)) button.focus({ preventScroll: true });
+        if (wasExpanded !== expanded && animate && !reducedMotion.matches) {
+            const fullHeight = content.scrollHeight;
+            if (wasExpanded) {
+                content.style.maxHeight = `${content.getBoundingClientRect().height}px`;
+                void content.offsetHeight;
+            }
+            content.style.maxHeight = expanded ? `${fullHeight}px` : '0px';
         } else {
-            langZhElements.forEach(el => el.style.display = 'none');
-            langEnElements.forEach(el => el.style.display = 'inline');
-            languageSwitcher.innerHTML = '中';
-            localStorage.setItem('language', 'en');
-            cvButtons.forEach(btn => btn.setAttribute('href', btn.getAttribute('data-cv-en')));
+            content.style.removeProperty('max-height');
         }
-        // sync terminal text if present
-        if (terminalOutput) {
-            const L = localStorage.getItem('language') || 'en';
-            terminalOutput.textContent = (L === 'zh') ? '可用命令: help, skills, about' : 'Commands: help, skills, about';
-        }
-        feather.replace();
-    };
-
-    const savedLanguage = localStorage.getItem('language');
-    // 初始隐藏中文, 避免闪烁；根据本地存储设置语言
-    langZhElements.forEach(el => el.style.display = 'none');
-    setLanguage(savedLanguage || 'en');
-
-    languageSwitcher.addEventListener('click', () => {
-        const currentLang = localStorage.getItem('language') || 'en';
-        setLanguage(currentLang === 'en' ? 'zh' : 'en');
-    });
-
-
-    // --- 滚动动画 ---
-    gsap.utils.toArray('main li, .skill-category, .service-card').forEach(elem => {
-        gsap.from(elem, {
-            autoAlpha: 0,
-            y: 50,
-            duration: 1.0,
-            ease: 'power3.out',
-            scrollTrigger: {
-                trigger: elem,
-                start: 'top 90%',
-                toggleActions: 'play none none none',
-                once: true
+        content.classList.toggle('is-expanded', expanded);
+        heading.classList.toggle('collapsed', !expanded);
+        content.inert = !expanded;
+        content.setAttribute('aria-hidden', String(!expanded));
+        button.setAttribute('aria-expanded', String(expanded));
+        updateScrollState();
+    }
+    collapsibleSections.forEach(section => {
+        const button = section.querySelector('.section-toggle');
+        const content = section.querySelector('.collapsible-content');
+        button.disabled = false;
+        button.addEventListener('click', () => setExpanded(section, button.getAttribute('aria-expanded') !== 'true'));
+        content.addEventListener('transitionend', event => {
+            if (event.target === content && event.propertyName === 'max-height') {
+                content.style.removeProperty('max-height');
+                updateScrollState();
             }
         });
+        setExpanded(section, window.location.hash === `#${section.id}`, false);
     });
 
-    // --- 快速导航 --- 
-    const quickNavLinks = document.querySelectorAll('.quick-nav a');
-    const mainSections = document.querySelectorAll('main section.collapsible-section, #about');
-    
-    quickNavLinks.forEach(link => {
-        link.addEventListener('click', (e) => {
-            e.preventDefault();
-            const targetId = link.getAttribute('href');
-            const targetSection = document.querySelector(targetId);
-            if (targetSection) {
-                gsap.to(window, {duration: 1, scrollTo: {y: targetSection, offsetY: 70}, ease: "power2.out"});
-            }
-        });
+    function setNavigation(open, restoreFocus = false) {
+        navigationOpen = open && mobileLayout.matches;
+        navigation.classList.toggle('is-open', navigationOpen);
+        navigation.inert = mobileLayout.matches && !navigationOpen;
+        navigation.setAttribute('aria-hidden', String(navigation.inert));
+        navButton.setAttribute('aria-expanded', String(navigationOpen));
+        if (restoreFocus) navButton.focus();
+    }
+    navButton.addEventListener('click', () => setNavigation(!navigationOpen));
+    document.addEventListener('keydown', event => {
+        if (event.key === 'Escape' && navigationOpen) setNavigation(false, true);
     });
-
-    mainSections.forEach(section => {
-        ScrollTrigger.create({
-            trigger: section,
-            start: "top center",
-            end: "bottom center",
-            onToggle: self => {
-                const link = document.querySelector(`.quick-nav a[href="#${section.id}"]`);
-                if (self.isActive) {
-                    quickNavLinks.forEach(l => l.classList.remove('active'));
-                    if(link) link.classList.add('active');
-                } else {
-                    if(link) link.classList.remove('active');
-                }
-            }
-        });
-    });
-
-    // 点击后给导航提供即时选中反馈（即使滚动尚未到达）
-    quickNavLinks.forEach(link => {
+    mobileLayout.addEventListener('change', () => setNavigation(false));
+    navLinks.forEach(link => {
         link.addEventListener('click', () => {
-            quickNavLinks.forEach(l => l.classList.remove('active'));
-            link.classList.add('active');
+            const target = document.getElementById(link.hash.slice(1));
+            if (target?.classList.contains('collapsible-section')) setExpanded(target, true, false);
+            if (mobileLayout.matches) {
+                setNavigation(false);
+                (target?.querySelector('.section-toggle') || target)?.focus({ preventScroll: true });
+            }
+            // 保留原生锚点导航，让地址、浏览器历史和返回操作保持同步。
         });
     });
-
-    // --- 折叠功能 ---
-    const collapsibleHeaders = document.querySelectorAll('.collapsible-header');
-    collapsibleHeaders.forEach(header => {
-        header.addEventListener('click', () => {
-            const content = header.nextElementSibling;
-            header.classList.toggle('collapsed');
-            content.classList.toggle('is-expanded');
-            feather.replace();
-
-            setTimeout(() => {
-                ScrollTrigger.refresh();
-            }, 500);
-        });
-    });
-
-    // --- 自定义光标 ---
-    const cursor = document.querySelector('.cursor');
-    const interactiveElements = document.querySelectorAll('a, button, .collapsible-header, .theme-switcher, .language-switcher, .tags span, .project-tags .tag, .service-card');
-
-    document.addEventListener('mousemove', e => {
-        cursor.setAttribute('style', `top: ${e.clientY}px; left: ${e.clientX}px;`);
-    });
-    
-    interactiveElements.forEach(el => {
-        el.addEventListener('mouseenter', () => cursor.classList.add('grow'));
-        el.addEventListener('mouseleave', () => cursor.classList.remove('grow'));
-    });
-
-    // --- 标题下划线动画 + h2逐字显现 ---
-    gsap.utils.toArray('h2').forEach(h2 => {
-        ScrollTrigger.create({
-          trigger: h2,
-          start: 'top 90%',
-          onEnter: () => {
-            h2.classList.add('is-visible');
-            animateLettersIn(h2);
-          },
-          once: true
-        });
-    });
-
-    // --- 页头背景幻灯片 ---
-    const bgImages = gsap.utils.toArray('.header-bg-slider img');
-    let currentIndex = 0;
-
-    gsap.set(bgImages[0], { autoAlpha: 1 });
-
-    function crossfade() {
-        gsap.to(bgImages[currentIndex], { autoAlpha: 0, duration: 1.5, ease: 'power2.inOut' });
-        currentIndex = (currentIndex + 1) % bgImages.length;
-        gsap.to(bgImages[currentIndex], { autoAlpha: 1, duration: 1.5, ease: 'power2.inOut' });
-        gsap.delayedCall(3, crossfade);
+    function revealHashTarget() {
+        const target = document.getElementById(window.location.hash.slice(1));
+        if (!target) return;
+        if (target.classList.contains('collapsible-section')) setExpanded(target, true, false);
+        requestAnimationFrame(() => target.scrollIntoView({ block: 'start', behavior: 'instant' }));
     }
-
-    gsap.delayedCall(3, crossfade);
-
-    // --- Mouse follow: header parallax (desktop only) ---
-    if (window.matchMedia('(pointer:fine)').matches) {
-      const headerEl = document.querySelector('header');
-      const parallaxTargets = gsap.utils.toArray('.header-bg-slider img');
-      const maxShift = 0.35; // 限制鼠标影响，避免位移过大
-      // 以百分比锁定基准居中，再在此基础上用像素做微偏移
-      gsap.set(parallaxTargets, { xPercent: -50, yPercent: -50, x: 0, y: 0 });
-      headerEl?.addEventListener('mousemove', (e) => {
-        const rect = headerEl.getBoundingClientRect();
-        // 以“视觉中心”为零点：桌面端向右补偿左侧目录的宽度（与 main 左 padding 保持一致）
-        const desktop = window.matchMedia('(min-width: 992px)').matches;
-        const compensationX = desktop ? 220 : 0; // 与 main/footer 的 padding-left:220px 对齐
-        const cx = ((e.clientX - rect.left) - (rect.width/2 + compensationX/2)) / rect.width;
-        const cy = ((e.clientY - rect.top) - (rect.height/2)) / rect.height;
-        // clamp parallax to prevent background from escaping overlay edges
-        const clamp = (v, m) => Math.max(-m, Math.min(m, v));
-        parallaxTargets.forEach((img, i) => {
-          const depth = (i + 1) * 12;
-          gsap.to(img, { x: clamp(cx, maxShift) * depth, y: clamp(cy, maxShift) * depth, scale: 1.02, transformOrigin: 'center', duration: 0.25, overwrite: true });
+    window.addEventListener('hashchange', revealHashTarget);
+    window.addEventListener('scroll', () => {
+        if (scrollFrame !== null) return;
+        scrollFrame = requestAnimationFrame(() => {
+            scrollFrame = null;
+            updateScrollState();
         });
-      });
+    }, { passive: true });
+    window.addEventListener('resize', updateScrollState);
+    if ('ResizeObserver' in window) new ResizeObserver(updateScrollState).observe(document.querySelector('main'));
+    backTopButton.addEventListener('click', () => window.scrollTo({ top: 0, behavior: reducedMotion.matches ? 'instant' : 'smooth' }));
 
-      // also reset parallax when leaving header to avoid residual offset
-      headerEl?.addEventListener('mouseleave', () => {
-        parallaxTargets.forEach((img) => {
-          gsap.to(img, { x: 0, y: 0, duration: 0.4, ease: 'power2.out' });
+    root.classList.add('has-interactions');
+    themeButton.hidden = false;
+    languageButton.hidden = false;
+    navButton.hidden = false;
+    setNavigation(false);
+    setLanguage(language);
+    replaceIcons();
+    revealHashTarget();
+
+    // 动画仅作为增强效果；基本阅读、导航、下载和按钮不依赖外部脚本。
+    const gsap = window.gsap;
+    if (!gsap || reducedMotion.matches) return;
+    const animationTargets = 'header h1, header p, .avatar, .hero-tags .pill, .hero-ctas .btn, header .social a, .service-card, .skill-category, main li';
+    try {
+        gsap.from('.avatar, header h1, header p, .hero-tags .pill, .hero-ctas .btn, header .social a', {
+            autoAlpha: 0, y: 18, duration: 0.7, stagger: 0.05, clearProps: 'opacity,visibility,transform'
         });
-      });
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (!entry.isIntersecting) return;
+                observer.unobserve(entry.target);
+                if (!reducedMotion.matches) gsap.fromTo(entry.target, { autoAlpha: 0, y: 24 }, {
+                    autoAlpha: 1, y: 0, duration: 0.6, clearProps: 'opacity,visibility,transform'
+                });
+            });
+        }, { threshold: 0.05 });
+        document.querySelectorAll('.service-card, .skill-category, .collapsible-content > ul > li').forEach(element => observer.observe(element));
 
-      // 当页面发生滚动时，逐步衰减并复位背景，避免滚动后下沿脱离蒙版的视觉问题
-      let scrollTween = null;
-      window.addEventListener('scroll', () => {
-        if (scrollTween && scrollTween.isActive()) return;
-        scrollTween = gsap.to(parallaxTargets, { x: 0, y: 0, duration: 0.5, ease: 'power2.out' });
-      }, { passive: true });
-
-      // Click effects (confetti)
-      const effectsCanvas = document.getElementById('click-effects');
-      const ectx = effectsCanvas?.getContext('2d');
-      let particles = [];
-      let ripples = [];
-      function resizeEffects(){
-        if (!effectsCanvas) return;
-        effectsCanvas.width = window.innerWidth * window.devicePixelRatio;
-        effectsCanvas.height = window.innerHeight * window.devicePixelRatio;
-        effectsCanvas.style.width = '100%';
-        effectsCanvas.style.height = '100%';
-      }
-      resizeEffects();
-      window.addEventListener('resize', resizeEffects);
-
-      // 生成渐变（跟随主题颜色）
-      function makeThemeGradient(){
-        if (!ectx || !effectsCanvas) return null;
-        const g = ectx.createLinearGradient(0,0,effectsCanvas.width,0);
-        // 读取 CSS 变量
-        const styles = getComputedStyle(document.documentElement);
-        const accent = styles.getPropertyValue('--accent').trim() || '#4f9cff';
-        const highlight = styles.getPropertyValue('--highlight').trim() || '#ffb300';
-        g.addColorStop(0, accent);
-        g.addColorStop(1, highlight);
-        return g;
-      }
-      let themeGradient = null;
-      const refreshThemeGradient = () => { themeGradient = makeThemeGradient(); };
-      refreshThemeGradient();
-
-      function spawnConfetti(x, y){
-        const count = 24;
-        for (let i=0;i<count;i++){
-          const angle = Math.random()*Math.PI*2;
-          const speed = Math.random()*3 + 2;
-          particles.push({
-            x: x*window.devicePixelRatio,
-            y: y*window.devicePixelRatio,
-            vx: Math.cos(angle)*speed,
-            vy: Math.sin(angle)*speed - 2,
-            g: 0.08,
-            life: 60 + Math.random()*30,
-            color: themeGradient || ['#5B8CFF','#6BE6FF','#7CFFB2','#FFD66B','#FF8FAB','#B686FF'][i % 6]
-          });
+        const backgroundImages = [...document.querySelectorAll('.header-bg-slider img')];
+        let backgroundIndex = 0;
+        let backgroundTimer;
+        function syncBackgroundAnimation() {
+            clearInterval(backgroundTimer);
+            if (document.hidden || reducedMotion.matches) return;
+            backgroundTimer = setInterval(() => {
+                gsap.to(backgroundImages[backgroundIndex], { opacity: 0, duration: 1.5 });
+                backgroundIndex = (backgroundIndex + 1) % backgroundImages.length;
+                gsap.to(backgroundImages[backgroundIndex], { opacity: 1, duration: 1.5 });
+            }, 4500);
         }
-        ripples.push({x:x*window.devicePixelRatio,y:y*window.devicePixelRatio,r:0,alpha:0.35});
-      }
+        document.addEventListener('visibilitychange', syncBackgroundAnimation);
+        syncBackgroundAnimation();
 
-      // 移除英雄区粒子效果
-      function tick(){
-        if (!ectx || !effectsCanvas) return;
-        ectx.clearRect(0,0,effectsCanvas.width,effectsCanvas.height);
-        particles.forEach(p => {
-          if (p.mode === 'seek'){
-            const dx = p.tx - p.x, dy = p.ty - p.y;
-            p.vx = (p.vx + dx*0.02) * p.friction;
-            p.vy = (p.vy + dy*0.02) * p.friction;
-            p.x += p.vx; p.y += p.vy; p.life -= 1;
-            ectx.fillStyle = p.color; ectx.globalAlpha = 1;
-            ectx.beginPath(); ectx.arc(p.x, p.y, p.size || 3, 0, Math.PI*2); ectx.fill();
-          } else {
-            p.vy += (p.g || 0);
-            p.x += p.vx; p.y += p.vy; p.life -= 1;
-            ectx.fillStyle = p.color; ectx.globalAlpha = Math.max(p.life/90, 0);
-            ectx.fillRect(p.x, p.y, 6, 3);
-          }
+        if (window.matchMedia('(pointer:fine)').matches) {
+            const cursor = document.querySelector('.cursor');
+            cursor.hidden = false;
+            document.addEventListener('mousemove', event => {
+                cursor.style.top = `${event.clientY}px`;
+                cursor.style.left = `${event.clientX}px`;
+            });
+            document.querySelectorAll('a, button').forEach(element => {
+                element.addEventListener('mouseenter', () => cursor.classList.add('grow'));
+                element.addEventListener('mouseleave', () => cursor.classList.remove('grow'));
+            });
+            document.querySelectorAll('.service-card').forEach(card => {
+                card.addEventListener('mousemove', event => {
+                    if (reducedMotion.matches) return;
+                    const bounds = card.getBoundingClientRect();
+                    card.style.setProperty('--mx', `${event.clientX - bounds.left}px`);
+                    card.style.setProperty('--my', `${event.clientY - bounds.top}px`);
+                    gsap.to(card, { rotateX: (event.clientY - bounds.top - bounds.height / 2) / bounds.height * -12,
+                        rotateY: (event.clientX - bounds.left - bounds.width / 2) / bounds.width * 12,
+                        transformPerspective: 1000, duration: 0.18, overwrite: true });
+                });
+                card.addEventListener('mouseleave', () => gsap.to(card, { rotateX: 0, rotateY: 0, duration: 0.35 }));
+            });
+            document.querySelectorAll('.btn, .pill, header .social a').forEach(element => {
+                element.addEventListener('mousemove', event => {
+                    if (reducedMotion.matches) return;
+                    const bounds = element.getBoundingClientRect();
+                    gsap.to(element, { x: (event.clientX - bounds.left - bounds.width / 2) / bounds.width * 12,
+                        y: (event.clientY - bounds.top - bounds.height / 2) / bounds.height * 12,
+                        duration: 0.18, overwrite: true });
+                });
+                element.addEventListener('mouseleave', () => gsap.to(element, { x: 0, y: 0, duration: 0.3 }));
+            });
+            const header = document.querySelector('header');
+            gsap.set(backgroundImages, { xPercent: -50, yPercent: -50, x: 0, y: 0 });
+            header.addEventListener('mousemove', event => {
+                if (reducedMotion.matches) return;
+                const bounds = header.getBoundingClientRect();
+                const x = Math.max(-0.35, Math.min(0.35, (event.clientX - bounds.left - bounds.width / 2) / bounds.width));
+                const y = Math.max(-0.35, Math.min(0.35, (event.clientY - bounds.top - bounds.height / 2) / bounds.height));
+                backgroundImages.forEach((image, index) => gsap.to(image, { x: x * (index + 1) * 12, y: y * (index + 1) * 12, duration: 0.25, overwrite: 'auto' }));
+            });
+            header.addEventListener('mouseleave', () => gsap.to(backgroundImages, { x: 0, y: 0, duration: 0.4 }));
+
+            const canvas = document.getElementById('click-effects');
+            const context = canvas.getContext('2d');
+            let particles = [];
+            let frame = null;
+            function resizeCanvas() {
+                canvas.width = innerWidth * devicePixelRatio;
+                canvas.height = innerHeight * devicePixelRatio;
+            }
+            function drawParticles() {
+                frame = null;
+                context.clearRect(0, 0, canvas.width, canvas.height);
+                particles = particles.filter(particle => particle.life > 0);
+                particles.forEach(particle => {
+                    particle.x += particle.vx;
+                    particle.y += particle.vy;
+                    particle.vy += 0.08;
+                    particle.life--;
+                    context.globalAlpha = particle.life / 60;
+                    context.fillStyle = particle.color;
+                    context.fillRect(particle.x, particle.y, 6, 3);
+                });
+                if (particles.length) frame = requestAnimationFrame(drawParticles);
+            }
+            function stopParticles() {
+                if (frame !== null) cancelAnimationFrame(frame);
+                frame = null;
+                particles = [];
+                context.clearRect(0, 0, canvas.width, canvas.height);
+            }
+            resizeCanvas();
+            window.addEventListener('resize', resizeCanvas);
+            document.addEventListener('click', event => {
+                if (reducedMotion.matches || document.hidden) return;
+                const styles = getComputedStyle(root);
+                const colors = [styles.getPropertyValue('--accent'), styles.getPropertyValue('--highlight')];
+                for (let i = 0; i < 24; i++) {
+                    const angle = Math.random() * Math.PI * 2;
+                    const speed = Math.random() * 3 + 2;
+                    particles.push({ x: event.clientX * devicePixelRatio, y: event.clientY * devicePixelRatio,
+                        vx: Math.cos(angle) * speed, vy: Math.sin(angle) * speed - 2, life: 60, color: colors[i % 2].trim() });
+                }
+                if (frame === null) frame = requestAnimationFrame(drawParticles);
+            });
+            document.addEventListener('visibilitychange', () => { if (document.hidden) stopParticles(); });
+            reducedMotion.addEventListener('change', () => { if (reducedMotion.matches) stopParticles(); });
+        }
+        reducedMotion.addEventListener('change', () => {
+            syncBackgroundAnimation();
+            if (reducedMotion.matches) {
+                clearInterval(typingTimer);
+                renderTerminal();
+                gsap.killTweensOf(animationTargets);
+                gsap.set(animationTargets, { clearProps: 'opacity,visibility,transform' });
+            }
         });
-        particles = particles.filter(p => p.life > 0);
-        // ripple rings
-        ripples.forEach(r => {
-          r.r += 6; r.alpha *= 0.94;
-          ectx.strokeStyle = 'rgba(255,255,255,'+r.alpha+')';
-          ectx.lineWidth = 2;
-          ectx.beginPath();
-          ectx.arc(r.x, r.y, r.r, 0, Math.PI*2);
-          ectx.stroke();
+    } catch (error) {
+        document.querySelectorAll(animationTargets).forEach(element => {
+            ['opacity', 'visibility', 'transform'].forEach(property => element.style.removeProperty(property));
         });
-        ripples = ripples.filter(r => r.alpha > 0.02);
-        requestAnimationFrame(tick);
-      }
-      requestAnimationFrame(tick);
-
-      document.addEventListener('click', (ev)=>{
-        // avoid clicks on header controls causing double spawn; always allow visually
-        spawnConfetti(ev.clientX, ev.clientY);
-      });
-
-      // 英雄区粒子效果已移除
-
-      // 主题切换时更新渐变
-      const observer = new MutationObserver(() => refreshThemeGradient());
-      observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
-
-      document.querySelectorAll('.service-card').forEach(card => {
-        card.addEventListener('mousemove', (e) => {
-          const r = card.getBoundingClientRect();
-          const rx = (e.clientY - r.top - r.height/2) / r.height * -12;
-          const ry = (e.clientX - r.left - r.width/2) / r.width * 12;
-          card.style.setProperty('--mx', `${e.clientX - r.left}px`);
-          card.style.setProperty('--my', `${e.clientY - r.top}px`);
-          gsap.to(card, { rotateX: rx, rotateY: ry, boxShadow: '0 18px 32px rgba(0,0,0,0.18)', transformPerspective: 1000, duration: 0.18, ease: 'power2.out' });
-        });
-        card.addEventListener('mouseleave', () => {
-          gsap.to(card, { rotateX: 0, rotateY: 0, boxShadow: 'var(--shadow)', duration: 0.35, ease: 'power2.out' });
-        });
-      });
+        console.warn('Decorative animations are unavailable; page controls remain active.', error);
     }
-
-    // --- 顶部滚动进度条 ---
-    const progressBar = document.querySelector('.scroll-progress .bar');
-    if (progressBar) {
-        const updateProgress = () => {
-            const h = document.documentElement;
-            const max = h.scrollHeight - h.clientHeight;
-            const p = max > 0 ? (h.scrollTop / max) * 100 : 0;
-            progressBar.style.width = `${p}%`;
-        };
-        updateProgress();
-        document.addEventListener('scroll', updateProgress, { passive: true });
-        window.addEventListener('resize', updateProgress);
-    }
-
-    // --- 回到顶部按钮 ---
-    const backTopBtn = document.getElementById('back-to-top');
-    if (backTopBtn){
-        const toggleBtn = () => {
-            const y = window.scrollY || document.documentElement.scrollTop;
-            if (y > 500) backTopBtn.classList.add('visible'); else backTopBtn.classList.remove('visible');
-        };
-        toggleBtn();
-        document.addEventListener('scroll', toggleBtn, { passive: true });
-        backTopBtn.addEventListener('click', () => gsap.to(window, { duration: 0.8, scrollTo: {y: 0}, ease: 'power2.out' }));
-    }
-
-    // --- 磁性按钮（CTA 与社交、Pills 轻微跟随）---
-    const magneticTargets = gsap.utils.toArray('.btn, .pill, header .social a');
-    magneticTargets.forEach(el => {
-        const strength = el.classList.contains('btn') ? 10 : 6;
-        el.addEventListener('mousemove', (e) => {
-            const r = el.getBoundingClientRect();
-            const dx = (e.clientX - (r.left + r.width/2)) / (r.width/2);
-            const dy = (e.clientY - (r.top + r.height/2)) / (r.height/2);
-            gsap.to(el, { x: dx*strength, y: dy*strength, duration: 0.18, ease: 'power2.out' });
-        });
-        el.addEventListener('mouseleave', () => gsap.to(el, { x: 0, y: 0, duration: 0.3 }));
-    });
-
-    // --- Mini Terminal playful interaction ---
-    function typeText(el, text, speed = 70) {
-        if (!el) return;
-        if (typerTimer) clearInterval(typerTimer);
-        el.textContent = '';
-        let i = 0;
-        typerTimer = setInterval(() => {
-            el.textContent += text[i] || '';
-            i++;
-            if (i >= text.length) { clearInterval(typerTimer); typerTimer = null; }
-        }, speed);
-    }
-
-    function showHelp(lang) {
-        if (!terminalOutput) return;
-        terminalOutput.textContent = lang === 'zh' 
-          ? '可用命令: help, skills, about' 
-          : 'Commands: help, skills, about';
-    }
-
-    function showSkills(lang) {
-        if (!terminalOutput) return;
-        terminalOutput.textContent = lang === 'zh' 
-          ? '视觉/ROS/自动化/数据分析' 
-          : 'Vision / ROS / Automation / Data Analysis';
-    }
-
-    if (terminalInput) {
-      const lang = localStorage.getItem('language') || 'en';
-      typeText(terminalInput, 'help');
-      setTimeout(() => showHelp(lang), 1200);
-
-      document.getElementById('mini-terminal')?.addEventListener('click', () => {
-          const L = localStorage.getItem('language') || 'en';
-          const current = terminalInput.textContent.trim();
-          if (current === 'help') {
-              typeText(terminalInput, 'skills');
-              setTimeout(() => showSkills(L), 900);
-          } else if (current === 'skills') {
-              typeText(terminalInput, 'about');
-              setTimeout(() => {
-                  if (terminalOutput) terminalOutput.textContent = (L === 'zh')
-                    ? '自动化初学者。'
-                    : 'Automation beginner.';
-              }, 900);
-          } else {
-              typeText(terminalInput, 'help');
-              setTimeout(() => showHelp(L), 1200);
-          }
-      });
-    }
-
-    // 初始化 Feather 图标
-    feather.replace();
 });
