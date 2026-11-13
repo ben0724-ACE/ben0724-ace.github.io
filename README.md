@@ -47,8 +47,6 @@ This is a modern personal homepage project showcasing my education background, r
 my-homepage/
 ├── index.html              # Main page file
 ├── README.md              # Project documentation
-├── CV.pdf                 # English CV PDF
-├── 简历.pdf               # Chinese resume PDF
 ├── assets/
 │   ├── css/
 │   │   └── style.css      # Stylesheet file
@@ -80,7 +78,6 @@ Modify the following content in the `index.html` file:
 - Name and contact information
 - Avatar image path
 - Social media links
-- Resume PDF files: `CV.pdf` in English and `简历.pdf` in Chinese; download links follow the selected language
 
 ### About / Services
 - Edit the `#about` section cards to reflect your focus areas.
@@ -91,7 +88,7 @@ In the `assets/css/style.css` file:
 - Modify CSS variables to adjust theme colors
 - Adjust font sizes and spacing
 - Customize animation effects
-- Hero additions: `.tagline`, `.hero-tags .pill`, `.hero-ctas`, `.btn.secondary`
+- Hero additions: `.tagline`, `.hero-tags .pill`
 - Services: `.service-grid`, `.service-card`
 - Terminal: `.terminal`, `.terminal-header`, `.terminal-body`
 - **Important Note on Asset Paths**: When referencing images, fonts, or other assets in CSS, ensure you use the correct relative paths. For example, if your `style.css` is in `assets/css/` and your image is in `assets/img/`, the path in CSS should be `../img/your-image.jpg` (using `../` to go up one directory).
@@ -169,8 +166,6 @@ Welcome to submit Issues and Pull Requests to improve this project!
 my-homepage/
 ├── index.html              # 主页文件
 ├── README.md              # 项目文档
-├── CV.pdf                 # 英文简历PDF
-├── 简历.pdf               # 中文简历PDF
 ├── assets/
 │   ├── css/
 │   │   └── style.css      # 样式表文件
@@ -202,7 +197,6 @@ my-homepage/
 - 姓名和联系方式
 - 头像图片路径
 - 社交媒体链接
-- 简历 PDF 文件：英文 `CV.pdf`、中文 `简历.pdf`，下载链接随语言切换
 
 ### 关于我 / 服务
 - 编辑 `#about` 版块服务卡片，贴合你的优势方向。
@@ -213,7 +207,7 @@ my-homepage/
 - 修改CSS变量以调整主题颜色
 - 调整字体大小和间距
 - 自定义动画效果
-- 页头新增：`.tagline`、`.hero-tags .pill`、`.hero-ctas`、`.btn.secondary`
+- 页头新增：`.tagline`、`.hero-tags .pill`
 - 服务区：`.service-grid`、`.service-card`
 - 终端：`.terminal`、`.terminal-header`、`.terminal-body`
 - **关于资源路径的重要说明**: 在CSS中引用图片、字体或其他资源时，请确保使用正确的相对路径。例如，如果您的 `style.css` 在 `assets/css/` 目录下，而您的图片在 `assets/img/` 目录下，那么CSS中的路径应为 `../img/your-image.jpg`（使用 `../` 返回上一级目录）。
@@ -246,12 +240,12 @@ my-homepage/
 
 - Native keyboard controls support language, theme, the terminal and collapsible sections. Collapsed content cannot receive keyboard focus.
 - Desktop navigation and the mobile contents menu use shareable anchors and browser history.
-- Content and CV downloads remain available without JavaScript or external animation libraries. System theme is followed until a manual choice is saved.
+- Content remains available without JavaScript or external animation libraries. System theme is followed until a manual choice is saved.
 - Offscreen images load lazily, with explicit dimensions. Optimized WebP images keep the original JPG/GIF files in `assets/img/`; animated replacements retain their timing and loops.
 - Reduced-motion preferences disable decorative effects, and the particle canvas stops rendering when idle.
 
 - 语言、主题、终端和折叠区使用原生键盘控件，收起内容不会获得键盘焦点。
 - 桌面目录与手机目录均支持锚点分享和浏览器前进、返回。
-- 禁用 JavaScript 或外部动画库不可用时，正文与简历仍可访问；主题在用户手动选择前跟随系统。
+- 禁用 JavaScript 或外部动画库不可用时，正文仍可访问。主题在用户手动选择前跟随系统。
 - 非首屏图片懒加载并预留尺寸；压缩版 WebP 与原始 JPG/GIF 均保留，动图保留播放时长和循环设置。
 - 尊重减少动态效果偏好，点击粒子在空闲时停止绘制。

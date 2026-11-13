@@ -156,22 +156,6 @@ header p { font-size: 1.2rem; color: #e0e0e0; text-shadow: 1px 1px 3px rgba(0,0,
   box-shadow: 0 4px 12px rgba(0,0,0,0.2);
 }
 @keyframes breath{0%{box-shadow:0 0 0 rgba(255,255,255,0.0)}50%{box-shadow:0 0 18px rgba(255,255,255,0.35)}100%{box-shadow:0 0 0 rgba(255,255,255,0.0)}}
-.hero-ctas{margin-top:1.2rem;display:flex;gap:.8rem;justify-content:center;flex-wrap:wrap}
-.btn.secondary{background:transparent;color:#fff;border:1px solid rgba(255,255,255,.6)}
-.btn.secondary:hover{
-  background:var(--button-bg);
-  border-color:var(--button-bg);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-} 
-/* ghost 与 secondary 在 hover 时一致 */
-.btn.ghost{background:transparent;color:#fff;border:1.6px solid rgba(255,255,255,.75)}
-.btn.ghost:hover{
-  background:var(--button-bg);
-  border-color:var(--button-bg);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-}
 .social a {
   margin: 0 .8rem;
   color: #fff;
@@ -409,25 +393,6 @@ li::before {
 }
 .award-item, .award-item span {
    color: var(--text-color-light);
-}
-.btn {
-  display: inline-block;
-  margin-top: 1.5rem;
-  padding: .9rem 1.8rem;
-  background-color: var(--button-bg);
-  color: var(--button-text);
-  text-decoration: none;
-  border-radius: 8px;
-  border: none;
-  font-weight: 600;
-  box-shadow: var(--shadow);
-  transition: background-color 0.2s, transform 0.2s;
-  font-size: 1.1rem;
-}
-.btn:hover {
-  background-color: var(--button-hover-bg);
-  transform: translateY(-2px);
-  box-shadow: var(--hover-shadow);
 }
 footer { 
   max-width: 1100px;
@@ -808,13 +773,12 @@ a:hover {
 @keyframes blink{50%{opacity:0}}
 
 /* tighten header spacing so icons don’t stick to text */
-.hero-ctas{margin-top:1.2rem}
 header .social{margin-top:1rem}
 
 @media (max-width: 600px){
   .pill{font-size:.85rem}
 }
-.tagline, .hero-tags, .hero-ctas, header p{max-width:1100px;margin-left:auto;margin-right:auto}
+.tagline, .hero-tags, header p{max-width:1100px;margin-left:auto;margin-right:auto}
 @media (min-width:992px){header{padding-bottom:3.5rem}}
 
 /* Service card lighting highlight (works with JS tilt) */
@@ -840,10 +804,6 @@ header .social{margin-top:1rem}
 /* stronger header overlay to avoid edges showing on scroll */
 header::before{background:linear-gradient(to top, rgba(0,0,0,0.78) 0%, rgba(0,0,0,0.42) 60%, rgba(0,0,0,0.58) 100%);}
 
-/* transparent ghost button for hero */
-.btn.ghost{background:transparent;color:#fff;border:1.6px solid rgba(255,255,255,.75)}
-.btn.ghost:hover{background:var(--button-bg);border-color:var(--button-bg);}
-
 /* Skills grid compress to one column */
 .skills-container{grid-template-columns:1fr}
 
@@ -852,7 +812,7 @@ header::before{background:linear-gradient(to top, rgba(0,0,0,0.78) 0%, rgba(0,0,
 .scroll-progress .bar{height:100%;width:0;background:linear-gradient(90deg, var(--accent), var(--highlight));box-shadow:0 0 6px rgba(var(--accent-rgb),.7)}
 
 /* --- 磁性按钮轻微跟随 --- */
-.btn, .pill{transition: transform .15s ease, background-color .2s ease, border-color .2s ease}
+.pill{transition: transform .15s ease, background-color .2s ease, border-color .2s ease}
 
 /* --- 点击彩色纸屑画布，固定覆盖并不占据文档流 --- */
 .effects-canvas{position:fixed;inset:0;z-index:2000;pointer-events:none;display:block}

@@ -102,9 +102,6 @@ document.addEventListener('DOMContentLoaded', () => {
         languageButton.textContent = language === 'zh' ? 'EN' : '中';
         languageButton.setAttribute('aria-label', language === 'zh' ? 'Switch to English' : '切换为中文');
         languageButton.title = languageButton.getAttribute('aria-label');
-        document.querySelectorAll('a[data-cv-en]').forEach(link => {
-            link.href = link.getAttribute(language === 'zh' ? 'data-cv-zh' : 'data-cv-en');
-        });
         document.querySelectorAll('h1, h2').forEach(heading => {
             const label = heading.querySelector(`.lang-${language}`)?.textContent.trim();
             if (label) {
@@ -212,9 +209,9 @@ document.addEventListener('DOMContentLoaded', () => {
     // 动画仅作为增强效果；基本阅读、导航、下载和按钮不依赖外部脚本。
     const gsap = window.gsap;
     if (!gsap || reducedMotion.matches) return;
-    const animationTargets = 'header h1, header p, .avatar, .hero-tags .pill, .hero-ctas .btn, header .social a, .service-card, .skill-category, main li';
+    const animationTargets = 'header h1, header p, .avatar, .hero-tags .pill, header .social a, .service-card, .skill-category, main li';
     try {
-        gsap.from('.avatar, header h1, header p, .hero-tags .pill, .hero-ctas .btn, header .social a', {
+        gsap.from('.avatar, header h1, header p, .hero-tags .pill, header .social a', {
             autoAlpha: 0, y: 18, duration: 0.7, stagger: 0.05, clearProps: 'opacity,visibility,transform'
         });
         const observer = new IntersectionObserver(entries => {
@@ -266,7 +263,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
                 card.addEventListener('mouseleave', () => gsap.to(card, { rotateX: 0, rotateY: 0, duration: 0.35 }));
             });
-            document.querySelectorAll('.btn, .pill, header .social a').forEach(element => {
+            document.querySelectorAll('.pill, header .social a').forEach(element => {
                 element.addEventListener('mousemove', event => {
                     if (reducedMotion.matches) return;
                     const bounds = element.getBoundingClientRect();
