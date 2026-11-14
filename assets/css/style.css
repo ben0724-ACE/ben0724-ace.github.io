@@ -830,7 +830,7 @@ header::before{background:linear-gradient(to top, rgba(0,0,0,0.78) 0%, rgba(0,0,
 .pill{transition: transform .15s ease, background-color .2s ease, border-color .2s ease}
 
 /* --- 点击彩色纸屑画布，固定覆盖并不占据文档流 --- */
-.effects-canvas{position:fixed;inset:0;z-index:2000;pointer-events:none;display:block}
+.effects-canvas{position:fixed;inset:0;width:100%;height:100%;z-index:2000;pointer-events:none;display:block}
 
 /* --- 回到顶部按钮 --- */
 .back-to-top{position:fixed;right:1.5rem;bottom:1.5rem;width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:var(--button-bg);color:var(--button-text);box-shadow:var(--shadow);z-index:1500;opacity:0;transform:translateY(20px);pointer-events:none;transition:opacity .25s ease, transform .25s ease, background-color .2s ease}

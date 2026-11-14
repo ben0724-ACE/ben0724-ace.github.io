@@ -288,13 +288,17 @@ document.addEventListener('DOMContentLoaded', () => {
             const context = canvas.getContext('2d');
             let particles = [];
             let frame = null;
+            let width;
+            let height;
             function resizeCanvas() {
-                canvas.width = innerWidth * devicePixelRatio;
-                canvas.height = innerHeight * devicePixelRatio;
+                ({ width, height } = canvas.getBoundingClientRect());
+                canvas.width = Math.round(width * devicePixelRatio);
+                canvas.height = Math.round(height * devicePixelRatio);
+                context.setTransform(devicePixelRatio, 0, 0, devicePixelRatio, 0, 0);
             }
             function drawParticles() {
                 frame = null;
-                context.clearRect(0, 0, canvas.width, canvas.height);
+                context.clearRect(0, 0, width, height);
                 particles = particles.filter(particle => particle.life > 0);
                 particles.forEach(particle => {
                     particle.x += particle.vx;
@@ -311,18 +315,21 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (frame !== null) cancelAnimationFrame(frame);
                 frame = null;
                 particles = [];
-                context.clearRect(0, 0, canvas.width, canvas.height);
+                context.clearRect(0, 0, width, height);
             }
             resizeCanvas();
             window.addEventListener('resize', resizeCanvas);
             document.addEventListener('click', event => {
                 if (reducedMotion.matches || document.hidden) return;
+                const bounds = canvas.getBoundingClientRect();
+                const x = event.clientX - bounds.left;
+                const y = event.clientY - bounds.top;
                 const styles = getComputedStyle(root);
                 const colors = [styles.getPropertyValue('--accent'), styles.getPropertyValue('--highlight')];
                 for (let i = 0; i < 24; i++) {
                     const angle = Math.random() * Math.PI * 2;
                     const speed = Math.random() * 3 + 2;
-                    particles.push({ x: event.clientX * devicePixelRatio, y: event.clientY * devicePixelRatio,
+                    particles.push({ x, y,
                         vx: Math.cos(angle) * speed, vy: Math.sin(angle) * speed - 2, life: 60, color: colors[i % 2].trim() });
                 }
                 if (frame === null) frame = requestAnimationFrame(drawParticles);
